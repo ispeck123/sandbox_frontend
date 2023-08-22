@@ -1,0 +1,488 @@
+<app-header></app-header>
+<div class="system_monitoring_sec">
+    <diV class="main-layout">
+        <div class="project_brd ">
+            <button class="log-button" mat-raised-button>
+      <span [routerLink]="['/home']"><mat-icon>arrow_back</mat-icon>
+     Back to home</span>
+   </button>
+            <div class="sys_mnt">
+                <h4>System monitoring</h4>
+            </div>
+        </div>
+
+
+        <div class="system_mn">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="graph-con">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-card>
+                                        <div class="cfv">
+                                            <div class="sys_hfg">
+                                                <h3>Cpu Usage</h3>
+                                            </div>
+                                            <div class="" data-bs-toggle="modal" data-bs-target="#dataModal">
+                                                <canvas id="canvas" height="200" width="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <div class="col-sm-6">
+                                    <mat-card>
+
+                                        <div class="cfv">
+                                            <div class="sys_hfg">
+                                                <h3>
+                                                    Memory Usage
+                                                </h3>
+                                            </div>
+                                            <div class="" data-bs-toggle="modal" data-bs-target="#memoryModal">
+                                                <canvas id="system_memory" height="200" width="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <div class="col-sm-6">
+                                    <mat-card>
+
+                                        <div class="cfv">
+                                            <div class="sys_hfg">
+                                                <h3>
+                                                    Gpu Usage
+                                                </h3>
+                                            </div>
+                                            <div class="" data-bs-toggle="modal" data-bs-target="#gpuModal">
+                                                <canvas id="gpu_usage" height="200" width="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <mat-card>
+                                        <div class="cfv">
+                                            <div class="sys_hfg">
+                                                <h3>
+                                                    Gpu Temperature
+                                                </h3>
+                                            </div>
+                                            <div class="">
+                                                <canvas id="gpu_temp" height="200" width="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="system-details">
+                            <mat-card>
+                                <div class="system_mon_heading">
+                                    <h2>
+                                        System Details
+                                    </h2>
+                                </div>
+
+                                <div class="system_cva">
+                                    <div class="mnk_list_for">
+                                        <div class="icon_jkl">
+                                            <mat-icon>dns</mat-icon>
+                                        </div>
+                                        <div class="para_lkw">
+                                            <h4> Platform Name (OS Name) </h4>
+                                            <p>{{graphdata.platform}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mnk_list_for">
+                                        <div class="icon_jkl">
+                                            <mat-icon>event_available</mat-icon>
+                                        </div>
+                                        <div class="para_lkw">
+                                            <h4> Number Of Cpu's Available </h4>
+                                            <p>{{graphdata.numofCPU}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mnk_list_for">
+                                        <div class="icon_jkl">
+                                            <mat-icon>tune</mat-icon>
+                                        </div>
+                                        <div class="para_lkw">
+                                            <h4> Used Cpu </h4>
+                                            <p>{{graphdata.CPUUsage | number : '1.2-2'}}%</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mnk_list_for">
+                                        <div class="icon_jkl">
+                                            <mat-icon>storage</mat-icon>
+                                        </div>
+                                        <div class="para_lkw">
+                                            <h4> Total Memory Available </h4>
+                                            <p>{{graphdata.totalmemory}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mnk_list_for">
+                                        <div class="icon_jkl">
+                                            <mat-icon>memory</mat-icon>
+                                        </div>
+                                        <div class="para_lkw">
+                                            <h4> Total Memory Used </h4>
+                                            <p>{{usedMem}}MB</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mnk_list_for">
+                                        <div class="icon_jkl">
+                                            <mat-icon>storage</mat-icon>
+                                        </div>
+                                        <div class="para_lkw">
+                                            <h4> Free Memory Available </h4>
+                                            <p>{{graphdata.freememory}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mnk_list_for">
+                                        <div class="icon_jkl">
+                                            <mat-icon>account_tree</mat-icon>
+                                        </div>
+                                        <div class="para_lkw">
+                                            <h4> Gpu Name </h4>
+                                            <p>{{gpuData.gpu_device_name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- proce -->
+                    <div class="col-sm-12">
+                        <!--  System Details
+ -->
+
+                        <div class="system-details">
+                            <div class="system_mon_heading sklmwe">
+                                <h2>
+                                    Process
+                                </h2>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-3" *ngFor="let item of processdata">
+                                    <mat-card>
+                                        <div class="system_cva">
+                                            <div class="mnk_list_for">
+                                                <div class="icon_jkl">
+                                                    <mat-icon>memory</mat-icon>
+                                                </div>
+                                                <div class="para_lkw">
+                                                    <h4> Process name
+                                                    </h4>
+                                                    <p>{{item.name}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="mnk_list_for">
+                                                <div class="icon_jkl">
+                                                    <mat-icon>burst_mode</mat-icon>
+                                                </div>
+                                                <div class="para_lkw">
+                                                    <h4> Pid </h4>
+                                                    <p>{{item.pid}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="mnk_list_for">
+                                                <div class="icon_jkl">
+                                                    <mat-icon>analytics</mat-icon>
+                                                </div>
+                                                <div class="para_lkw">
+                                                    <h4> Cpu used </h4>
+                                                    <p>{{item.cpu}}</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="mnk_list_for">
+                                                <div class="icon_jkl">
+                                                    <mat-icon>storage</mat-icon>
+                                                </div>
+                                                <div class="para_lkw">
+                                                    <h4> Memory used</h4>
+                                                    <p>{{item.memoryused}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <!-- <div class="col-sm-3">
+  <mat-card>
+  <div class="system_cva">
+      <div class="mnk_list_for">
+      <div class="icon_jkl">
+        <mat-icon>memory</mat-icon>
+      </div>
+      <div class="para_lkw">
+        <h4> Process name
+        </h4>
+        <p>abc</p>
+      </div>
+      </div>
+      <div class="mnk_list_for">
+        <div class="icon_jkl">
+          <mat-icon>burst_mode</mat-icon>
+        </div>
+<div class="para_lkw">
+<h4> Pid  </h4>
+<p>asd</p>
+</div>
+      </div>
+
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>analytics</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Cpu used </h4>
+<p>121</p>
+</div>
+</div>
+
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>storage</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Memory used</h4>
+<p>392.65MB</p>
+</div>
+</div>
+</div>
+</mat-card>
+</div>
+<div class="col-sm-3">
+  <mat-card>
+  <div class="system_cva">
+  <div class="mnk_list_for">
+      <div class="icon_jkl">
+        <mat-icon>memory</mat-icon>
+      </div>
+      <div class="para_lkw">
+        <h4> Process name
+        </h4>
+        <p>abc</p>
+      </div>
+  </div>
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>burst_mode</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Pid  </h4>
+<p>asd</p>
+</div>
+</div>
+
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>analytics</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Cpu used </h4>
+<p>121</p>
+</div>
+</div>
+
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>storage</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Memory used</h4>
+<p>392.65MB</p>
+</div>
+</div>
+</div>
+</mat-card>
+</div>
+<div class="col-sm-3">
+  <mat-card>
+  <div class="system_cva">
+  <div class="mnk_list_for">
+      <div class="icon_jkl">
+        <mat-icon>memory</mat-icon>
+      </div>
+      <div class="para_lkw">
+        <h4> Process name
+        </h4>
+        <p>abc</p>
+      </div>
+  </div>
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>burst_mode</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Pid  </h4>
+<p>asd</p>
+</div>
+</div>
+
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>analytics</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Cpu used </h4>
+<p>121</p>
+</div>
+</div>
+
+<div class="mnk_list_for">
+<div class="icon_jkl">
+<mat-icon>storage</mat-icon>
+</div>
+<div class="para_lkw">
+<h4> Memory used</h4>
+<p>392.65MB</p>
+</div>
+</div>
+</div>
+</mat-card>
+</div> -->
+                            </div>
+                        </div>
+                        <!-- end process -->
+                    </div>
+
+                    <!-- end process -->
+                </div>
+            </div>
+        </div>
+    </diV>
+</div>
+
+
+
+<!-- modal Cpu Usage -->
+
+<div class="modal fade show " id="dataModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal" aria-modal="false" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Cpu Usage
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mnk_list_for">
+                    <div class="redf">
+                    </div>
+                    <div class="para_lkw">
+                        <h4> Cpu Usage
+                        </h4>
+                        <p>0</p>
+                    </div>
+                </div>
+                <div class="mnk_list_for">
+                    <div class="blte">
+                    </div>
+                    <div class="para_lkw">
+                        <h4> Free Cpu
+                        </h4>
+                        <p>100</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End modal Cpu Usage -->
+
+
+
+
+
+<!-- modal Memory Usage
+-->
+
+<div class="modal fade show " id="memoryModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="memoryModal" aria-modal="false" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="memoryModal">Memory Usage
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mnk_list_for">
+                    <div class="redf">
+                    </div>
+                    <div class="para_lkw">
+                        <h4> Usage Memory
+                        </h4>
+                        <p>657</p>
+                    </div>
+                </div>
+                <div class="mnk_list_for">
+                    <div class="blte">
+                    </div>
+                    <div class="para_lkw">
+                        <h4> Free Memory
+                        </h4>
+                        <p>202</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End modal Memory Usage -->
+
+
+
+<!-- modal Memory Usage
+-->
+
+<div class="modal fade show " id="gpuModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="gpuModal" aria-modal="false" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="gpuModal">Gpu Usage
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mnk_list_for">
+                    <div class="redf">
+                    </div>
+                    <div class="para_lkw">
+                        <h4> Usage Gpu
+                        </h4>
+                        <p>10</p>
+                    </div>
+                </div>
+                <div class="mnk_list_for">
+                    <div class="blte">
+                    </div>
+                    <div class="para_lkw">
+                        <h4> Free Gpu
+                        </h4>
+                        <p>90</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End modal Memory Usage -->

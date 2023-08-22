@@ -1,0 +1,37 @@
+<!-- <div class="container">
+  <app-header></app-header>
+<div class="row g-0">
+<div class="col-2">
+  <app-user-sidebar></app-user-sidebar>
+</div>
+<div class="col-10 main-layout">
+   <router-outlet></router-outlet>
+</div>
+</div>
+<div class="row g-0">
+   <app-footer fxLayout="column"></app-footer>
+</div>
+</div> -->
+
+
+
+<div class="">
+  <app-header></app-header>
+      <div class="side-nav" style="top: 64px;bottom: 0px;transform: none; visibility: visible;">
+          <div class="main-lay_sec">
+          <div class="side-bar-section">
+            <app-user-sidebar></app-user-sidebar>
+          </div>
+      </div>
+      </div>
+      <div class="sidenav-content" style="margin-left: 270px;">
+      <div class="main-lay-out">
+      <div class="main-layout">
+          <router-outlet></router-outlet>
+      </div>
+     </div>
+  </div>
+  <div class="g-0">
+    <app-footer fxLayout="column"></app-footer>
+ </div>
+</div>

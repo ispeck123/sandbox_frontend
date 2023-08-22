@@ -1,0 +1,9 @@
+class artifact{
+    artifact_type_id:number;
+    location:string;
+    model_id:number;
+    file:File;
+    project_id:number;
+    pipeline_id:number;
+
+}

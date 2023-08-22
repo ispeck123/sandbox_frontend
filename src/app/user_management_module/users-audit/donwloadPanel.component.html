@@ -1,0 +1,49 @@
+<div class="files-wrapper d-container-shadow" #filesWrapperInner
+    style="z-index:11; transition: 0.25s;transform-origin: bottom; padding: 10px 15px; position: fixed; background-color: white; top: 100px; left: 10px; width: 100%; max-width: calc(100% - 30px); min-height: 400px; height: 100%; max-height: 500px;">
+    <div class="head-wrapper d-flex justify-content-between align-items-center">
+        <h1 mat-title>Reports</h1>
+        <button mat-flat-button (click)="sendCloseEvent()">Close</button>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="exportsList.length !== 0; else noExports">
+        <div class="container-fluid">
+            <div class="row p-2" style="overflow: auto; max-height: 420px">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 " *ngFor="let pdf of exportsList; let i = index">
+                    <mat-card class="example-card m-2 custom-shadow">
+                        <mat-card-header>
+                            <!-- <mat-card-subtitle>PDF</mat-card-subtitle> -->
+                        </mat-card-header>
+                        <mat-card-content>
+                            <h4 mat-title>{{pdf.filename}}</h4>
+                            <p class="text-secondary">Creation Date: {{pdf.creation_date |date}}</p>
+                            <p class="text-secondary" *ngIf="pdf.fromdate !== '0'; else noFilter">Filter: {{ pdf.fromdate*1000 | date }} to {{ pdf.todate*1000 | date }}</p>
+                            <ng-template #noFilter>
+                                <p class="text-secondary">Filter: No Filter</p>
+                            </ng-template>
+                            <p class="text-secondary" *ngIf="pdf.search_keywords else noSearch">Search:
+                                {{pdf.search_keywords === "" ? "no search" : pdf.search_keywords }}</p>
+                            <ng-template #noSearch>
+                                <p class="text-secondary">Search: No Search</p>
+                            </ng-template>
+                            <mat-divider></mat-divider>
+                        </mat-card-content>
+                        <mat-card-actions>
+                            <a mat-stroked-button *ngIf="pdf.status"
+                                href="{{API_PATH}}/exports/{{pdf.filename}}">Download</a>
+                        </mat-card-actions>
+                        <mat-card-footer>
+                            <!-- <button mat-flat-button *ngIf="!pdf.status">File Processing</button> -->
+                            <mat-progress-bar *ngIf="!pdf.status" mode="indeterminate"></mat-progress-bar>
+                        </mat-card-footer>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #noExports>
+        <li class="list-group-item d-flex justify-content-between align-items-center">No files!</li>
+    </ng-template>
+
+
+
+</div>

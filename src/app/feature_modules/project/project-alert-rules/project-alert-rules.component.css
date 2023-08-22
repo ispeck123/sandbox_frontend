@@ -1,0 +1,66 @@
+
+
+.project_brd{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    padding-top: 4px;
+    margin-bottom: 22px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .pro_sub h3{
+    font-size: 18px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+  }
+  .select_attr h2{
+    font-size: 18px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+    padding-top: 0px;
+  }
+  .select_attr{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .atb_heading h2{
+    font-size: 18px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+
+  }
+  .prof_lklads{
+    margin-left: 10px;
+    padding-top: 15px;
+    margin-right: 10px;
+  }
+  .prjt_chip_plk {
+    margin-left: 8px;
+}
+.prht_alett{
+    margin-right: 20px;
+    padding-bottom: 20px;
+}
+.prht_alett button {
+    width: 10%;
+}
+.prkl_cgh {
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+.confi_heading h2{
+font-weight: normal;
+}
+.lfgt {
+  float: right;
+  padding-top: 9px;
+}

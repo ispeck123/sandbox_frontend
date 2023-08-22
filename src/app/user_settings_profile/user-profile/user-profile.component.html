@@ -1,0 +1,88 @@
+<!-- <div class="container">
+  <app-header></app-header>
+</div> -->
+<app-header></app-header>
+<div class="user_fl_section">
+  <div class="project_brd ">
+    <button class="log-button" mat-raised-button>
+      <span [routerLink]="['/home']"><mat-icon>arrow_back</mat-icon>
+     Back to home</span>
+   </button>
+<div class="sys_mnt">
+  <h4>User profile</h4>
+</div>
+</div>
+
+
+<div class="main-layout">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-8">
+      <div class="system-details">
+         <div class="">
+          <div class="user_profile_pic">
+            <img src="/assets/images/default.jpeg" alt="profile-picture">
+           </div>
+          <!-- Name   {{userDetailsData.data[0].USER_NAME}}
+          Email {{this.userDetailsData.data[0].USER_EMAIL}} -->
+          
+           <div class="mnk_list_for">
+            <div class="icon_jkl">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="para_lkw">
+              <h4> Name </h4>
+              <p>{{userDetailsData.data[0].USER_NAME}}</p>
+            </div>
+       </div>
+       <div class="mnk_list_for">
+        <div class="icon_jkl">
+          <mat-icon class="material-symbols-outlined">assignment</mat-icon>
+        
+        </div>
+        <div class="para_lkw">
+          <h4> User role name </h4>
+          <p>Super_Admin</p>
+        </div>
+   </div>
+       <div class="mnk_list_for">
+        <div class="icon_jkl">
+          <mat-icon class="material-symbols-outlined">mail</mat-icon>
+        </div>
+        <div class="para_lkw">
+          <h4> Email </h4>
+          <p> {{this.userDetailsData.data[0].USER_EMAIL}}</p>
+        </div>
+       </div>
+            <!-- <tr>
+              <td>Used Cpu:</td> <td class="">{{this.graphData.data.CPUUsage}}%</td>
+            </tr>
+            <tr>
+              <td>Total Memory Available :</td> <td class="">{{this.graphData.data.totalmemory}}</td>
+            </tr>
+            <tr>
+              <td>Total Memory Used :</td> <td class="">{{this.usedMem}}MB</td>
+            </tr>
+            <tr>
+              <td>Free Memory Available :</td> <td class="">{{this.graphData.data.freememory}}</td>
+            </tr>
+            <tr>
+              <td>Gpu Name:</td> <td class="">{{gpuUsageData.data.gpu_device_name }}</td>
+            </tr> -->
+        
+              <!-- <div class="w-25"><p>Platform Name (OS Name) :</p> <p class="ps-3">{{this.graphData.data.platform}}</p></div>
+              <p>Number Of Cpu's Available :</p> <p class="ps-3">{{this.graphData.data.numofCPU}}</p>
+              <p>Used Cpu :</p> <p class="ps-3">{{this.graphData.data.CPUUsage}}</p>
+              <p>Memory Available :</p> <p class="ps-3">{{this.graphData.data.totalmemory}}</p>
+              <p>Free Memory :</p> <p class="ps-3">{{this.graphData.data.freememory}}</p> -->
+              <div class="graph pe-5">
+                <canvas id="gpu_temp" width="300"></canvas>
+              </div>
+         </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+</div>

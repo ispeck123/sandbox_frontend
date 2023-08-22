@@ -1,0 +1,104 @@
+<div class="pipe_details">
+  <div mat-dialog-title class="d-flex justify-content-between align-items-center">
+    <h2 class="m-0 modal-header-text">Pipeline Details</h2>
+    <button mat-icon-button mat-dialog-close id="matDialogClose">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="mat-typography">
+    <div class="" *ngIf="pipeList != undefined">
+      <div *ngFor="let pipe of this.pipeList.pipeData.data" class="w-100">
+        <!-- Columns  -->
+        <div class="mnk_list_for">
+          <div class="icon_jkl">
+            <mat-icon>badge</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4> Pipeline Name </h4>
+            <p>{{pipe.pipeline_name}}</p>
+          </div>
+        </div>
+
+        <div class="mnk_list_for">
+          <div class="icon_jkl">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4> Created By </h4>
+            <p>{{pipe.created_by}}</p>
+          </div>
+        </div>
+
+        <div class="mnk_list_for">
+          <div class="icon_jkl">
+            <mat-icon>update</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4>Cretaed On</h4>
+            <p>{{pipe.created_on | date}}</p>
+          </div>
+        </div>
+
+        <div class="mnk_list_for">
+          <div class="icon_jkl">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4>Modified By</h4>
+            <p>{{pipe.modified_by}}</p>
+          </div>
+        </div>
+
+        <div class="mnk_list_for">
+          <div class="icon_jkl">
+            <mat-icon>view_carousel</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4>Skip Frames</h4>
+            <p>{{pipe.skip_frames}}</p>
+          </div>
+        </div>
+
+        <div class="mnk_list_for">
+          <div class="icon_jkl">
+            <mat-icon>flip_to_front</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4>Processing Type Name</h4>
+            <p>{{pipe.processing_type_name}}</p>
+          </div>
+        </div>
+
+        <div class="mnk_list_for">
+          <div class="icon_jkl">
+            <mat-icon>flip_to_front</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4>Processing Type Name</h4>
+            <p>{{pipe.pipeline_model_type_name}}</p>
+          </div>
+        </div>
+
+        <div class="mnk_list_for" *ngIf="modelList">
+          <div class="icon_jkl">
+            <mat-icon>flip_to_front</mat-icon>
+          </div>
+          <div class="para_lkw">
+            <h4>Pipeline Models</h4>
+            <mat-chip-list>
+              <mat-chip *ngFor="let model of modelList">
+                {{model.model_name}}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+
+        <!-- Columns  -->
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <!-- <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions> -->
+</div>

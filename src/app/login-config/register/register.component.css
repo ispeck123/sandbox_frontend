@@ -1,0 +1,100 @@
+input:-internal-autofill-selected {
+    background-color: transparent !important;
+}
+
+mat-checkbox {
+    padding-bottom: 18px;
+}
+
+.login-wrapper {
+    background-image: linear-gradient(rgb(0 0 0 / 27%), rgb(0 0 0 / 51%)), url(/assets/images/iSpeck-bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.forgot_pas_btn {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 4px;
+}
+
+.forgot_pas_btn button {
+    color: #673ab7;
+    font-size: 14px;
+}
+
+.sign-up {
+    text-align: center;
+}
+
+.sign-up span {
+    color: #673ab7;
+    cursor: pointer;
+}
+.login_btn {
+    margin-top: 3px;
+}
+.sign-up p {
+    font-size: 15px;
+}
+
+.sign-up,
+.forgot-pass {
+    padding-top: 22px !important;
+    font-size: 0.8rem;
+    margin-bottom: 12px !important;
+}
+
+.sign-up>span,
+.forgot-pass {
+    color: var(--link-color);
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.sign-up>span:hover,
+.forgot-pass:hover {
+    color: rgb(80, 16, 145);
+    cursor: pointer;
+}
+
+.forgot-pass {
+    padding-top: 18px;
+}
+
+.login-wrapper .mat-label {
+    font-size: 14px;
+}
+
+.login_btn button {
+    padding: 4px;
+    font-size: 15px;
+}
+
+.welcome_text h1 {
+    font-size: 22px;
+    color: #222;
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
+.welcome_text p {
+    font-size: 13px;
+    color: #646464;
+}
+
+.login_logo img {
+    width: 30%;
+    height: auto;
+    object-fit: contain;
+}
+
+.login_logo {
+    margin-bottom: 10px;
+}
+
+.welcome_text {
+    margin-bottom: 20px;
+}

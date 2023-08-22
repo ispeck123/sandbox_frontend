@@ -1,0 +1,39 @@
+
+<div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+    <h3>Select Model</h3>
+    </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <form action="">
+                    <mat-form-field appearance="outline" *ngIf="modelList != undefined">
+                          <mat-label>Select Model</mat-label>
+                          <mat-select >
+                            <mat-option value="{{item}}" selected *ngFor="let item of modelList.data"  (onSelectionChange)="modelSelect(item.algo_id, item.framework_id, item.model_id, $event)">{{item.model_name}}</mat-option>
+                          </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" *ngIf="framework != undefined">
+                           <mat-label> Framework Type</mat-label>
+                           <input disabled matInput placeholder="" *ngFor="let item of framework.data" value="{{item.framework_name}}"/>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" *ngIf="algoData != undefined">
+                            <mat-label>Algorithm</mat-label>
+                            <input disabled matInput placeholder="" *ngFor="let item of algoData.data" value="{{item.algo_name}}"/>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" *ngIf="individualModel != undefined">
+                            <mat-label>Model Version</mat-label>
+                            <input disabled matInput placeholder="" *ngFor="let item of individualModel.data" value="{{item.model_version}}"/>
+                    </mat-form-field>
+                    <div class="project_button_nt">
+                      <button type="submit" class="stepper-button"  mat-raised-button color="primary" style="margin-right: 8px">  Submit</button>
+                      <button class="stepper-button" mat-raised-button color="primary" [routerLink]="['/project-datasource']">Next </button>
+                    </div>
+          </form>
+          </div>
+    </div>
+</div>

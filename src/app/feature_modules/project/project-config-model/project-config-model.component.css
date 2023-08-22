@@ -1,0 +1,139 @@
+.model-config {
+    position: relative;
+    background-color: var(--tile-bg);
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 1px 2px rgba(141, 138, 138, 0.2);
+}
+
+.model-config::before {
+    content: 'Configure Model';
+    position: absolute;
+    top: -15px;
+    left: 25px;
+    font-size: 1em;
+    padding: 8px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #673ab7;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2), 0px 1px 2px rgba(141, 138, 138, 0.2);
+}
+
+.modal-dialog {
+    width: 100% !important;
+}
+
+.upload_btn_ispkl button {
+    padding: 4px 20px;
+    background-color: #673ab7;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.active_chip {
+    background-color: #673ab7;
+    color: #fff;
+}
+
+.upload_btn_ispkl mat-icon {
+    margin-right: 8px;
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+}
+
+.project_brd {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    margin-bottom: 22px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.pro_sub h3 {
+    font-size: 20px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+}
+
+.project_button_nt {
+    text-align: right;
+    margin-right: 5px;
+}
+
+.project_button_nt button {
+    margin-right: 8px;
+    width: 130px;
+}
+
+.configur_sec button {
+    width: 20%;
+    border: 1px solid #673ab7 !important;
+}
+
+.project_button_nt {
+    padding-bottom: 30px;
+}
+
+.configur_sec h4 {
+    font-size: 20px;
+    color: #222;
+    margin-bottom: 2px;
+}
+
+.configur_sec p {
+    font-size: 13px;
+    color: #4b4b4b;
+}
+
+.configur_sec {
+    margin-bottom: 22px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 22px;
+}
+
+.user_role_btn {
+    padding-top: 10px;
+}
+
+.user_role_btn button {
+    padding: 3px;
+    margin-top: 0px !important;
+}
+
+.modal-header h5 {
+    margin-bottom: 0px;
+}
+
+.mat-tab-header {
+    margin-bottom: 20px;
+}
+
+
+/* placeholder data */
+
+.placeholder_text {
+    padding: 5px 0px 20px;
+    font-size: 15px;
+    color: #616161;
+}
+
+.dfgm_oplm {
+    display: flex;
+}
+
+.upload_btn_ispkl {
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+
+.upload_btn_ispkl input {
+    opacity: 0;
+    left: 0;
+    width: 40%;
+}

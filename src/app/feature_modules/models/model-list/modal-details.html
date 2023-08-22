@@ -1,0 +1,113 @@
+<div class="pipe_details">
+  <div mat-dialog-title class="d-flex justify-content-between align-items-center">
+    <h2 class="m-0 modal-header-text">Model Details</h2>
+    <button mat-icon-button mat-dialog-close id="matDialogClose">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+  <mat-dialog-content class="mat-typography">
+    <div class="" *ngIf="modalList != undefined">
+      <div *ngFor="let modal of this.modalList.modalData.data" class="">
+        <div class="container">
+          <div class="row">
+            <!-- Column 1 -->
+            <div class="col-md-12">
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>model_training</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Model Name</h4>
+                  <p>{{modal.model_name}}</p>
+                </div>
+              </div>
+
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Created By</h4>
+                  <p>{{modal.created_by}}</p>
+                </div>
+              </div>
+
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>line_style</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Algorithm Name</h4>
+                  <p>{{modal.algo_name}}</p>
+                </div>
+              </div>
+
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>label</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Model Type Name</h4>
+                  <p>{{modal.model_type_name}}</p>
+                </div>
+              </div>
+
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>text_format</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Description</h4>
+                  <p>{{ modal.description }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="col-md-12">
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>group_work</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Framework</h4>
+                  <p>{{ modal.framework_name }}</p>
+                </div>
+              </div>
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>collections_bookmark</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Model Registration</h4>
+                  <p>{{ modal.description ? 'Registered' : 'Not Registered' }}</p>
+                </div>
+              </div>
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>join_inner</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Model Version</h4>
+                  <p>{{ modal.model_version }}</p>
+                </div>
+              </div>
+              <div class="mnk_list_for">
+                <div class="icon_jkl">
+                  <mat-icon>verified_user</mat-icon>
+                </div>
+                <div class="para_lkw">
+                  <h4> Model Verification</h4>
+                  <p>{{ modal.is_verified ? 'verified' : 'Not Verified' }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <!-- <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions> -->
+</div>

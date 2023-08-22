@@ -1,0 +1,152 @@
+<div class="">
+    <div class="project_brd">
+        <div class="pro_sub d-flex justify-content-between">
+            <h3>Model Configuration</h3>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between flex-wrap mb-5">
+            <div class="d-flex justify-content-start flex-wrap w-100">
+                <mat-chip-list aria-label="Fish selection" *ngIf="modelData != undefined">
+                    <mat-chip selected="{{item.model_id === selectedModelChip}}" [id]="item.model_id" #select="matChip" *ngFor="let item of modelData" 
+                    (click)="modelConfig(item.model_id)">
+                        <mat-icon *ngIf="selected">check_circle</mat-icon>
+                        <span style="padding-right: 15px; margin-left: 5px;">{{item.model_name}}</span>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <div class="d-flex justify-content-start flex-wrap w-100" *ngIf="modelData==null || modelData==undefined">
+                <div class="placeholder_text">
+                    No Model Selected
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div *ngIf="showAtrributes">
+                <div *ngFor="let items of attrList;let i = index" >
+                    <div class="configur_sec">
+                        <h4>Where can I get some?
+                        </h4>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+                        <div class="dfgm_oplm">
+                             <button mat-stroked-button class="stepper-button mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#dataModal" color="primary" (click)="openArtifact(items)">
+                        {{items.artifacts_type_name}}
+                        </button>
+                        <!-- *ngIf="items.artifacts_type_name !='Hyperparameter'" -->
+                            <div class="upload_btn_ispkl" >
+
+                                <button >
+                                  <span style="position: relative;
+                                  left: 33px;"><mat-icon>cloud_upload</mat-icon>Upload</span>
+                                  <input type="file" id="myFile" name="filename" accept=".pt,.pb,.pth,.weights,.tf,.h5,.caffe" (change)="selectFiles($event,items.artifacts_type_id,items)" required>
+                                   <div *ngIf="items.isVisible" >No chosen file</div>
+                                </button>
+                               
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="configur_sec">
+                    <h4>
+                        Where can I get some?
+                    </h4>
+                    <p> Second Config</p>
+                    <button mat-stroked-button class="stepper-button mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#advancedModal" color="primary">
+                        Advanced
+                    </button>
+                </div>
+                
+
+            </div>
+            <div class="project_button_nt">
+                <button type="submit" class="stepper-button" mat-raised-button color="primary" (click)="upload()">
+                    Submit
+                </button>
+                <!-- <button class="stepper-button" mat-raised-button color="primary" [routerLink]="[nextUrl]">
+                    Next
+                </button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="dataModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal" aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">{{keyname}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="!checkdata">
+                <!-- <div *ngFor="let property of Object.keys(configData.data)">
+                    <div style="font-weight: bold; font-size: 1rem; width: 100%" class="pb-3" *ngIf="property != 'EDITABLE1' && property != 'ADDABLE2'">
+                        {{ property }}: {{configData.data[property]}}
+                    </div>
+                    <div *ngIf="property != 'EDITABLE1' && property != 'ADDABLE2'">
+                        <div style="color: rgb(83, 83, 82); font-size: 0.9rem; width: 100%" class="pb-3" *ngFor="let property2 of configData.data[property] | keyvalue">
+                            <mat-form-field appearance="outline">
+                                <mat-label>{{ property2.key }}</mat-label>
+                                <input matInput placeholder="{{ property2.key }}" [value]=" property2.value" />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>  -->
+                <div *ngIf="configuredata !=null || configuredata!=undefined">
+                <div *ngFor="let property of Object.keys(configuredata);let i = index">
+                    <div style="font-weight: bold; font-size: 1rem; width: 100%" class="pb-3" (click)="getData(Object.values(property),i)">
+                        {{ property }}:
+                    </div>
+                    <!-- <div *ngIf="g"> -->
+                    <div style="color: rgb(83, 83, 82); font-size: 0.9rem; width: 100%" class="pb-3" *ngFor="let property2 of configuredata[property] | keyvalue">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ property2.key }}</mat-label>
+                            <input matInput placeholder="{{ property2.key }}" [value]="property2.value" />
+                        </mat-form-field>
+                        <!-- </div>  -->
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            <div class="modal-body" *ngIf="checkdata">
+                No File Data Present
+            </div>
+            <div class="user_role_btn">
+                <div class="modal-footer">
+                    <button type="button" class="log-button mt-2" data-bs-dismiss="modal" aria-label="Close" mat-raised-button color="primary">
+                    save
+                 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="advancedModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal" aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-fullscreen-sm modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Advanced</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <mat-tab-group mat-align-tabs="center">
+                    <mat-tab label="Configuration">
+                        <json-editor [options]="editorOptions" [data]="data" (change)="showJson($event)"></json-editor>
+                    </mat-tab>
+              
+                        <mat-tab label="Hyperparameter">
+                          <json-editor [options]="editorOptions" [data]="data" (change)="showJson($event)"></json-editor>
+                        </mat-tab>
+                 \
+                    <mat-tab label="Weights">
+                        <json-editor [options]="editorOptions" [data]="data" (change)="showJson($event)"></json-editor>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

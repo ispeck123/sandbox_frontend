@@ -1,0 +1,81 @@
+<div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+    <h3>Alert rules</h3>
+  </div>
+</div>
+
+<div class="select_attr">
+  <div class="mb-2 d-flex justify-content-between">
+    <h2>Select Classes And Attributes</h2>
+    <div class="project_alert_btn">
+      <button mat-raised-button color="primary" (click)="openSettingsDialog()" [disabled]=" attrDisable">
+        <mat-icon>add</mat-icon> Configure Alerts
+      </button>
+    </div>
+  </div>
+  <mat-form-field appearance="outline" *ngIf="modelList != undefined">
+    <mat-label>Select Model</mat-label>
+    <mat-select [(ngModel)]="model_id">
+      <mat-option [value]="item.model_id" selected (onSelectionChange)="getClassData(item.model_id)"
+        *ngFor="let item of modelList.data">{{item.model_name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="select_attr" style="border-bottom: 1px solid #ddd;
+padding-bottom: 9px;
+padding-top: 8px;">
+  <h2>Select Class </h2>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap prof_lklads">
+  <form action="" *ngIf="classListData != undefined">
+    <div class="d-flex justify-content-start flex-wrap w-100">
+      <mat-chip-list aria-label="Fish selection" *ngIf="classListData != undefined">
+        <mat-chip #select="matChip" [selected]="selected" *ngFor="let item of classListData.data"
+          (click)="chipManager(item.class_id , select, true)">
+          <mat-icon *ngIf="select.selected" class="pe-4">check</mat-icon>
+          <span style="margin-right: 8px;">{{item.class_name}}</span>
+          <mat-slide-toggle [checked]="is_considered" (click)="chipManager(item.class_id , select, true)">
+          </mat-slide-toggle>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </form>
+</div>
+<div class="atb_heading" style="    border-bottom: 1px solid #ddd;
+padding-bottom: 9px;
+padding-top: 8px;margin-left: 10px;margin-left: 10px;    margin-right: 10px;" [ngClass]="{'disable-div': attrDisable}">
+  <h2>Attribute</h2>
+</div>
+
+<div class="prjt_chip_plk" [ngClass]="{'disable-div': attrDisable}">
+  <div *ngIf="attrList != undefined">
+    <div *ngFor="let attr of attrList.data">
+      <div class="d-flex justify-content-start flex-row flex-wrap mb-3 p-2"
+        *ngFor="let attrdata of attr.class_attributes" 
+          style="background:#fff;margin-right: 10px;margin-top: 10px;margin-bottom: 10px;">
+        <div class="d-flex justify-content-between flex-row w-100 mb-1">
+          <div class="prkl_cgh mb-2 d-flex">
+            <h4>{{attrdata.class_attribute_name}}</h4>
+            <mat-slide-toggle [checked]="attrdata.is_enabled" style="margin-left: 12px;"> </mat-slide-toggle>
+          </div>
+        </div>
+        <mat-chip-list aria-label="Fish selection" [selectable]="true" *ngIf="attrdata.attribute_values != undefined">
+          <mat-chip #select="matChip" class=" mb-3 me-3" *ngFor="let attrValue of attrdata.attribute_values"
+            [selected]="selected" (click)="attrChipManager(attrValue.class_attribute_value_id , select, true)">
+            <mat-icon *ngIf="select.selected" class="pe-4">check</mat-icon>
+            <span style="margin-right: 8px;">{{attrValue.class_attribute_value_name}}</span>
+            <mat-slide-toggle [checked]="attrValue.is_enabled" style="margin-left: 12px;"> </mat-slide-toggle>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="prht_alett d-flex justify-content-end mt-4">
+  <button class="stepper-button" mat-raised-button color="primary" [routerLink]="['/deploy-project']">
+    Next
+  </button>
+</div>

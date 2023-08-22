@@ -1,0 +1,468 @@
+<div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+        <h3>{{heading}}</h3>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-form-field appearance="outline" *ngIf="modelList != undefined">
+                <mat-label>Select Model</mat-label>
+                <mat-select [(ngModel)]="model_id">
+                    <mat-option>Select Model</mat-option>
+                    <mat-option [value]="item.model_id" (onSelectionChange)="getClassData(item.model_id)" selected
+                        *ngFor="let item of modelList.data">{{item.model_name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="project_brd" style="margin-left: 3px;padding-top: 0px;margin-right: 4px;">
+        <div class="pro_sub d-flex justify-content-between">
+            <h3 style="margin-left: -15px;">Class List</h3>
+            <div class="create-button" style="left: 20px;">
+                <button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#addClassModal">
+                    <mat-icon style="font-size: 20px;">add</mat-icon>
+                    Add Class
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- *ngIf="hideBtn" -->
+
+    <div class="d-flex justify-content-between flex-wrap mb-5">
+        <form action="" *ngIf="classListData != undefined">
+            <div class="d-flex justify-content-start flex-wrap w-100">
+                <mat-chip-list aria-label="Fish selection" *ngIf="classListData != undefined">
+                    <mat-chip #select="matChip" [selected]="selected" *ngFor="let item of classListData.data"
+                        (click)="chipManager($event, item.class_id , select, true);">
+                        <mat-icon *ngIf="select.selected" class="pe-4 dfrt">check_circle</mat-icon>
+                        <span style="padding-right: 15px" class="no-select">{{item.class_name}}</span>
+                        <!-- <mat-icon>more_vert</mat-icon> -->
+                        <div class="user_flt" *ngIf="!hideBtn">
+                            <button class="ms-auto option-btn" mat-icon-button aria-label="option menu"
+                                #moreClassOptionsBtn [matMenuTriggerFor]="menu">
+                                <mat-icon (click)="onMoreOptionsButtonClick(select)">more_horiz</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item data-bs-toggle="modal" data-bs-target="#editClassModal"
+                                    (click)="getClassDetail(item.class_id)">
+                                    <span>Edit</span>
+                                </button>
+                                <button mat-menu-item data-bs-toggle="modal" data-bs-target="#delete"
+                                    (click)="opendelete(item.class_id,'Class')">
+                                    <span>Delete</span>
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </mat-chip>
+
+                </mat-chip-list>
+            </div>
+        </form>
+    </div>
+
+    <div class="project_brd" style="margin-left: 3px;padding-top: 0px;    margin-right: 5px;"
+        [ngClass]="{'disable-div': attrDisable}">
+        <div class="pro_sub d-flex justify-content-between">
+            <h3 style="margin-left: -15px;">Attribute</h3>
+            <div class="create-button" style="left: 20px;">
+                <button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#addAttrModal"
+                    [disabled]="attrDisable">
+                    <mat-icon style="font-size: 20px;">add</mat-icon>
+                    Attribute
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div [ngClass]="{'disable-div': attrDisable}">
+        <div *ngIf="attrList != undefined">
+            <div class="add_model_sec" *ngFor="let attr of attrList.data">
+                <div class="add_md_del" *ngFor="let attrdata of attr.class_attributes; let i = index">
+                    <div class="fls_sec">
+                        <div class="sdf_text cvbqwe">
+                            <h4 id="attribute_{{i}}">{{attrdata.class_attribute_name}}</h4>
+                            <div class="user_flt orplk">
+                                <button class="ms-auto option-btn" mat-icon-button aria-label="option menu"
+                                    #moreClassOptionsBtn [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_horiz</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item data-bs-toggle="modal" data-bs-target="#editAttrModal"
+                                        (click)="getAttributeDetail(attrdata, 'attribute_'+i)">
+                                        <span>Edit</span>
+                                    </button>
+                                    <button mat-menu-item data-bs-toggle="modal" data-bs-target="#delete"
+                                        (click)="opendelete(attrdata.class_attribute_id,'Class Attribute')">
+                                        <span>Delete</span>
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </div>
+                        <div class="mdf_sdf">
+
+                            <mat-chip-list aria-label="Fish selection" [selectable]="true"
+                                *ngFor="let attrValue of attrdata.attribute_values; let i = index">
+                                <mat-chip class="attrVal">
+                                    <span style="padding-right: 15px" id="attrValueField_{{attrValue.class_attribute_value_id}}">{{attrValue.class_attribute_value_name}}</span>
+                                    <div class="user_flt">
+                                        <button class="ms-auto option-btn" mat-icon-button aria-label="option menu"
+                                            #moreClassOptionsBtn [matMenuTriggerFor]="menu">
+                                            <mat-icon>more_horiz</mat-icon>
+                                        </button>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item data-bs-toggle="modal"
+                                                data-bs-target="#editAttrValModal"
+                                                (click)="getAttributeValDetail(attrValue, 'attrValueField_'+attrValue.class_attribute_value_id)">
+                                                <span>Edit</span>
+                                            </button>
+                                            <button mat-menu-item data-bs-toggle="modal" data-bs-target="#delete"
+                                                (click)="opendelete(attrValue.class_attribute_value_id,'Class Attribute Value')">
+                                                <span>Delete</span>
+                                            </button>
+                                        </mat-menu>
+                                    </div>
+                                </mat-chip>
+                            </mat-chip-list>
+
+                            <mat-chip color="primary" data-bs-toggle="modal" data-bs-target="#addAttrValModal"
+                                [disabled]="attrDisable" (click)="attrValueIdGetter(attrdata.class_attribute_id)">
+                                <mat-icon>add</mat-icon> Value
+                            </mat-chip>
+                        </div>
+                        <!-- *ngIf="hideBtn" -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="row" *ngIf="attrList == undefined || listdata.length==0">
+            <div class="col-sm-12">
+                <div class="pce_hml_text">
+                    <div class="gtr_plc">
+                        <div class="plt_hlr">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                width="512" height="512" x="0" y="0" viewBox="0 0 504.845 504.845"
+                                style="enable-background:new 0 0 512 512" xml:space="preserve">
+                                <g>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_463_"
+                                        d="m0 153.906h153.472v-153.472h-153.472zm30-123.472h93.472v93.472h-93.472z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_554_"
+                                        d="m76.736 39.567c-20.734 0-37.603 16.869-37.603 37.603s16.869 37.602 37.603 37.602 37.602-16.868 37.602-37.602-16.868-37.603-37.602-37.603zm0 45.205c-4.192 0-7.603-3.41-7.603-7.602s3.411-7.603 7.603-7.603 7.602 3.411 7.602 7.603-3.41 7.602-7.602 7.602z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_557_"
+                                        d="m179.86.434v153.472h324.984v-153.472zm294.985 123.472h-264.985v-93.472h264.984v93.472z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_572_"
+                                        d="m0 328.734h153.472v-153.472h-153.472zm30-123.472h93.472v93.472h-93.472z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_576_"
+                                        d="m76.736 214.396c-20.734 0-37.603 16.869-37.603 37.603s16.869 37.602 37.603 37.602 37.602-16.868 37.602-37.602-16.868-37.603-37.602-37.603zm0 45.205c-4.192 0-7.603-3.41-7.603-7.602s3.411-7.603 7.603-7.603 7.602 3.411 7.602 7.603-3.41 7.602-7.602 7.602z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_581_"
+                                        d="m179.86 328.734h324.984v-153.472h-324.984zm30-123.472h264.984v93.472h-264.984z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_584_"
+                                        d="m0 504.411h153.472v-153.472h-153.472zm30-123.472h93.472v93.472h-93.472z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_589_"
+                                        d="m76.736 390.073c-20.734 0-37.603 16.869-37.603 37.603s16.869 37.602 37.603 37.602 37.602-16.868 37.602-37.602-16.868-37.603-37.602-37.603zm0 45.204c-4.192 0-7.603-3.41-7.603-7.602s3.411-7.603 7.603-7.603 7.602 3.411 7.602 7.603-3.41 7.602-7.602 7.602z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_592_"
+                                        d="m179.86 504.411h324.984v-153.472h-324.984zm30-123.472h264.984v93.472h-264.984z"
+                                        fill="#000000" data-original="#000000"></path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_593_"
+                                        d="m304.285 62.17h76.135v30h-76.135z" fill="#000000" data-original="#000000">
+                                    </path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_594_"
+                                        d="m304.285 236.999h76.135v30h-76.135z" fill="#000000" data-original="#000000">
+                                    </path>
+                                    <path xmlns="http://www.w3.org/2000/svg" id="XMLID_595_"
+                                        d="m304.285 411.827h76.135v30h-76.135z" fill="#000000" data-original="#000000">
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="rgt_ted">
+                            <h3> No Attribute yet</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="d-flex justify-content-center mt-4" *ngIf="(nextUrl != '')">
+  <button
+    class="stepper-button"
+    mat-raised-button
+    color="primary"
+    [routerLink]="[nextUrl]">
+    Next
+  </button>
+</div> -->
+
+
+<div class="" *ngIf="(nextUrl != '')">
+    <div class="project_button_nt">
+        <button type="button" mat-stroked-button color="primary" [routerLink]="['/model-create']">Back</button>
+        <button type="button" class="stepper-button mt-2" mat-raised-button color="primary" [routerLink]="[nextUrl]">
+            Next
+        </button>
+    </div>
+</div>
+
+<!-- Add new Class Modal -->
+<div class="modal fade show" id="addClassModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Add New Class</h5>
+                <button type="button" class="btn-close" #closebutton data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addClass" (ngSubmit)="onSubmitClass()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Class Name</mat-label>
+                        <input matInput placeholder="Enter Class Name" formControlName="class_name" required>
+                    </mat-form-field>
+                    <input type="hidden" [ngModel]="model_id" formControlName="model_id" />
+                    <input type="hidden" [ngModel]="username" formControlName="created_by" />
+                    <input type="hidden" [ngModel]="" formControlName="modified_by" />
+                    <div class="user_role_btn">
+                        <button type="submit" class="log-button" mat-raised-button color="primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Class Modal -->
+
+<div class="modal fade show" id="editClassModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Edit Class</h5>
+                <button type="button" class="btn-close" #closebutton1 data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editClass" (ngSubmit)="onUpdateClass()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Class Name</mat-label>
+                        <input matInput placeholder="Enter Class Name" formControlName="class_name" required>
+                    </mat-form-field>
+
+                    <div class="user_role_btn">
+                        <button type="submit" class="log-button" mat-raised-button color="primary">Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Add Attribute Modal -->
+<div class="modal fade show" id="addAttrModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Add Attribute</h5>
+                <button type="button" class="btn-close" #closebutton5 data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addAttribute" (ngSubmit)="onSubmitAttr()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Attribute Name</mat-label>
+                        <input matInput placeholder="Enter Attribute Name" formControlName="class_attribute_name"
+                            required />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" *ngIf="attrDataType != undefined">
+                        <mat-label>Select Attribute Value Data Type</mat-label>
+                        <mat-select formControlName="class_attribute_datatype_id" required>
+                            <mat-option [value]="dataType.class_attribute_datatype_id"
+                                *ngFor="let dataType of attrDataType.data"
+                                (onSelectionChange)="setAttrDataType(dataType.class_attribute_datatype_id)">
+                                {{dataType.class_attribute_datatype_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- <mat-form-field appearance="outline" >
+            <mat-label>Select Class Status</mat-label>
+            <mat-select formControlName="is_enabled">
+              <mat-option value = true>Enabled</mat-option>
+              <mat-option value = false>Disabled</mat-option>
+            </mat-select>
+          </mat-form-field> -->
+                    <!-- <input type="hidden" [ngModel]="username"  formControlName="class_id" /> -->
+                    <input type="hidden" [ngModel]="username" formControlName="created_by" />
+                    <input type="hidden" [ngModel]="" formControlName="modified_by" />
+
+                    <!-- <button mat-raised-button color="accent" class="mb-2">
+                <mat-icon>add</mat-icon>
+                Add More Values
+              </button> -->
+
+                    <div class="user_role_btn">
+                        <button type="submit" class="log-button" mat-raised-button color="primary">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Attribute Value Modal -->
+
+<div class="modal fade show" id="addAttrValModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Add Attribute Value</h5>
+                <button type="button" class="btn-close" #closebutton2 data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addAttributeVal" (ngSubmit)="onSubmitAttrVal()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Attribute Value Name</mat-label>
+                        <input matInput placeholder="Enter Attribute Value" formControlName="class_attribute_value_name"
+                            required />
+                    </mat-form-field>
+
+                    <!-- <input type="hidden" [ngModel]="username"  formControlName="class_id" /> -->
+                    <input type="hidden" [ngModel]="username" formControlName="created_by" />
+                    <input type="hidden" [ngModel]="" formControlName="modified_by" />
+
+
+                    <!-- <button mat-raised-button color="accent" class="mb-2">
+                <mat-icon>add</mat-icon>
+                Add More Values
+              </button> -->
+
+                    <div class="user_role_btn">
+
+                        <button type="submit" class="log-button" mat-raised-button color="primary">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Attribute Modal -->
+
+<div class="modal fade show" id="editAttrModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Edit Attribute</h5>
+                <button type="button" class="btn-close" #closebutton3 data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addAttribute" (ngSubmit)="onUpdateAttr()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Attribute Name</mat-label>
+                        <input matInput placeholder="Enter Attribute Name" formControlName="class_attribute_name"
+                            required />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" *ngIf="attrDataType != undefined">
+                        <mat-label>Select Attribute Value Data Type</mat-label>
+                        <mat-select formControlName="class_attribute_datatype_id" required>
+                            <mat-option [value]="dataType.class_attribute_datatype_id"
+                                *ngFor="let dataType of attrDataType.data"
+                                (onSelectionChange)="setAttrDataType(dataType.class_attribute_datatype_id)">
+                                {{dataType.class_attribute_datatype_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="user_role_btn">
+                        <button type="submit" class="log-button" mat-raised-button color="primary">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Attribute Value Modal -->
+
+<div class="modal fade show" id="editAttrValModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Edit Attribute Value</h5>
+                <button type="button" class="btn-close" #closebutton4 data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addAttributeVal" (ngSubmit)="onUpdateAttrVal()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Attribute Value Name</mat-label>
+                        <input matInput placeholder="Enter Attribute Value" formControlName="class_attribute_value_name"
+                            required />
+                    </mat-form-field>
+
+                    <div class="user_role_btn">
+                        <button type="submit" class="log-button" mat-raised-button color="primary">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Class Modal -->
+<div class="modal fade show" id="delete" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Confirmation</h5>
+                <button type="button" class="btn-close" #closebutton6 data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure want to delete this {{dType}}?</p>
+                <div class="user_del_btn">
+
+                    <button type="submit" class="log-button" mat-raised-button color="primary" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        Cancel
+                    </button>
+                    <button type="submit" class="log-button" mat-raised-button color="primary"
+                        (click)="deleteClass(cId,dType)">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+        <h3>Module List</h3>
+        <div class="create-button">
+            <button mat-raised-button color="primary" data-bs-toggle="modal" (click)="enableCreateModule()" (click)="setpopupHeading('Create New Module')" data-bs-target="#dataModal">
+                <mat-icon>add</mat-icon>
+                Module
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="user_details_pt">
+    <div class="table-responsive tgbg">
+        <div class="container-fluid">
+            <div class="row">
+                <table class="table table-hover">
+                    <thead class="hed_sec_pl">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Module Name</th>
+                            <th scope="col">Creation Date</th>
+                            <th scope="col">Module Status</th>
+                            <th scope="col"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="moduleList != undefined">
+                        <tr *ngFor="let item of moduleList.data; let i = index">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{item.MODULE_NAME}}</td>
+                            <td>{{item.CREATION_DATE}}</td>
+                            <td>{{(item.MODULE_PER_STATUS == 1) ? 'Active' : 'Inactive' }}</td>
+                            <td class="btn_rl_icon"> <button mat-button color="primary" data-bs-toggle="modal"
+                                    (click)="editModuleFn(item.MODULE_ID,'edit', item.PER_MODULE_HASH_ID)"
+                                    (click)="setpopupHeading('Update Module')"
+                                    data-bs-target="#dataModal">
+                                    <mat-icon>edit</mat-icon> Edit
+                                </button></td>
+                            <!-- <td> <button  mat-raised-button color="warn" [routerLink]="['/project-datasource']"><mat-icon>delete</mat-icon>Delete</button></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create/Edit Modal  -->
+<div class="modal fade show" id="dataModal" #popup tabindex="-1" data-bs-backdrop="dynamic" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">{{popupHeading}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" #closebutton
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addModule" (ngSubmit)="submit(popup)">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Module Name</mat-label>
+                        <input matInput placeholder="Enter Role Name" formControlName="MODULE_NAME" required />
+                    </mat-form-field>
+
+                    <div #checkboxFieldWrapper class="d-flex justify-content-start align-items-center  flex-row flex-wrap checkbox mb-4">
+                        <mat-label formArrayName="PERMISSION"
+                            *ngFor="let permission of permArray.controls; let i = index" class="w-50">
+                            <input class="input-check me-2" type="checkbox" #checkBoxField [id]=permissionDetails.data[i].PER_ID  (change)="selectSubordinatePermissions(permissionDetails.data[i].PER_ID, checkBoxField)" [formControlName]="i" required> {{permissionDetails.data[i].PER_NAME}}
+                        </mat-label>
+                    </div>
+
+                    <div class="user_role_btn">
+                        <button type="submit" class="log-button" mat-raised-button color="primary">
+                            {{ isCreate === true ? 'Create' : 'Update'}}
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+            <!-- <div class="modal-footer">
+
+        <button
+          type="button"
+          class="log-button mt-2"
+          mat-raised-button
+          color="warn"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+      </div> -->
+        </div>
+    </div>
+</div>

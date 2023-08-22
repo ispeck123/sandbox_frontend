@@ -1,0 +1,94 @@
+<div class="pipeline_list_bg">
+  <div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+      <h3> Pipeline List</h3>
+      <div class="create-button">
+        <button mat-raised-button color="primary" [routerLink]="['/pipeline-create']">
+          <mat-icon>add</mat-icon>
+          Create Pipeline
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="pipeline_lsd">
+      <div *ngIf="pipelineList != undefined">
+        <div class="row">
+          <div class="col-sm-3" *ngFor="let item of pipelineList.data; let i=index;">
+            <mat-card>
+              <div class="user_flt">
+                <button class="ms-auto option-btn" mat-icon-button aria-label="option menu" [matMenuTriggerFor]="menu">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <!-- <button mat-menu-item (click)="fetchPipeById(item.pipeline_id, 'edit')" >
+                    <span> Edit</span>
+                  </button> -->
+                  <button mat-menu-item routerLink="/pipeline-edit/{{item.pipeline_id}}">
+                    <span> Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="fetchPipeById(item.pipeline_id, 'details')">
+                    <span>Details </span>
+                  </button>
+                  <button mat-menu-item (click)="deletePopup(item.pipeline_id)">
+                    <span>Delete </span>
+                  </button>
+                </mat-menu>
+              </div>
+              <div class="project_list_cricle avaterColor-{{colorVariation(i)}}">
+                <h4>{{createAvaterName(item.pipeline_name | uppercase)}}</h4>
+              </div>
+              <div class="pro-style mt-3">
+                <div class="project_heading">
+                  <h4>{{item.pipeline_name}}</h4>
+                </div>
+
+                <div class="prj_icon">
+                  <mat-icon class="material-symbols-outlined">
+                    edit_document
+                  </mat-icon>
+                  <span>{{item.created_by}}</span>
+                </div>
+
+                <div class="prj_icon pipe_active">
+                  <span>{{item.status}}</span>
+                </div>
+
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="pipelineList == undefined || listdata.length==0">
+        <div class="col-sm-12">
+          <div class="pce_hml_text">
+            <div class="gtr_plc">
+              <div class="plt_hlr">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns:svgjs="http://svgjs.com/svgjs" width="512" height="512" x="0" y="0" viewBox="0 0 512 512"
+                  style="enable-background:new 0 0 512 512" xml:space="preserve">
+                  <g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="m502 190.694c5.522 0 10-4.477 10-10v-25.561c0-35.493-21.916-65.947-52.918-78.59 7.886-8.132 12.755-19.205 12.755-31.4 0-24.892-20.251-45.143-45.143-45.143-24.893 0-45.143 20.251-45.143 45.143 0 9.301 2.829 17.952 7.669 25.142h-266.44c4.84-7.19 7.669-15.842 7.669-25.142 0-24.892-20.251-45.143-45.143-45.143s-45.143 20.251-45.143 45.143c0 12.195 4.869 23.268 12.755 31.4-31.002 12.642-52.918 43.097-52.918 78.59v25.561c0 5.523 4.477 10 10 10h65.306v131.742c-20.094 4.564-35.143 22.558-35.143 44.013 0 12.195 4.869 23.269 12.755 31.4-31.002 12.642-52.918 43.097-52.918 78.591v25.56c0 5.522 4.477 10 10 10h150.612c5.523 0 10-4.478 10-10v-25.56c0-25.988-11.755-49.271-30.214-64.848h231.205c-18.46 15.577-30.215 38.86-30.215 64.848v25.56c0 5.522 4.478 10 10 10h150.612c5.522 0 10-4.478 10-10v-25.56c0-35.493-21.916-65.948-52.918-78.59 7.886-8.132 12.755-19.205 12.755-31.4 0-21.455-15.049-39.449-35.143-44.013v-131.743zm-10-35.561v15.561h-130.612v-15.561c0-35.757 29.091-64.847 64.848-64.847.101 0 1.018 0 .917 0 35.756 0 64.847 29.09 64.847 64.847zm-65.306-135.133c13.863 0 25.143 11.279 25.143 25.143s-11.279 25.142-25.143 25.142-25.143-11.279-25.143-25.142c0-13.864 11.279-25.143 25.143-25.143zm-341.388 0c13.864 0 25.144 11.279 25.144 25.143s-11.279 25.142-25.144 25.142c-13.863 0-25.143-11.279-25.143-25.142 0-13.864 11.279-25.143 25.143-25.143zm-65.306 135.133c0-35.757 29.091-64.847 64.848-64.847.101 0 1.018 0 .917 0 35.757 0 64.848 29.09 64.848 64.847v15.561h-130.613zm65.306 186.173c13.864 0 25.144 11.279 25.144 25.143 0 13.863-11.279 25.143-25.144 25.143-13.863 0-25.143-11.279-25.143-25.143s11.279-25.143 25.143-25.143zm65.306 135.134v15.56h-130.612v-15.56c0-35.757 29.091-64.848 64.848-64.848.101 0 1.018 0 .917 0 35.756 0 64.847 29.091 64.847 64.848zm341.388 0v15.56h-130.612v-15.56c0-35.757 29.091-64.848 64.848-64.848.101 0 1.018 0 .917 0 35.756 0 64.847 29.091 64.847 64.848zm-40.163-109.991c0 13.863-11.279 25.143-25.143 25.143s-25.143-11.279-25.143-25.143 11.279-25.143 25.143-25.143 25.143 11.279 25.143 25.143zm-35.143-44.013c-30.827 7.001-45.12 42.942-27.474 69.156h-266.44c4.84-7.191 7.669-15.842 7.669-25.143 0-21.455-15.049-39.45-35.143-44.013v-131.742h65.307c5.523 0 10-4.477 10-10v-25.561c0-25.987-11.755-49.271-30.214-64.847h231.204c-18.459 15.576-30.214 38.86-30.214 64.847v25.561c0 5.523 4.478 10 10 10h65.307v131.742z"
+                        fill="#000000" data-original="#000000"></path>
+                      <path
+                        d="m304.153 193.704-93.378 93.378v-26.061c0-5.523-4.477-10-10-10s-10 4.478-10 10v50.199c-.003 5.416 4.405 10.005 10 10.005h50.204c5.523 0 10-4.478 10-10 0-5.523-4.477-10-10-10h-26.062l93.378-93.378c3.905-3.905 3.905-10.237 0-14.143-3.905-3.905-10.235-3.905-14.142 0z"
+                        fill="#000000" data-original="#000000"></path>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <div class="rgt_ted">
+                <h3> No pipeline list yet</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

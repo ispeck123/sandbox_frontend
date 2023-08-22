@@ -1,0 +1,87 @@
+<div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+        <h3>User Role List</h3>
+        <div class="create-button">
+            <button mat-raised-button color="primary" data-bs-toggle="modal" (click)="enableCreateRole()" (click)="popup('Create New Role')"
+                data-bs-target="#dataModal">
+                <mat-icon>add</mat-icon>
+                Create Role
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="user_details_pt">
+    <div class="table-responsive tgbg">
+        <div class="container-fluid">
+            <div class="row">
+                <table class="table table-hover">
+                    <thead class="hed_sec_pl">
+                        <tr class="hed_sec_pl">
+                            <th scope="col">Role ID</th>
+                            <th scope="col">Role Name</th>
+                            <th scope="col">Role Description</th>
+                            <th scope="col">Role Status</th>
+                            <th scope="col">Creation Date</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="roleDetails != undefined">
+                        <tr *ngFor="let roles of roleDetails.data">
+                            <th scope="row">{{roles.ROLE_ID}}</th>
+                            <td>{{roles.ROLE_NAME}}</td>
+                            <td>{{roles.ROLE_DESC}}</td>
+                            <td>
+                                <span *ngIf="roles.ROLE_STATUS==1">Enabled</span>
+                                <span *ngIf="roles.ROLE_STATUS==0">Disabled</span>
+
+                            </td>
+                            <td>{{roles.CREATION_DATE}}</td>
+                            <td class="btn_rl_icon"> <button mat-button color="primary"
+                                    (click)="editRole(roles.ROLE_ID,'edit')" (click)="popup('Update Role')"
+                                    data-bs-toggle="modal" data-bs-target="#dataModal">
+                                    <mat-icon>edit</mat-icon> Edit
+                                </button></td>
+                            <td class="btn_rl_icon"> <button mat-button color="warn"
+                                    (click)="editRole(roles.ROLE_ID,'del')">
+                                    <mat-icon>delete</mat-icon>Delete
+                                </button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="dataModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">{{popupHeading}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    #closebutton></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Role Name</mat-label>
+                        <input matInput placeholder="Enter Role Name" formControlName="RoleName" required />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Role Description</mat-label>
+                        <input matInput placeholder="Enter Role Description" formControlName="RoleDesc" required />
+                    </mat-form-field>
+                    <div class="user_role_btn">
+                        <button type="submit" class="log-button" mat-raised-button color="primary" aria-label="Close">
+                            {{isCreate === true ? 'Create' : 'Update'}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

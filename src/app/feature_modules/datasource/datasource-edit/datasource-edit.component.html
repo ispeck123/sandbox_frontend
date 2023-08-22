@@ -1,0 +1,71 @@
+<div class="model-create">
+    <div class="project_brd">
+        <div class="pro_sub">
+            <h3>Datasource edit</h3>
+        </div>
+    </div>
+</div>
+<!-- <mat-card-title>Create Model</mat-card-title> -->
+<div class="container-fluid">
+    <div class="model_create_section">
+        <form [formGroup]="editDatasource" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-sm1-12">
+                    <mat-form-field appearance="outline" class="form-fields">
+                        <mat-label>Datasource Name *</mat-label>
+                        <input matInput placeholder="" formControlName="source_name" required/>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" *ngIf="areaList != undefined">
+                        <mat-label>Select Area</mat-label>
+                        <mat-select formControlName="area_id" required>
+                            <mat-option [value]="area.area_id" selected *ngFor="let area of areaList.data">{{area.area_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" *ngIf="processingTypeList != undefined">
+                        <mat-label>Select Processing Type</mat-label>
+                        <mat-select formControlName="process_type" required>
+                            <mat-option [value]="processType.processing_type_id" selected *ngFor="let processType of processingTypeList.data">{{processType.processing_type_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+              
+                <div class="select_fps">
+                    <label class="example-name-label">Selected FPS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <!-- <label class="example-value-label">{{value}}</label> -->
+                </div>
+                <div class="mat_secd">
+                    <mat-label>FPS&nbsp;</mat-label>
+                    <mat-slider min="0" max="144" step="1" formControlName="fps" ></mat-slider>
+                </div>
+
+                <mat-form-field appearance="outline" *ngIf="sourceLocation != undefined">
+                    <mat-label>Select Source Stored Location</mat-label>
+                    <mat-select formControlName="source_stored_location_id" required>
+                        <mat-option [value]="item.source_stored_location_id" *ngFor="let item of sourceLocation.data">{{item.source_stored_location_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <textarea matInput rows="5" formControlName="description" required>
+               </textarea>
+                </mat-form-field>
+
+
+                <div class="col-sm-12">
+                    <div class="model_cre_btn">
+                        <div class="model_create_btn">
+                            <button type="submit" class="log-button" mat-raised-button color="primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

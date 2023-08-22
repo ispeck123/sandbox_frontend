@@ -1,0 +1,117 @@
+
+<div class="pipe_details">
+  <div mat-dialog-title class="d-flex justify-content-between align-items-center">
+    <h2 class="m-0 modal-header-text">Project Details</h2>
+    <button mat-icon-button mat-dialog-close id="matDialogClose">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+  <div class="row">
+    <div class="col-md-12">
+      <mat-dialog-content style="width: 100%;" class="mat-typography">
+        <div class="" *ngIf="projectList != undefined">
+          <div class="mnk_list_for">
+            <div class="icon_jkl">
+              <mat-icon>folder</mat-icon>
+            </div>
+            <div class="para_lkw">
+              <h4>Project Name</h4>
+              <p>{{projectDataforUI.project_name}}</p>
+            </div>
+          </div>
+          <div class="mnk_list_for">
+            <div class="icon_jkl">
+              <mat-icon>flip_to_front</mat-icon>
+            </div>
+            <div class="para_lkw">
+              <h4> Project Type Name</h4>
+              <p>{{projectDataforUI.project_type_name}}</p>
+            </div>
+          </div>
+          <div class="mnk_list_for">
+            <div class="icon_jkl">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="para_lkw">
+              <h4> Created By</h4>
+              <p>{{projectDataforUI.created_by}}</p>
+            </div>
+          </div>
+
+          <div class="mnk_list_for" *ngIf="projectDataforUI.modified_by">
+            <div class="icon_jkl">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="para_lkw">
+              <h4> Modified By</h4>
+              <p>{{projectDataforUI.modified_by}}</p>
+            </div>
+          </div>
+
+          <div class="mnk_list_for">
+            <div class="icon_jkl">
+              <mat-icon>date_range</mat-icon>
+            </div>
+            <div class="para_lkw">
+              <h4> Create On </h4>
+              <p>{{projectDataforUI.created_on | date}}</p>
+            </div>
+          </div>
+        </div>
+      </mat-dialog-content>
+    </div>
+
+    <!-- @ Column 2 -->
+    <div class="pipe_secfg">
+    <div class="col-md-12">
+      <div class="mnk_list_for" *ngIf="projectDataforUI.pipeline_id">
+        <div class="icon_jkl">
+          <mat-icon>nfc</mat-icon>
+        </div>
+        <div class="para_lkw">
+          <h4> Pipeline </h4>
+          <p>{{projectDataforUI.pipeline_name}}</p>
+        </div>
+      </div>
+
+      <div class="mnk_list_for" *ngIf="projectDataforUI.pipeline_id">
+        <div class="icon_jkl">
+          <mat-icon>link</mat-icon>
+        </div>
+        <div class="para_lkw">
+          <h4> Pipeline Type Name </h4>
+          <p>{{projectDataforUI.processing_type_name}}</p>
+        </div>
+      </div>
+
+      <div class="mnk_list_for " *ngIf="projectDataforUI.sources">
+        <div class="icon_jkl">
+          <mat-icon>insert_drive_file</mat-icon>
+        </div>
+        <div class="para_lkw">
+          <h4> Download Weight </h4>
+
+          <!-- <p *ngFor="let source of projectDataforUI.sources">
+            <mat-icon style="font-size: 18px;">attach_file</mat-icon>{{source}}
+          </p> -->
+          <div class="dtgnma">
+          <mat-chip-list>
+            <mat-chip *ngFor="let source of projectDataforUI.sources">
+              <mat-icon style="font-size: 18px;">attach_file</mat-icon>{{source}}
+            </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions> -->
+
+
+</div>

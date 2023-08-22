@@ -1,0 +1,17 @@
+.project_brd{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    margin-bottom: 22px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .pro_sub h3{
+    font-size: 20px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+  }

@@ -1,0 +1,323 @@
+<div class="project-list-section">
+    <div class="project_brd">
+        <div class="pro_sub d-flex justify-content-between">
+            <h3>
+                <span class="create_icon">Projects <mat-icon class="material-symbols-outlined">
+                        chevron_right
+                    </mat-icon> </span>
+
+                <span class="create_icon">{{ getUIClass() }} <mat-icon class="material-symbols-outlined">
+                        chevron_right
+                    </mat-icon> </span>
+                <span class="mdf_hg">Datasource </span>
+            </h3>
+            <div class="create-button" *ngIf="sourcebuttonflag">
+                <button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal">
+                    <mat-icon>add</mat-icon>
+                    Create datasource
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="project_list_card">
+            <!-- Datasource card list start-->
+            <div *ngIf="sourceList != undefined">
+                <div class="row">
+                    <div class="col-sm-3" *ngFor="let source of sourceList.data; let i=index;">
+                        <mat-card [id]="source.source_id" #dataSourceCard>
+                            <div class="user_flt">
+                                <button class="ms-auto option-btn" mat-icon-button aria-label="option menu"
+                                    [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_horiz</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="editDatasource(source.source_id)">
+                                        <span> Edit</span>
+                                    </button>
+                                    <button mat-menu-item [routerLink]="['/datasource-details']">
+                                        <span>Details </span>
+                                    </button>
+                                    <button mat-menu-item (click)="openDeleteDialog(source.source_id)"
+                                        *ngIf="isSourceAttatched(source.source_id)">
+                                        <span>Delete </span>
+                                    </button>
+                                </mat-menu>
+                            </div>
+
+                            <div class="tick_mark_datashr"
+                                *ngIf="source.source_id === selectedDataSource.source_id && !(isSourceAttatched(source.source_id))">
+                                <mat-icon class="datasourceIndicator">
+                                    check_circle
+                                </mat-icon>
+                            </div>
+
+                            <div class="" (click)="selectSource(source, $event);">
+
+                                <div class="project_list_cricle avaterColor-{{colorVariation(i)}}">
+                                    <h4 style="cursor: pointer;">{{createAvaterName(source.source_name | uppercase)}}
+                                    </h4>
+                                </div>
+                                <div class="project_heading">
+                                    <h4>{{source.source_name}}</h4>
+                                </div>
+                                <div class="prj_icon">
+                                    <mat-icon class="material-symbols-outlined">
+                                        confirmation_number
+                                    </mat-icon>
+                                    <span>
+                                        {{source.fps}}
+                                    </span>
+                                </div>
+
+                                <div class="prj_icon">
+                                    <mat-icon class="material-symbols-outlined">
+                                        running_with_errors
+                                    </mat-icon>
+                                    <span>{{source.processing_type_name}}</span>
+                                </div>
+
+                                <div class="prj_icon">
+                                    <mat-icon class="material-symbols-outlined">
+                                        file_present
+                                    </mat-icon>
+                                    <span>{{source.source_stored_location_name}}</span>
+                                </div>
+                                <div class="prj_icon">
+                                    <mat-icon class="material-symbols-outlined">
+                                        location_on
+                                    </mat-icon>
+                                    <span> {{source.area_name}}</span>
+                                </div>
+                                <div class="prj_icon">
+                                    <mat-icon class="material-symbols-outlined">
+                                        description
+                                    </mat-icon>
+                                    <span> {{source.description}}</span>
+                                </div>
+                                <span *ngIf="isSourceAttatched(source.source_id)" style="color: white"
+                                    class="badge badge-pill badge-secondary source-badge-pill">Attatched</span>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <!-- Datasource card list end-->
+
+
+            <!-- Datashurce placeholder start -->
+            <div class="row" *ngIf="sourceList == undefined || listdata.length==0">
+                <div class="col-sm-12">
+                    <div class="pce_hml_text">
+                        <div class="gtr_plc">
+                            <div class="plt_hlr">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                    width="512" height="512" x="0" y="0" viewBox="0 0 512 512"
+                                    style="enable-background:new 0 0 512 512" xml:space="preserve">
+                                    <g>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m496.941 305.231-24.3-5.006q-1.1-2.954-2.354-5.847l13.6-20.658a18.7 18.7 0 0 0 -2.417-23.714l-24.753-24.753a18.706 18.706 0 0 0 -23.713-2.417l-20.004 13.172q-3.291-1.508-6.678-2.8l-4.826-23.421a18.7 18.7 0 0 0 -18.477-15.058h-14.619v-93.2c0-24-20.028-46-56.4-61.942-34.27-15.022-79.658-23.3-127.8-23.3s-93.535 8.273-127.8 23.295c-36.372 15.942-56.4 37.94-56.4 61.942v308.952c0 24 20.028 46 56.4 61.942 34.269 15.022 79.658 23.3 127.8 23.3 55.974 0 109.2-11.622 143.659-31.219l1.677 8.143a18.7 18.7 0 0 0 18.477 15.058h35a18.7 18.7 0 0 0 18.477-15.059l5.409-26.249q1.878-.732 3.733-1.53l22.37 14.727a18.7 18.7 0 0 0 23.713-2.418l24.752-24.751a18.7 18.7 0 0 0 2.418-23.714l-14.3-21.716q1.026-2.264 1.95-4.563l25.4-5.233a18.7 18.7 0 0 0 15.065-18.481v-35a18.7 18.7 0 0 0 -15.059-18.482zm-312.741-272.945c100.613 0 168.2 35.8 168.2 69.238s-67.586 69.238-168.2 69.238c-100.581 0-168.156-35.779-168.2-69.207v-.05c.026-33.432 67.606-69.219 168.2-69.219zm-127.8 131.18c34.269 15.022 79.658 23.3 127.8 23.3s93.534-8.274 127.8-23.3c17.3-7.582 30.888-16.536 40.4-26.422v57.682h-4.385a18.7 18.7 0 0 0 -18.478 15.058l-4.826 23.42q-3.378 1.294-6.678 2.8l-20.008-13.172a18.7 18.7 0 0 0 -23.713 2.418l-24.751 24.752a18.668 18.668 0 0 0 -4.689 18.933 373.635 373.635 0 0 1 -60.671 4.807c-100.591 0-168.17-35.786-168.2-69.217v-67.48c9.508 9.885 23.099 18.839 40.399 26.421zm0 102.984c34.269 15.023 79.658 23.3 127.8 23.3a385.418 385.418 0 0 0 69.464-6.119l7.08 10.756q-1.257 2.889-2.351 5.841l-24.3 5.007a18.7 18.7 0 0 0 -15.059 18.477v35a18.683 18.683 0 0 0 8.3 15.645 384.782 384.782 0 0 1 -43.134 2.373c-100.6 0-168.186-35.793-168.2-69.23v-67.471c9.508 9.886 23.1 18.84 40.4 26.421zm266.931 182.15c-31.858 19.482-83.87 31.113-139.132 31.113-100.612 0-168.2-35.8-168.2-69.238v-67.462c9.508 9.886 23.1 18.84 40.4 26.422 34.269 15.022 79.658 23.3 127.8 23.3a379.914 379.914 0 0 0 76.494-7.472c.25.577.481 1.161.74 1.733l-14.292 21.704a18.7 18.7 0 0 0 2.417 23.713l24.752 24.752a18.7 18.7 0 0 0 23.714 2.418l22.369-14.727q1.854.8 3.734 1.53l.339 1.646a7.905 7.905 0 0 0 -1.135.568zm172.669-89.887a2.774 2.774 0 0 1 -2.287 2.807l-29.706 6.12a8 8 0 0 0 -5.924 5.157 97.985 97.985 0 0 1 -4.8 11.218 8 8 0 0 0 .464 8l16.778 25.485a2.772 2.772 0 0 1 -.368 3.6l-24.752 24.752a2.776 2.776 0 0 1 -3.6.367l-26.058-17.154a8 8 0 0 0 -7.854-.533 98.066 98.066 0 0 1 -10.52 4.308 8 8 0 0 0 -5.24 5.953l-6.308 30.613a2.775 2.775 0 0 1 -2.807 2.288h-35a2.776 2.776 0 0 1 -2.808-2.287l-6.31-30.613a8 8 0 0 0 -5.241-5.954 98.1 98.1 0 0 1 -10.519-4.3 8 8 0 0 0 -7.856.532l-26.054 17.154a2.777 2.777 0 0 1 -3.6-.367l-24.759-24.759a2.773 2.773 0 0 1 -.367-3.6l16.775-25.482a8 8 0 0 0 .464-8 98.112 98.112 0 0 1 -4.8-11.225 8 8 0 0 0 -5.923-5.156l-29.7-6.12a2.775 2.775 0 0 1 -2.287-2.807v-35a2.774 2.774 0 0 1 2.287-2.806l28.753-5.924a8 8 0 0 0 6-5.37 97.982 97.982 0 0 1 5-12.435 8 8 0 0 0 -.519-7.884l-16.054-24.369a2.773 2.773 0 0 1 .368-3.6l24.751-24.752a2.776 2.776 0 0 1 3.6-.367l23.8 15.665a8 8 0 0 0 8.027.448 98.036 98.036 0 0 1 13.14-5.52 8 8 0 0 0 5.286-5.968l5.73-27.813a2.776 2.776 0 0 1 2.808-2.287h35a2.775 2.775 0 0 1 2.807 2.287l5.731 27.814a8 8 0 0 0 5.285 5.968 98.026 98.026 0 0 1 13.14 5.519 8 8 0 0 0 8.027-.448l23.8-15.668a2.774 2.774 0 0 1 3.6.366l24.753 24.753a2.774 2.774 0 0 1 .367 3.6l-16.039 24.362a8 8 0 0 0 -.518 7.885 98.132 98.132 0 0 1 5 12.44 8 8 0 0 0 6 5.37l28.749 5.923a2.773 2.773 0 0 1 2.288 2.809zm-130.485-86.568a69.066 69.066 0 1 0 69.065 69.065 69.144 69.144 0 0 0 -69.065-69.065zm0 122.131a53.066 53.066 0 1 1 53.065-53.066 53.126 53.126 0 0 1 -53.065 53.066z"
+                                            fill="#000000" data-original="#000000"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="rgt_ted">
+                                <h3> No datasource list yet</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Datashurce placeholder end   -->
+        </div>
+    </div>
+
+    <!-- Add new datasource modal -->
+    <div class="modal fade show" id="dataModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal"
+        aria-modal="false" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dataModal">Add New DataSource</h5>
+                    <button type="button" class="btn-close" #closebutton data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="addSource" (ngSubmit)="onSubmit()">
+                        <mat-form-field appearance="outline">
+                            <mat-label>DataSource Name</mat-label>
+                            <input matInput placeholder="" formControlName="source_name" />
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="purpose != undefined">
+                            <mat-label>Purpose</mat-label>
+                            <mat-select formControlName="purpose">
+                                <mat-option value="{{purpose_type.purpose}}" selected *ngFor="let area of purpose.data">
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="outline" *ngIf="areaList != undefined">
+                            <mat-label>Select Area</mat-label>
+                            <mat-select formControlName="area_id">
+                                <mat-option value="{{area.area_id}}" selected *ngFor="let area of areaList.data">
+                                    {{area.area_name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="ProjectTypeList!= undefined">
+                            <mat-label>Select Project Type</mat-label>
+                            <mat-select #id formControlName="project_type"
+                                (selectionChange)="getProjectTypeflag(id.value)">
+                                <mat-option [value]="projectType.project_type_id"
+                                    *ngFor="let projectType of ProjectTypeList.data"
+                                    (onSelectionChange)="getProTypeName(projectType.project_type)">{{projectType.project_type}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" *ngIf="processingTypeList != undefined">
+                            <mat-label>Select Processing Type</mat-label>
+                            <mat-select #id formControlName="process_type">
+                                <div *ngIf="projectTypeFlag==1">
+                                    <ng-container *ngFor="let processType of processingTypeList.data">
+                                        <mat-option *ngIf="processType.processing_type_name=='IMAGE'"
+                                            (click)="getProcessingTypeflag(processType.processing_type_name)"
+                                            value="{{processType.processing_type_id}}">
+                                            {{processType.processing_type_name}}</mat-option>
+                                        <mat-option *ngIf="processType.processing_type_name=='VIDEO'"
+                                            (click)="getProcessingTypeflag(processType.processing_type_name)"
+                                            value="{{processType.processing_type_id}}">
+                                            {{processType.processing_type_name}}</mat-option>
+                                        <mat-option *ngIf="processType.processing_type_name=='RTSP'"
+                                            (click)="getProcessingTypeflag(processType.processing_type_name)"
+                                            value="{{processType.processing_type_id}}">
+                                            {{processType.processing_type_name}}</mat-option>
+                                    </ng-container>
+
+                                </div>
+                                <div *ngIf="projectTypeFlag=='2'">
+                                    <ng-container *ngFor="let processType of processingTypeList.data">
+                                        <mat-option *ngIf="processType.processing_type_name=='FILE'"
+                                            (click)="getProcessingTypeflag(processType.processing_type_name)"
+                                            value="{{processType.processing_type_id}}">
+                                            {{processType.processing_type_name}}</mat-option>
+                                    </ng-container>
+
+                                </div>
+
+
+
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="image-upload" *ngIf="fileflag=='IMAGE'">
+                            <input type="file" required formControlName="filename" (change)="onFileSelection($event)"
+                                #fileUpload>
+                            <label for="logo" id="file-label" class="upload-field">
+                            </label>
+                            <span *ngIf="fileerrorShow" style="color: red;">* Required</span>
+                        </div>
+                        <div class="image-upload" *ngIf="fileflag=='VIDEO'">
+                            <input type="file" required formControlName="filename" (change)="onFileSelection($event)"
+                                #fileUpload>
+                            <label for="logo" id="file-label" class="upload-field">
+                            </label>
+                            <span *ngIf="fileerrorShow" style="color: red;">* Required</span>
+                        </div>
+
+
+                        <div class="image-upload" *ngIf="fileflag=='FILE'">
+                            <input type="file" required formControlName="filename" (change)="onFileSelection($event)"
+                                #fileUpload>
+                            <label for="logo" id="file-label" class="upload-field">
+                            </label>
+                            <span *ngIf="fileerrorShow" style="color: red;">* Required</span>
+                        </div>
+                        <div *ngIf="fileflag=='RTSP'">
+
+                            <input type="text" required id="rtsp" name="rtsp" formControlName="rtspurl" #rtspUpload>
+                            <label for="rtsp">RTSP</label>
+                            <span *ngIf="rtsperrorShow" style="color: red;">* Required</span>
+                        </div>
+
+
+                        <div>
+                            <label class="example-name-label">Selected FPS
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <label class="example-value-label">{{value}}</label>
+                        </div>
+                        <mat-label>FPS&nbsp;</mat-label>
+                        <mat-slider min="0" max="144" step="1" formControlName="fps" [(ngModel)]="value"></mat-slider>
+
+                        <mat-form-field appearance="outline" *ngIf="sourceLocation != undefined">
+                            <mat-label>Select Source Stored Location</mat-label>
+                            <mat-select formControlName="source_stored_location_id">
+                                <mat-option [value]="item.source_stored_location_id"
+                                    *ngFor="let item of sourceLocation.data">{{item.source_stored_location_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput placeholder="" rows="5" formControlName="description">
+                         </textarea>
+                        </mat-form-field>
+
+                        <input type="hidden" formControlName="created_by" [ngModel]="username">
+                        <input type="hidden" formControlName="modified_by" [ngModel]="">
+                        <div class="user_role_btn">
+                            <div class="user_role_btn">
+                                <button type="submit" class="log-button" mat-raised-button color="primary">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End add new datasource modal  -->
+
+    <!-- Save and next button start -->
+    <div class="">
+        <div class="project_button_nt">
+            <button type="button" mat-stroked-button color="primary" [routerLink]="['/project-create']">Back</button>
+            <button type="button" [disabled]="disableNxtBtn" *ngIf="NextVisibleFlag" class="stepper-button mt-2"
+                mat-raised-button color="primary" (click)="nexttype()"> Next
+            </button>
+        </div>
+    </div>
+    <!-- Save and next button end  -->
+</div>
+
+<!-- <div class="msgToast alert" #toast>
+    <span>{{toastMessage}}</span>
+    <button mat-button style="margin-left: 15px;" color="primary" (click)="closeToast()"> <mat-icon> close </mat-icon> </button>
+</div> -->
+
+
+
+<!-- Delete Source Modal -->
+<div class="modal fade" #deleteModal id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Alert</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button> -->
+            </div>
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button mat-raised-button class="mx-2" (click)="closeDeleteDialog()" data-dismiss="modal">Close</button>
+                <button mat-raised-button color="primary" class="mx-2"
+                    (click)="deleteSourceFromProject($event)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

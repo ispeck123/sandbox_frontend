@@ -1,0 +1,48 @@
+<!-- <div>
+  <h2>User Details</h2>
+</div> -->
+
+<div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+    <h3>Users</h3>
+  </div>
+</div>
+
+<div class="user_details_pt">
+    <div class="table-responsive tgbg">
+      <div class="container-fluid">
+        <div class="row">
+      <table class="table table-hover">
+        <thead class="hed_sec_pl">
+          <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">UserName</th>
+            <th scope="col">User Email</th>
+            <th scope="col">User Name</th>
+            <th scope="col">User Status</th>
+            <th scope="col">User Role Name</th>
+            <th scope="col">Creation Date</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="userDetails != undefined">
+          <tr *ngFor="let userlist of userDetails.data">
+            <th scope="row">{{userlist.USER_ID}}</th>
+            <td>{{userlist.USER_FULLNAME}}</td>
+            <td>{{userlist.USER_EMAIL}}</td>
+            <td>{{userlist.USER_NAME}}</td>
+            <td>
+              <span *ngIf="userlist.USER_STATUS==1">Enabled</span>
+              <span *ngIf="userlist.USER_STATUS==0">Disabled</span>
+            </td>
+            <td>{{userlist.ROLE_NAME}}</td>
+            <td>{{userlist.CREATION_DATE  | date}}</td>
+            <!-- <td> <button  mat-raised-button color="primary" [routerLink]="['/project-datasource']"> <mat-icon>edit</mat-icon> Edit</button></td> -->
+            <!-- <td> <button  mat-raised-button color="warn" [routerLink]="['/project-datasource']"><mat-icon>delete</mat-icon>Delete</button></td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</div>
+

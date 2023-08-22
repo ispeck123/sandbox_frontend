@@ -1,0 +1,56 @@
+.list-group button {
+    padding: 12px 15px 16px;
+    border-radius: 0px;
+    border-right: none;
+    font-size: 14px;
+    color: #212b39;
+}
+
+.list-group mat-icon {
+    font-size: 20px;
+    position: relative;
+    top: 4px;
+    margin-right: 8px;
+    color: #6c6c6c;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #ffffff !important;
+    background-color: #673ab7;
+    border-color: #ecffec;
+    border-right: 5px solid #9c73e5 !important;
+    border-top-left-radius: 1.25rem;
+    border-bottom-left-radius: 1.25rem;
+    font-weight: bold;
+}
+
+.list-group-item.active mat-icon {
+    color: #ffffff !important;
+}
+
+.list-group-item {
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+.back-button mat-icon{
+    line-height: 22px;
+    margin-right: 5px;
+  }
+
+mat-sidenav-content,
+mat-sidenav-container {
+    background: #f2f6f9;
+    min-height: 100%;
+}
+
+mat-sidenav {
+    width: 270px;
+    margin-top: 12px;
+    box-shadow: 0 8px 24px rgba(229, 228, 230, 0.4);
+    background: #fff;
+    border-right: 1px solid #eaedf1;
+}
+
+mat-sidenav-content {
+    padding-top: 80px;
+}

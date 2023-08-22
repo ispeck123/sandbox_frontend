@@ -1,0 +1,94 @@
+<div class="confi_heading d-flex">
+  <h2>Configure Alerts</h2>
+</div>
+    <form [formGroup]="alertForm">
+      <mat-form-field appearance="outline" *ngIf="alertCategory != undefined" >
+        <mat-label>Select Alert Category</mat-label>
+        <mat-select>
+          <mat-option [value]="item.alarm_category_id" selected  *ngFor="let item of alertCategory.data" >{{item.alarm_category_name}}</mat-option>
+        </mat-select>
+      </mat-form-field> 
+
+     <div class="dfg_count">
+      <div class="lfgt">
+        <label class="">{{countval}}</label>
+      </div>
+        <mat-label class="me-4">Count&nbsp;</mat-label>
+        <mat-slider min="0" max="144" step="1" formControlName="count" [(ngModel)]="countval"></mat-slider>
+      </div>
+
+     <div class="dfg_count">
+        <div class="lfgt">
+          <label class="">{{durationval}}</label>
+        </div>
+          <mat-label class="me-1">Duration&nbsp;</mat-label>
+          <mat-slider min="0" max="144" step="1"  formControlName="duration" [(ngModel)]="durationval"></mat-slider>
+         </div>
+
+
+          <mat-form-field appearance="outline" class="me-1 filter-form">
+            <input
+              matInput
+              [ngxMatDatetimePicker]="alarm_start_time"
+              placeholder="Start Date"
+              [disabled]="disabled"
+              formControlName="alarm_start_time"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="$any(alarm_start_time)"
+            ></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker
+              #alarm_start_time
+              [showSpinners]="showSpinners"
+              [showSeconds]="showSeconds"
+              [touchUi]="touchUi"
+              [enableMeridian]="enableMeridian"
+            >
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="me-1 filter-form">
+            <input
+              matInput
+              [ngxMatDatetimePicker]="alarm_end_time"
+              placeholder="End Date"
+              [disabled]="disabled"
+              formControlName="alarm_end_time"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="$any(alarm_end_time)"
+            ></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker
+              #alarm_end_time
+              [showSpinners]="showSpinners"
+              [showSeconds]="showSeconds"
+              [touchUi]="touchUi"
+              [enableMeridian]="enableMeridian"
+            >
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" >
+            <mat-label>Cross Over</mat-label>
+            <mat-select>
+              <mat-option value="true" >Yes</mat-option>
+              <mat-option value="false" >No</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" >
+            <mat-label>Alarm Frequency</mat-label>
+            <mat-select>
+              <mat-option value="daily" >Daily</mat-option>
+              <mat-option value="weekly" >Weekly</mat-option>
+              <mat-option value="monthly" >Monthly</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- <button mat-button mat-dialog-close >save</button> -->
+   
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close >Close</button>
+  <button mat-dialog-close mat-flat-button color="primary">save</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>
+</form>

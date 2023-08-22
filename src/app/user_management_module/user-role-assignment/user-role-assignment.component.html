@@ -1,0 +1,33 @@
+<div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+        <h3>User Role Assignment</h3>
+    </div>
+</div>
+
+<div class="user_role_assign_section">
+    <div class="container-fluid">
+        <div class="row">
+            <form [formGroup]="addRole" (ngSubmit)="assignRole()">
+                <mat-form-field appearance="outline" *ngIf="userDetails != undefined">
+                    <mat-label>Select User</mat-label>
+                    <mat-select formControlName="userid">
+                        <mat-option *ngFor="let users of userDetails.data" value="{{users.USER_ID}}" selected>{{users.USER_NAME}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <input type="hidden" formControlName="type" [ngModel]="role">
+                <mat-form-field appearance="outline" *ngIf="roleDetails != undefined">
+                    <mat-label>Select Role</mat-label>
+                    <mat-select formControlName="roleperid">
+                        <mat-option *ngFor="let roles of roleDetails.data" value="{{roles.ROLE_ID}}">{{roles.ROLE_NAME}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="log-button" mat-raised-button color="primary">
+          Submit
+        </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

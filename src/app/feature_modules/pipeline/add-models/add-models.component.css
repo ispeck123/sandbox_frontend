@@ -1,0 +1,78 @@
+.project_brd {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 9px;
+    padding-top: 8px;
+    margin-bottom: 22px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.pro_sub h3 {
+    font-size: 18px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+}
+
+.add_mdlg {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.project_btn button {
+    width: 150px;
+    padding: 3px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.project_btn {
+    float: right;
+    margin-top: 10px;
+}
+
+.project_btn button mat-icon {
+    font-size: 19px;
+}
+
+mat-chip span {
+    padding-right: 8px !important;
+}
+
+.cfg {
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.add_modal_chip {
+    padding-top: 10px;
+}
+
+#deleteModal.show {
+    display: block;
+    transition: 2.25s;
+}
+#deleteModal.show.fadIn {
+    animation: fadeIn 1.0s ease-in-out alternate forwards;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-300px);
+    } from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.existingModelChip {
+    background-color: rgba(125, 39, 238, 0.082);
+}
+.head_prt_section h3 {
+    font-weight: bold;
+    font-size: 18px;
+    color: #222;
+}

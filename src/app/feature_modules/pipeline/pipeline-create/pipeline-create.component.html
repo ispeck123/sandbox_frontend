@@ -1,0 +1,66 @@
+<div class="pipeline_create_section">
+  <div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+      <h3  *ngIf="this.isCreate"> Pipeline Create</h3>
+      <h3 *ngIf="!this.isCreate"> Pipeline Update</h3>
+    </div>
+  </div>
+
+<div class="pipe_from_section">
+  <div class="container-fluid">
+    <div class="row">
+    <form [formGroup]="addPipeline" (ngSubmit)="pipelineCreateUpdate()">
+      <mat-form-field appearance="outline">
+        <mat-label>Pipeline Name</mat-label>
+        <input matInput placeholder="Enter Project Name" formControlName="pipeline_name" >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-fields" *ngIf="pipeLineType != undefined">
+        <mat-label>Select Pipeline Operation Type</mat-label>
+        <mat-select formControlName= "pipeline_type_id">
+          <mat-option [value]="item.pipeline_type_id" *ngFor="let item of pipeLineType.data">{{item.pipeline_type}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" *ngIf="pipeModeltype != undefined">
+        <mat-label>Select Pipeline Model Type</mat-label>
+        <mat-select formControlName="pipeline_model_type_id" >
+          <mat-option [value]="modelType.pipeline_model_type_id" *ngFor="let modelType of pipeModeltype.data">{{modelType.pipeline_model_type_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="processingTypeList != undefined">
+        <mat-label>Processing Type</mat-label>
+        <mat-select formControlName= "processing_type_id">
+          <mat-option [value]="processType.processing_type_id" selected *ngFor="let processType of processingTypeList.data" >{{processType.processing_type_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="pipe_seda">
+      <div class="frem_skp">
+          <mat-label><b>Frames </b>&nbsp;</mat-label>
+          <mat-slider min="0" max="20" step="1" formControlName="skip_frames"  [(ngModel)]="value"></mat-slider>
+          <div>
+            <label class="example-name-label me-3"><b>Skip Frames</b></label>
+            <label class="example-value-label">{{value}}</label>
+          </div>
+      </div>
+      <div class="trrk_plt d-flex">
+        <mat-label class="me-3 "><b>Tracking</b></mat-label>
+        <div class="onolo">
+        <mat-slide-toggle [checked] = "isTracking" (change)="tracking()">
+          <span style="display:block;width:30px;">{{(this.isTracking) ? 'On' : 'Off'}}</span>
+        </mat-slide-toggle>
+      </div>
+      </div>
+      </div>
+      <input type="hidden" formControlName="created_by" [ngModel]="username">
+      <input type="hidden" formControlName="modified_by" [ngModel]="">
+
+      <div class="d-flex project_btn">
+        <button type="submit"  class="stepper-button" mat-raised-button color="primary" style="margin-right: 10px;"  [hidden]="buttonvisible" >{{isCreate ? 'Submit' : 'Update'}}</button>
+        <button  class="stepper-button" mat-raised-button color="primary"  [routerLink]="['/add-model']"  [hidden]="!buttonvisible">Next</button>
+    </div>
+    </form>
+  </div>
+  </div>
+</div>
+</div>

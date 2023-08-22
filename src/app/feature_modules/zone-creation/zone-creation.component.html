@@ -1,0 +1,153 @@
+<div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+        <h3>Region Of Interest</h3>
+    </div>
+</div>
+
+
+<div class="zone_creation_section">
+    <!-- images section -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="">
+                    <div class="rounded-1 zone_lpl">
+                        <div class="zxc_cret">
+                          <video *ngIf="videoUrl"  id="zonImage" #zoneImageContainer alt="" width="100%" height="500" controls autoplay>
+                            <source [src]="selectedZoneImage" type="video/mp4">
+                          </video>
+                          <img *ngIf="processingtype == 'IMAGE'" [src]="selectedZoneImage" id="zonImage" #zoneImageContainer alt="" width="100%" height="500" />
+                          <div class="canvasPlaceholder">
+                            <canvas #canvas id="drawBoard" width="100%" height="500" style="position: absolute; top: 0; left: 0"></canvas>
+                          </div>
+                        </div>
+                      </div>
+
+                    <!-- coohse color section -->
+                    <div class="" *ngIf="isSettings"
+                        style="background: #fff;   border: 1px solid #ddd; padding: 16px !important;">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="zone_input_kl">
+                                    <mat-label style="margin-top:0.8em;">Choose Line Color </mat-label><br>
+                                    <input class="mt-2" matInput name="colorCode" type="color" [(ngModel)]="strokeColor"
+                                        (ngModelChange)="onStrokeColorChange()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="ms-2">
+                                    <label>Line Width</label><br>
+                                    <mat-slider min="1" max="10" [(ngModel)]="strokeWidth" class="me-1"
+                                        (change)="onStrokeWidthChange()">
+                                    </mat-slider>{{strokeWidth}}&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="zone_input_kl">
+
+                                    <mat-label style="margin-top:0.8em;">Background Color</mat-label><br>
+                                    <input class="mt-2" matInput name="bgColor" type="color" [(ngModel)]="bgColor"
+                                        (ngModelChange)="onBgColorChange()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="ms-2">
+                                    <label>Background Opacity</label><br>
+                                    <mat-slider min="0" max="1" step="0.1" [(ngModel)]="bgOpacity"
+                                        (change)="onBgOpacityChange()" class="me-1">
+                                    </mat-slider>{{bgOpacity}}
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="zone_cre_btn">
+                                    <button mat-raised-button color="primary" (click)="saveSettings()"
+                                        [disabled]="isSaveSettings">
+                                        Save Settings
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- button header section -->
+                    <div class="draw_zone_section">
+                        <button mat-raised-button color="primary" class="me-1 mt-2" (click)="onToggleToolBar()">
+                            <mat-icon class="material-symbols-outlined">
+                                draw
+                            </mat-icon>
+                            Draw Zone
+                        </button>
+                        <div class="nxt_btn_pl">
+                            <!-- <button type="button" class="log-button mb-2" mat-raised-button color="primary"
+                                [routerLink]="['/select-model-pipeline']">Next
+                            </button> -->
+                            <button mat-raised-button color="primary" class="me-1" (click)="saveZone()">
+                           Next
+                        </button>
+                        </div>
+                    </div>
+
+                    <div class="draw_btn_section d-flex justify-content-start" *ngIf="isToolBarOpen">
+                        <button style="border:1px solid #673ab7 !important" mat-stroked-button color="primary"
+                            class="me-1" (click)="onSelectTool('')"
+                            [disabled]="selectedTool !==  'randomline' ? false : true">
+                            <mat-icon>select_all</mat-icon>
+                        </button>
+
+                        <button style="border:1px solid #673ab7 !important" mat-stroked-button color="primary"
+                            class="me-1" (click)="onSelectTool('rectangle')"
+                            [disabled]="selectedTool !== 'rectangle' ? false : true">
+                            <mat-icon>rectangle</mat-icon>
+                        </button>
+
+                        <button style="border:1px solid #673ab7 !important" mat-stroked-button color="primary"
+                            class="me-1" (click)="onSelectTool('randomline')"
+                            [disabled]="selectedTool !==  'randomline' ? false : true">
+                            <mat-icon>show_chart</mat-icon>
+                        </button>
+                        <button style="border:1px solid #673ab7 !important" mat-stroked-button color="primary"
+                            class="me-1" (click)="onSelectTool('polygon')"
+                            [disabled]="selectedTool !== 'polygon' ? false : true">
+                            <mat-icon>pentagon</mat-icon>
+                        </button>
+
+                        <button style="border:1px solid #673ab7 !important" mat-stroked-button color="primary"
+                            class="me-1" (click)="propSettings()">
+                            <mat-icon>settings</mat-icon>
+                        </button>
+
+                        <button style="border:1px solid #673ab7 !important" mat-stroked-button color="primary"
+                            class="me-1" (click)="deleteActiveShape()" [disabled]="shapeDeleteButton ? false : true">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+
+                        <button mat-raised-button color="warn" class="me-1" (click)="clearCanvas()"
+                            (click)="onSelectTool('clear')">
+                            Clear
+                        </button>
+                        <button mat-raised-button color="primary" class="me-1" (click)="saveZone()"
+                            *ngIf="updateZoneCoordinates === true" [disabled]="isSaveBtn">
+                            Update
+                        </button>
+                       
+                    </div>
+
+
+                    <!--End coohse color section -->
+                </div>
+            </div>
+            <div class="col-sm-3" hidden>
+                <div class="zone_card_section">
+                    <mat-card>
+                        <video *ngIf="processingtype == 'VIDEO'" id="zonImage" #zoneImageContainer alt="" width="100%" height="500" controls>
+                            <source [src]="selectedZoneImage" type="video/mp4">
+                          </video>
+                          <img *ngIf="processingtype == 'IMAGE'" [src]="selectedZoneImage" id="zonImage" #zoneImageContainer alt="" width="100%" height="500" />
+                    </mat-card>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- nutton header section -->

@@ -1,0 +1,176 @@
+<app-header></app-header>
+
+
+ 
+
+<diV class="main-layout" style="    padding-top: 82px;">
+  <div class="container-fluid">
+<div class="row">
+  <div class="col-sm-2" style="width: 270px;
+  box-shadow: 0 8px 24px #e5e4e666;
+  background: #fff;
+  border-right: 1px solid #eaedf1;
+  z-index: 2;
+  position: fixed;
+  outline: 0;
+  padding: 0px;
+  box-sizing: border-box;">
+<!-- sidebar section -->
+<div class="sidebar d-flex flex-column">
+  <div class="back-button">
+    <button class="log-button" mat-raised-button [routerLink]="['/home']">
+      <mat-icon>arrow_back</mat-icon>
+      Back to home
+   </button>
+  </div>
+  <div routerLinkActive="active" class="vbfd" [routerLink]="['/user-audit-trail']">
+    <a>
+      <mat-icon >login</mat-icon>
+      <span>Login Chart</span>
+    </a>
+  </div>
+  <div routerLinkActive="active" class="vbfd" [routerLink]="['/login-failure-chart']">
+    <a >
+      <mat-icon >insights</mat-icon>
+      <span>Login Failure Chart</span>
+    </a>
+  </div>
+  <div routerLinkActive="active" class="vbfd"  [routerLink]="['/event-chart']">
+    <a>
+      <mat-icon >event_note</mat-icon>
+      <span>Event Chart</span>
+    </a>
+  </div>
+  <div routerLinkActive="active" style="z-index: 2;
+  color: #ffffff !important;
+  background-color: #673ab7;
+  border-color: #ecffec;
+  border-right: 5px solid #9c73e5 !important;
+  font-weight: bold;cursor: pointer;" class="vbfd" [routerLink]="['/event-failure-chart']">
+    <a>
+      <mat-icon>sports_handball</mat-icon>
+      <span>Event Failure Chart</span>
+    </a>
+  </div>
+  <div routerLinkActive="active" class="vbfd" [routerLink]="['/users-audit']">
+    <a>
+      <mat-icon>monitoring</mat-icon>
+      <span>User Audit Details
+      </span>
+    </a>
+  </div>
+ 
+</div>
+</div>
+
+<!-- sidebar end -->
+<div class="col" style="margin-left: 273px;">
+  <div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+      <h3>Event failure chart
+      </h3>
+    </div>
+  </div>
+  <form [formGroup]="eventfailChartForm" (ngSubmit)="getEventfailure()">
+
+  <div class="top_header_flied">
+    <div class="row">
+      <div class="col-sm-3">
+        <mat-form-field appearance="outline" class="me-1 filter-form">
+          <input
+            matInput
+            [ngxMatDatetimePicker]="from_date"
+            placeholder="From date"
+            [disabled]="disabled"
+            formControlName="from_date"
+            [max]="currentDate"
+           
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="$any(from_date)"
+          ></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker
+            #from_date
+            [showSpinners]="showSpinners"
+            [showSeconds]="showSeconds"
+            [touchUi]="touchUi"
+            [enableMeridian]="enableMeridian"
+          >
+          </ngx-mat-datetime-picker>
+        </mat-form-field>
+  </div>
+  <div class="col-sm-3">
+    <mat-form-field appearance="outline" class="me-1 filter-form">
+      <input
+      
+        matInput
+        [ngxMatDatetimePicker]="to_date"
+        placeholder="To date"
+        [disabled]="disabled"
+        formControlName="to_date"
+        [max]="currentDate"
+        [min]="eventfailChartForm.value['from_date']"
+               />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="$any(to_date)"
+      ></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker
+        #to_date
+        [showSpinners]="showSpinners"
+        [showSeconds]="showSeconds"
+        [touchUi]="touchUi"
+        [enableMeridian]="enableMeridian"
+      >
+      </ngx-mat-datetime-picker>
+    </mat-form-field>
+</div>
+<div class="col-sm-4">
+  <mat-form-field appearance="outline">
+    <mat-label>User type</mat-label>
+    <mat-select formControlName="user">
+      <mat-option
+      value="All"
+      selected>All</mat-option> 
+      <mat-option
+      [value]="item" 
+      *ngFor="let item of userDetails"
+      >{{ item.USER_FULLNAME }}</mat-option
+    >
+    </mat-select>
+  </mat-form-field>
+    </div>
+    <div class="col-sm-2">
+      <div class="gere_cht">
+    <button class="stepper-button" mat-raised-button  color="primary">
+      Generate Chart
+    </button>
+  </div>
+    </div>
+  </div>
+  </div>
+</form>
+  <div class=" login_cert">
+    <div class="">
+      <mat-card>
+      <div class="graph-con">
+     
+        <div *ngIf="myeventfail">
+            <div class="audit_klk">
+                <h4>Event failure chart</h4>
+              </div>
+          <canvas id="event-failure" width="700"></canvas>
+        </div>
+        <div  *ngIf="!myeventfail">
+          <div class="audit_klk">
+          </div>
+          <canvas id="login" width="700"> </canvas> 
+        </div>
+      </div>
+    </mat-card>
+    </div>
+  </div>
+</div>
+</div></div>
+</diV>

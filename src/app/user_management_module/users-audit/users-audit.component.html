@@ -1,0 +1,188 @@
+<app-header></app-header>
+
+<div class="main-layout" style="padding-top: 82px;">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2" style="width: 270px;
+        box-shadow: 0 8px 24px #e5e4e666;
+        background: #fff;
+        border-right: 1px solid #eaedf1;
+        z-index: 2;
+        position: fixed;
+        outline: 0;
+        padding: 0px;
+        box-sizing: border-box;">
+        <!-- sidebar section -->
+        <div class="sidebar d-flex flex-column">
+          <div class="back-button">
+            <button class="log-button" mat-raised-button [routerLink]="['/home']">
+              <mat-icon>arrow_back</mat-icon>
+              Back to home
+            </button>
+          </div>
+          <div routerLinkActive="active" class="vbfd" [routerLink]="['/user-audit-trail']">
+            <a>
+              <mat-icon>login</mat-icon>
+              <span>Login Chart</span>
+            </a>
+          </div>
+          <div routerLinkActive="active" class="vbfd" [routerLink]="['/login-failure-chart']">
+            <a>
+              <mat-icon>insights</mat-icon>
+              <span>Login Failure Chart</span>
+            </a>
+          </div>
+          <div routerLinkActive="active" class="vbfd" [routerLink]="['/event-chart']">
+            <a>
+              <mat-icon>event_note</mat-icon>
+              <span>Event Chart</span>
+            </a>
+          </div>
+          <div routerLinkActive="active" class="vbfd" [routerLink]="['/event-failure-chart']">
+            <a>
+              <mat-icon>sports_handball</mat-icon>
+              <span>Event Failure Chart</span>
+            </a>
+          </div>
+          <div routerLinkActive="active" class="vbfd" style="z-index: 2;
+        color: #ffffff !important;
+        background-color: #673ab7;
+        border-color: #ecffec;
+        border-right: 5px solid #9c73e5 !important;
+        font-weight: bold;cursor: pointer;" [routerLink]="['/users-audit']">
+            <a>
+              <mat-icon>monitoring</mat-icon>
+              <span style="color:#fff">User Audit Details
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col" style="margin-left: 273px;">
+        <div class="project_brd">
+          <div class="pro_sub d-flex justify-content-between">
+            <h3>User audit details</h3>
+            <div class="create-button">
+              <button mat-raised-button color="primary" (click)="getFilter()">
+                <mat-icon>filter_alt</mat-icon>
+                {{filterName}}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <div class="">
+            <div class="">
+              <form [formGroup]="filterForm">
+                <div class="users_flrf w-100" *ngIf="isFilter || isFilterUi">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <mat-form-field appearance="outline" class="me-1 filter-form">
+                        <input matInput [ngxMatDatetimePicker]="fromdate" placeholder="From date" [disabled]="disabled"
+                          formControlName="fromdate" />
+                        <mat-datepicker-toggle matSuffix [for]="$any(fromdate)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #fromdate [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                          [touchUi]="touchUi" [enableMeridian]="enableMeridian">
+                        </ngx-mat-datetime-picker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                      <mat-form-field appearance="outline" class="me-1 filter-form">
+                        <input matInput [ngxMatDatetimePicker]="todate" placeholder="To date" [disabled]="disabled"
+                          formControlName="todate" value="todate" />
+                        <mat-datepicker-toggle matSuffix [for]="$any(todate)"></mat-datepicker-toggle>
+                        <ngx-mat-datetime-picker #todate [touchUi]="touchUi" [enableMeridian]="enableMeridian">
+                        </ngx-mat-datetime-picker>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                      <mat-form-field appearance="outline" class="me-1 filter-form">
+                        <mat-label>Select User</mat-label>
+                        <mat-select>
+                          <mat-option value="{{ item.USER_ID }}" selected (onSelectionChange)="changeUserName($event)"
+                            *ngFor="let item of userDetails.data">{{ item.USER_FULLNAME }}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <div class="">
+                <div class="row">
+                  <div class="col-sm-10">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Search</mat-label>
+                      <input matInput appearance="outline" name="searchData" #searchData />
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="user_audit_btn">
+                      <button mat-raised-button color="primary" (click)="getSearchData(searchData.value)">
+                        <mat-icon>search</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="user_details_pt">
+              <div class="table-responsive tgbg">
+                <div class="container-fluid">
+                  <div class="row">
+                    <table class="table table-hover">
+                      <thead class="hed_sec_pl">
+                        <tr>
+                          <th scope="col">User Name</th>
+                          <th scope="col">User Email</th>
+                          <th scope="col">Event Type</th>
+                          <th scope="col">Event Result</th>
+                          <th scope="col">Event Time</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngIf="auditTrail != undefined">
+                        <tr *ngFor="let item of auditTrail.data">
+                          <th scope="row">{{ item.name }}</th>
+                          <td>{{ item.email }}</td>
+                          <td>{{ item.event_type }}</td>
+                          <td>{{ item.event_result }}</td>
+                          <td>{{ item.event_time | date}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 d-flex justify-content-between align-items-center">
+                      <mat-paginator class="paginator" [length]="totalItems" [pageSize]="noOfItemPerPage"
+                        (page)="pageEvent($event)" aria-label="Select page">
+                      </mat-paginator>
+                      <div class="button-wrapper">
+                        <button mat-raised-button color="primary" class="mx-2"
+                          [disabled]="searchMode !== true && isFilter !== true"
+                          (click)="removeFiltersAndSearch()">Reset</button>
+                        <button mat-raised-button color="primary" (click)="onExport()">Export</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #downloadsWrapper class="donwloads-wrapper custom-shadow" style="max-width: 250px; width: 100%; ;padding: 10px 15px;position: fixed; bottom: 20px; left: 10px; z-index: 10; border-radius: 4px;">
+  <div mat-raised-button color="primary" style="width: 100%;" class="d-flex justify-content-between align-items-center">
+    <span>Donwloads</span>
+    <button mat-flat-button (click)="openDownloadContainer(downloadsWrapper)">
+       <mat-icon fontIcon="save-alt" style="margin-left: 10px;">keyboard_arrow_up</mat-icon>
+    </button>
+  </div>
+  <div>
+    <downloads-container (closeDownloadsContainer)="openDownloadContainer(downloadsWrapper)"  #filesWrapper *ngIf="loadDownloadsContainer"></downloads-container>
+  </div>
+</div>

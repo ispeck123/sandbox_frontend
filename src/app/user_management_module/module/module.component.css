@@ -1,0 +1,59 @@
+.project_brd{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    padding-top: 4px;
+    margin-bottom: 22px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .pro_sub h3{
+    font-size: 20px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+  }
+  .create-button{
+    padding-top: 10px;
+    position: relative;
+    bottom: 4px;
+  }
+  .tgbg{
+    box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 20px;
+    border-radius: 5px; 
+}
+.tgbg th {
+    font-weight: normal;
+    color: #444;
+}
+.table>:not(:first-child) {
+    border-top: 1px solid currentColor !important;
+}
+.table>:not(caption)>*>* {
+    padding: 0px 0.5rem;
+    background-color: var(--bs-table-bg);
+    border-bottom-width: 1px;
+    box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+    padding-bottom: 15px !important;
+    padding-top: 15px !important;
+    font-size: 13px;
+}
+.btn_rl_icon mat-icon{ 
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.user_role_btn {
+  padding-top: 10px;
+}
+.user_role_btn button {
+  padding: 3px;
+}
+.modal-header h5{
+  margin-bottom: 0px;
+}

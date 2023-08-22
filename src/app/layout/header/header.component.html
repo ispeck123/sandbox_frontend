@@ -1,0 +1,30 @@
+<mat-toolbar class="sticky-top">
+    <div class="header d-flex justify-content-between">
+        <div class="d-flex ms-3">
+            <img src="/assets/images/ispecklogo.webp" alt="ispeck-logo" [routerLink]="['/home']" style="cursor :pointer;">
+            <h1 class="pt-3 sed_text">iSpeck VA SandBox</h1>
+        </div>
+        <div class="d-flex justify-content-end me-2">
+            <div>
+                <img src="/assets/images/default.jpeg" alt="User-img">
+                <button mat-button [matMenuTriggerFor]="menu">
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+                
+           <div class="me_sec">
+                <mat-menu #menu="matMenu" class="hed_mat" style="width: 200px;">
+                    <button mat-menu-item [routerLink]="['/user-profile']">
+            <mat-icon>person</mat-icon>
+            Profile</button>
+                    <button mat-menu-item [routerLink]="['/settings']">
+            <mat-icon>settings</mat-icon>
+            Settings</button>
+                    <button mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                Logout</button>
+                </mat-menu>
+            </div>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>

@@ -1,0 +1,25 @@
+
+<div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+    <h3> Select Model Pipeline</h3>
+  </div>
+</div>
+
+<div class="user_role_assign_section">
+  <div class="container-fluid">
+    <div class="row">
+     <mat-form-field appearance="outline" *ngIf="pipelineList!= undefined">
+        <mat-label>Select Model Pipeline</mat-label>
+        <mat-select [(ngModel)]="pipeline_id">
+          <mat-option  *ngFor="let item of pipelineList" [value]="item.model_id" (onSelectionChange)="getmodelid(item.model_id)" selected >{{item.pipeline_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <span *ngIf="dropvalidate" class="error-message" style="color: red;">* Required</span>
+   
+      <div class="project_button_nt">
+        <!-- <button type="submit"  class="stepper-button" mat-raised-button color="primary" style="margin-right: 8px;">Submit</button> -->
+        <button  class="stepper-button" mat-raised-button color="primary"  (click)="routeNext(pipeline_id)">Next</button>
+    </div>
+  </div>
+</div>
+</div>

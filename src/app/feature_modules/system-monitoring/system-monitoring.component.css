@@ -1,0 +1,159 @@
+.system-details hr{
+    margin-left: 20em;
+    margin-right:20em;
+}
+
+table {
+  table-layout: fixed ;
+  width:30%;
+  border-collapse: separate;
+}
+.graph{
+  flex-basis:10% !important;
+}
+
+
+ td{
+  color:rgb(95, 93, 93);
+  font-weight:bold;
+  font-size: 1rem;
+  text-align: left;
+  white-space: nowrap;
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
+  width:47%;
+  padding-bottom:5px;
+}
+/* .system-details table tr{
+   display:block;
+   margin-bottom:10px !important;
+} */
+
+
+
+.project-container{
+  background: linear-gradient(to right, rgba(226, 253, 244, 0.4), rgba(168, 197, 190, 0.6));;;
+}
+
+.system-details h2{
+  font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+.system-details {
+  margin-bottom: 12px;
+}
+table tr td{
+
+  /* border: 1px solid red; */
+}
+.cfv canvas{
+  width: 300px !important;
+  height: 300px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.system_monitoring_sec {
+  /* height: 100%; */
+  padding-top: 95px;
+  background: #fbfbfb;
+  padding-bottom: 40px;
+}
+.system_mn{
+  /* background-color: #fff; */
+    padding-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.sys_mnt h4{
+  font-size: 18px;
+  margin-bottom: 0px;
+  padding-top: 7px;
+}
+.project_brd mat-icon{
+  position: relative;
+  top: 6px;
+  margin-right: 6px;
+}
+.project_brd {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 13px;
+  margin-bottom: 15px;
+  padding-left: 24px;
+  display: flex;
+}
+
+/* .sys_mnt {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0px;
+  margin-bottom: 22px;
+  margin-left: 32px;
+  margin-right: 32px;
+} */
+.system-details mat-card {
+  margin-bottom: 16px;
+}
+.blte{
+  width: 30px;
+  height: 12px;
+  background-color: #36a2eb;
+  margin-top: 6px;
+
+}
+.sklmwe{
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0px;
+  margin-bottom: 26px;
+  padding-left: 8px;
+  padding-top: 12px;
+}
+.redf{
+  width: 30px;
+  height: 12px;
+  background-color: #fe6384;
+  margin-top: 6px;
+}
+span.sys_mon_text {
+  font-weight: bold;
+}
+.pro_sub h3{
+  font-size: 20px;
+  color: #222;
+  padding-top: 10px;
+  font-weight: normal;
+  margin: 0px;
+  
+}
+.project_brd button{
+  box-shadow: none !important;
+  text-align: left !important;
+  background: #fbfbfb;
+  width: auto;
+  font-size: 16px;
+  margin-left: 0px;
+  padding-left: 0px;
+  border-right: 1px solid #dddd;
+  border-radius: 0px !important;
+  margin-right: 18px;
+}
+
+.graph-con mat-card{
+  margin-bottom: 15px;
+}
+
+.mnk_list_for {
+  display: flex;
+}
+.para_lkw h4 {
+  margin-bottom: 2px;
+  font-size: 13px;
+  color: #6f6f6f;
+}
+.para_lkw {
+  padding-left: 14px;
+}
+.icon_jkl mat-icon {
+  font-size: 18px;
+  padding-top: 5px;
+  color: #4a4a4a;
+}

@@ -1,0 +1,103 @@
+<app-header></app-header>
+
+<div class="user_fl_section">
+    <div class="project_brd ">
+        <button class="log-button" mat-raised-button>
+        <span [routerLink]="['/home']"><mat-icon>arrow_back</mat-icon>
+       Back to home</span>
+     </button>
+        <div class="sys_mnt">
+            <h4>Settings</h4>
+        </div>
+    </div>
+    <div class="main-layout">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="sett_sedf">
+                        <div class="system-details ">
+                            <div class="edit_icon_user_set">
+                                <button mat-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal"><mat-icon>edit</mat-icon>Edit user info</button>
+                            </div>
+                            <div class="user_section">
+                                <h4>User info</h4>
+                            </div>
+                            <div class="mnk_list_for">
+
+                                <div class="para_lkw">
+                                    <h4> Name </h4>
+                                    <p>{{temp.USER_NAME}}</p>
+                                </div>
+                            </div>
+                            <div class="mnk_list_for">
+                                <div class="para_lkw">
+                                    <h4> Email </h4>
+                                    <p> {{temp.USER_EMAIL}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="password_chg">
+                            <div class="user_section">
+                                <h4>Password change</h4>
+                            </div>
+                            <form [formGroup]="changePasswordForm" (ngSubmit)="onFormSubmit()" class="ps0128_kls">
+                                <div class="alert alert-danger" *ngIf="errorMsg" >{{errorMsg}}</div>
+                                <mat-form-field appearance="outline" class="col-12">
+                                    <mat-label>Current password</mat-label>
+                                    <input matInput matInput [type]="showCurrentPassword === true ? 'text' : 'password'" #currentPassword formControlName="currentPassword" placeholder="Enter your current password">
+                                    <mat-icon matSuffix (click)="onCurrentPasswordEyePatchClick()" >{{showCurrentPassword === true ? 'visibility' : 'visibility_off'}}</mat-icon>
+                                </mat-form-field>
+                                <span class="help-block text-danger"  *ngIf="changePasswordForm.get('currentPassword')?.invalid && changePasswordForm.get('currentPassword')?.touched">Current password cannot be empty.</span>
+                                <mat-form-field appearance="outline" class="col-12">
+                                    <mat-label>New password</mat-label>
+                                    <input matInput matInput #newPassword  [type]="showNewPassword === true ? 'text' : 'password'" formControlName="newPassword"  placeholder="Enter your new password">
+                                    <mat-icon matSuffix (click)="onNewPasswordEyePatchClick()">{{showNewPassword === true ? 'visibility' : 'visibility_off'}}</mat-icon>
+                                </mat-form-field>
+                                <span class="help-block text-danger" *ngIf="changePasswordForm.get('newPassword')?.invalid && changePasswordForm.get('newPassword')?.touched">New password must be atleas 8 characters long!</span>
+                                <div class="login_btn">
+                                    <button type="submit"  class="log-button" mat-raised-button color="primary">Save</button>
+                                    <!-- <button type="submit" class="log-button" (click)="onPassWordChangeButtonClick(currentPassword.value, newPassword.value)" mat-raised-button color="primary">Save</button> -->
+                                </div>
+                                <div class="row my-3" *ngIf="passwordChangedSuccessfully">
+                                    <div class="col-md-12">
+                                        <div class="alert alert-success">password has been changed successfully ✅</div>
+                                    </div>
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade show" id="dataModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal" aria-modal="false" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dataModal">Edit user info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Name</mat-label>
+                        <input matInput placeholder="Enter Name" >
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label> Email</mat-label>
+                        <input matInput placeholder="Enter email" >
+                    </mat-form-field>
+                </div>
+                <div class="modal-footer">
+
+                    <div class="project_button_nt">
+                        <button type="button" mat-stroked-button color="primary">Cancel</button>
+                        <button type="button" class="stepper-button mt-2" mat-raised-button color="primary">
+       Save
+    </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

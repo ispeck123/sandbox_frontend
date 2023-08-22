@@ -1,0 +1,231 @@
+<!-- <div>
+  <h2>Project Save And Deploy</h2>
+</div> -->
+<div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+        <h3>Project Save And Deploy</h3>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- <div class="col-sm-8">
+            <div class="" *ngIf="projectList != undefined">
+                <div *ngFor="let pro of this.projectList.data" class="w-100">
+                    <div>
+                        Project Name:
+                    </div>
+                    <div>{{pro.project_name}}</div>
+                    <div>Created By:</div>
+                    <div>{{pro.created_by}}</div>
+                    <div>
+                        Project Type ID
+                    </div>
+                    <div>{{pro.project_type_id}}</div>
+                </div>
+            </div>
+            <div class="placeholder_text" *ngIf="projectList == undefined">
+                Please create project first to view the project related
+            </div>
+            <div class="d-flex justify-content-between mt-1">
+                <button type="submit" class="log-button" mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal">
+                <mat-icon></mat-icon> Deploy Project
+              </button>
+            </div>
+        </div> -->
+        <div class="col-sm-12">
+            <!-- <div *ngIf="projectList != undefined">  @ Comented for creating simlpler UI logic
+                <div class="reg_secd" *ngFor="let pro of this.projectList.data">
+                    <div class="rg_section_pl">
+                        <div class="row">
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        settings_account_box
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Project Name</h4>
+                                    <p>{{pro.project_name}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        date_range
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Created By</h4>
+                                    <p>{{pro.created_by}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        view_timeline
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Project Type ID</h4>
+                                    <p>{{pro.project_type_id}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        folder_shared
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Project Type</h4>
+                                    <p>{{pro.project_type_name}}</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        update
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Last updated on</h4>
+                                    <p>{{pro.modified_on | date}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- Commt ends here -->
+            <!-- project UI Clean -->
+            <div *ngIf="projectUIData != undefined">
+                <div class="reg_secd">
+                    <div class="rg_section_pl">
+                        <div class="row">
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        settings_account_box
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Project Name</h4>
+                                    <p>{{projectUIData.project_name}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                       date_range
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Created By</h4>
+                                    <p>{{projectUIData.created_by}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        view_timeline
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Project Type Name</h4>
+                                    <p>{{projectUIData.project_type_name}}</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex" *ngIf="projectUIData.pipeline_id">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        view_timeline
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Pipeline Name</h4>
+                                    <p>{{projectUIData.pipeline_name}}</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex" *ngIf="projectUIData.pipeline_id">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        view_timeline
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>processing Type Name</h4>
+                                    <p>{{projectUIData.processing_type_name}}</p>
+                                </div>
+                            </div>
+
+
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        folder_shared
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Created On</h4>
+                                    <p>{{projectUIData.created_on | date}}</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        update
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4> Last updated on</h4>
+                                    <p>{{projectUIData.modified_on | date}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- projectUI Clean ends here  -->
+        </div>
+        <div class="placeholder_text" *ngIf="projectList == undefined">
+            Please create project first to view the project related
+        </div>
+        <div class="d-flex justify-content-between mt-1">
+            <button type="submit" class="log-button" mat-raised-button color="primary" data-bs-toggle="modal"
+                data-bs-target="#dataModal">
+                <mat-icon></mat-icon> Deploy Project
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Deploy Project Popup / Dialog -->
+<div class="modal fade show" id="dataModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Deploy Project</h5>
+                <button type="button"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="deply_btn_project">
+                    <button type="button" class="" data-bs-dismiss="modal" aria-label="Close" mat-raised-button
+                        color="primary" (click)="projectDeploy(pId)">
+                        Now
+                    </button>
+                    <button type="button" class="" data-bs-dismiss="modal" aria-label="Close" mat-raised-button
+                        color="primary" routerLink="/project-list">
+                        Later
+                    </button>
+                </div>
+                <!-- <button type="button" class="log-button mt-2" mat-raised-button color="warn" data-bs-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>

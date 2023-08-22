@@ -1,0 +1,91 @@
+<!-- <div class="back-button">
+  <button
+  class="log-button"
+  mat-raised-button
+  color="primary"
+  [routerLink]="['/home']"
+>
+<mat-icon>arrow_back</mat-icon>
+    Go Back
+</button>
+</div>
+
+<div class="sidebar d-flex flex-column">
+  <div routerLinkActive="active">
+    <a [routerLink]="['user-management/user-details']">
+      <mat-icon>emoji_people</mat-icon>
+      <span>Users</span>
+    </a>
+  </div>
+  <div routerLinkActive="active">
+    <a [routerLink]="['user-management/user-role-list']" >
+      <mat-icon>follow_the_signs</mat-icon>
+      <span>User Role List</span>
+    </a>
+  </div>
+  <div routerLinkActive="active">
+    <a [routerLink]="['user-management/user-role-assignment']">
+      <mat-icon>sports_handball</mat-icon>
+      <span>Assign User Role</span>
+    </a>
+  </div>
+  <div routerLinkActive="active">
+    <a [routerLink]="['/user-management/user-permission-list']">
+      <mat-icon>vpn_key</mat-icon>
+      <span>Permissions</span>
+    </a>
+  </div>
+  <div routerLinkActive="active">
+    <a [routerLink]="['/user-management/assign-permission']">
+      <mat-icon>lock_open</mat-icon>
+      <span>Assign Permissions</span>
+    </a>
+  </div>
+  <div routerLinkActive="active">
+    <a [routerLink]="['/user-management/module']">
+      <mat-icon>view_module</mat-icon>
+      <span>Module</span>
+    </a>
+  </div>
+  <div routerLinkActive="active">
+    <a [routerLink]="['/user-management/role-perm-map']">
+      <mat-icon>lock_person</mat-icon>
+      <span>Role Permission Map</span>
+    </a>
+  </div>
+</div>
+ -->
+
+
+ <div class="back-button">
+  <button class="log-button" mat-raised-button [routerLink]="['/home']">
+    <mat-icon>arrow_back</mat-icon>
+    Back to home
+ </button>
+</div>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation" autosize>
+      <div class="list-group">
+          <button type="button" class="list-group-item list-group-item-action" [routerLink]="['user-management/user-details']" routerLinkActive="active">
+            <mat-icon>group</mat-icon>
+            Users</button>
+          <button type="button" class="list-group-item list-group-item-action" [routerLink]="['user-management/user-role-list']" routerLinkActive="active">
+            <mat-icon>list</mat-icon>User Role List</button>
+
+          <button type="button" class="list-group-item list-group-item-action" [routerLink]="['user-management/user-role-assignment']"  routerLinkActive="active">
+            <mat-icon>assignment</mat-icon>Assign User Role</button>
+
+          <button type="button" class="list-group-item list-group-item-action" [routerLink]="['/user-management/user-permission-list']" routerLinkActive="active">
+        <mat-icon>article</mat-icon>Permissions</button>
+
+        <button type="button" class="list-group-item list-group-item-action" [routerLink]="['/user-management/assign-permission']"  routerLinkActive="active">
+          <mat-icon>assignment</mat-icon>Assign Permissions</button>
+
+          <button type="button" class="list-group-item list-group-item-action" [routerLink]="['/user-management/module']"  routerLinkActive="active">
+            <mat-icon>view_module</mat-icon>Module</button>
+
+          <button type="button" class="list-group-item list-group-item-action" [routerLink]="['/user-management/role-perm-map']"  routerLinkActive="active">
+            <mat-icon>recent_actors</mat-icon>Role Permission Map</button>
+      </div>
+  </mat-sidenav>
+</mat-sidenav-container> 

@@ -1,0 +1,152 @@
+<div class="model-create">
+    <div class="project_brd">
+        <div class="pro_sub">
+            <h3>{{isCreate ? 'Create' : 'Update'}} Model</h3>
+        </div>
+    </div>
+</div>
+<!-- <mat-card-title>Create Model</mat-card-title> -->
+<div class="container-fluid">
+    <div class="model_create_section">
+        <form [formGroup]="addModel" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-sm1-12">
+                    <mat-form-field appearance="outline" class="form-fields">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="" formControlName="model_name" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                    <mat-form-field appearance="outline" class="form-fields">
+                        <mat-label>Version</mat-label>
+                        <input matInput placeholder="" formControlName="model_version" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="form-fields" *ngIf="modelCategory != undefined" >
+                        <mat-label>Model Category</mat-label>
+                        <mat-select #id formControlName="model_category_id" required (selectionChange)="getModelType(id.value)">
+                            <mat-option [value]="modelCategory.model_category_id"
+                                *ngFor="let modelCategory of modelCategory.data">{{modelCategory.model_category_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="form-fields" *ngIf="modelType != undefined">
+                        <mat-label>Model Type</mat-label>
+                        <mat-select #frameworkid formControlName="model_type" required (selectionChange)="getFramework(frameworkid.value)">
+                            <mat-option [value]="modelType.model_type_id" *ngFor="let modelType of modelType.data">
+                                {{modelType.model_type_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="form-fields" *ngIf="algoList != undefined">
+                        <mat-label>Base Algorithm</mat-label>
+                        <mat-select #frameworkid formControlName="algo_id" required (selectionChange)="getFrameworklist(frameworkid.value)">
+                            <mat-option [value]="item.algo_id" *ngFor="let item of algoList.data">{{item.algo_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="form-fields" *ngIf="frameworkList != undefined">
+                        <mat-label>Framework</mat-label>
+                        <mat-select formControlName="framework_id" required>
+                            <mat-option *ngFor="let item of frameworkList.data" [value]="item.framework_id"
+                                (onSelectionChange)="frameWorkSelect(item.framework_id, $event)">{{item.framework_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                    <mat-form-field appearance="outline" class="form-fields" *ngIf="frameworkByID != undefined">
+                        <mat-label>Framework Version</mat-label>
+                        <input disabled matInput placeholder="" *ngFor="let item of frameworkByID.data"
+                            [value]="item.version" required />
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                    <mat-form-field appearance="outline" class="form-fields w-100">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput placeholder="" formControlName="description" required>
+                        </textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="model_cre_btn">
+                        <div class="model_create_btn">
+                            <input type="hidden" *ngIf="isNewModel" formControlName="created_by" [ngModel]="username">
+                            <input type="hidden" *ngIf="!isNewModel" formControlName="modified_by" [ngModel]="username">
+                            <button type="submit" *ngIf="showSubmitButton" class="log-button" mat-raised-button
+                                color="primary">
+                                {{isCreate ? 'Submit' : 'Update'}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- file upload section -->
+    <div id="myElement">
+    <div class="file_upload_section" [ngClass]="isNewModel === true ? 'disable-section': 'activate-section' ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="file_upd">
+                    <mat-card-title>File Upload</mat-card-title>
+                </div>
+                <form action="" [formGroup]="addFiles" enctype="multipart/form-data">
+                    <div *ngIf="artiFacts != undefined" class="w-100">
+                        <div class="mb-3 model_card_tht">
+                            <div class="row">
+                                <div class="col-sm-3" *ngFor="let artifact of artiFacts.data; let  i = index">
+                                    <mat-card>
+                                        <div class="ari_text">
+                                            <h4>{{artifact.artifacts_type_name}}</h4>
+                                        </div>
+                                        <div class="file-upload" #filename id="file_{{i}}" class="w-100">
+                                            <input type="file" class="file-input"
+                                                (change)="onFileSelection($event, artifact.artifacts_type_id, filename.id, uploadedFileNameDiplayer)"
+                                                #fileupload [id]="artifact.artifacts_type_id"
+                                                accept="{{getExtensions(fileupload.id)}}">
+                                            <button type="button" mat-mini-fab color="primary" class="upload-btn"
+                                                (click)="uploadInitiater(fileupload.id)">
+                                                <mat-icon>file_upload</mat-icon>
+                                            </button>
+                                            <p class="model_cefg" #uploadedFileNameDiplayer> {{filename.id == isMatch ?
+                                                fileName : "No file uploaded yet."}}</p>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- file upload section End -->
+    <div class="model_cre_footer">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="model_next_btn">
+                    <button class="log-button" [disabled]="disableNextBtn" mat-raised-button color="primary" (click)="setUrlData()"
+                        [routerLink]="['/model-class']" *ngIf="showNextButton">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

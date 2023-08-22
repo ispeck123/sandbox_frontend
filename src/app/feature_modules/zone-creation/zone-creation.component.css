@@ -1,0 +1,91 @@
+.btn{
+  width:80%;
+  height:65px;
+  margin:5px;
+}
+.zone_lpl{
+  padding-top: 0px !important;
+}
+.zxc_cret{
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+.zxc_cret img{
+  border-radius: 5px;
+}
+.project_brd{
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  margin-bottom: 22px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.pro_sub h3{
+  font-size: 20px;
+  color: #222;
+  padding-top: 10px;
+  font-weight: normal;
+  margin: 0px;
+}.zone_input_kl input{
+  width: 100%;
+  border: 1px solid #fff;
+}
+.zone_cre_btn button{
+width: 100%;
+}
+.draw_btn_section{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.draw_zone_section {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0px !important;
+}
+.draw_zone_section button{
+  width: 20%;
+  padding: 3px;
+
+}
+.nxt_btn_pl button{
+  width: 100%;
+  position: relative;
+  top: 8px;
+}
+.nxt_btn_pl {
+  width: 20%;
+}
+.draw_zone_section mat-icon{
+  font-size: 20px;
+}
+.zone_creation_section {
+  padding-bottom: 40px;
+}
+.zone_card_section mat-card {
+  height: 600px;
+  overflow: auto;
+}
+
+
+.zone_img_listing img{
+  width: 100%;
+  object-fit: cover;
+  height: 100px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.draw_btn_section button {
+  width: 100%;
+  padding: 4px;
+}
+
+.canvasPlaceholder {
+  position: absolute;
+  left: 0;
+  top: 0;
+}

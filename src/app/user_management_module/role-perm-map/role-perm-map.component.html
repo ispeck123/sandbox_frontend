@@ -1,0 +1,29 @@
+<div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+    <h3>Role permission Map</h3>
+  </div>
+</div>
+
+
+<div class="user_details_pt">
+  <div class="table-responsive tgbg">
+    <div class="container-fluid">
+      <div class="row">
+      <table class="table table-hover">
+        <thead class="hed_sec_pl">
+          <tr>
+            <th scope="col">Role Name</th>
+            <th scope="col">Permission Name</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="rolePermMap != undefined">
+          <tr *ngFor="let map of rolmMap">
+            <th scope="row">{{map.ROLE_NAME}}</th>
+            <td><p >{{map.PERMISSION_NAME | sanitizePermissionList }}</p></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>

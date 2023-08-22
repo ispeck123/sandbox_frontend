@@ -1,0 +1,22 @@
+
+<div class="pp_heading_text">
+  <h2>Edit modal And Related Details</h2>
+</div>
+
+<mat-dialog-content class="mat-typography">
+    <div
+      class="pipe_text_btn w-100"
+    >
+      <button
+        class="log-button mt-1 mb-1"
+        mat-raised-button
+        color="accent"
+        [routerLink]="[url]"
+        (click)="close()">
+      <mat-icon>edit</mat-icon> Modal Edit
+      </button>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,191 @@
+.pro-content::before{
+  content: 'Pipeline' !important;
+}
+
+.model-content::before{
+  content: 'Modal' !important;
+}
+
+.class-content::before{
+  content: 'Class' !important;
+}
+
+.model-content{
+  margin-bottom:15px;
+}
+
+mat-card{
+  width:100%
+}
+.pp_heading_text h2{
+  font-size: 18px;
+}
+.pp_heading_text h2 {
+  font-size: 15px;
+  font-weight: normal;
+}
+.pipe_text_btn button{
+  background-color: #673ab7;
+}
+mat-dialog-container #mat-dialog-0 {
+  width: 500px;
+}
+.project_brd{
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  padding-top: 4px;
+  margin-bottom: 22px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.pro_sub h3{
+  font-size: 20px;
+  color: #222;
+  padding-top: 10px;
+  font-weight: normal;
+  margin: 0px;
+}
+.create-button{
+  padding-top: 10px;
+  position: relative;
+  bottom: 4px;
+}
+.project_list_cricle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #d74b3b;
+  text-align: center;
+  padding-top: 13px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.user_flt {
+  float: right;
+}
+.pipeline_lsd mat-card{
+  margin-bottom: 20px;
+  padding-bottom: 32px;
+}
+
+.prj_icon mat-icon {
+  font-size: 16px;
+  color: #353535;
+  position: relative;
+  top: 2px;
+}
+.pipe_active span{
+  font-weight: 600;
+  color: #2baa12 !important;
+}
+.pipe_active {
+  float: right;
+}
+.project_heading h4 {
+  font-size: 14px;
+    margin-bottom: 1px;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.project_heading {
+  margin-bottom: 10px;
+}
+.prj_icon span {
+  font-size: 12px;
+  color: #555;
+}
+.strd_btn {
+  padding-top: 10px;
+}
+.strd_btn button {
+  width: 100%;
+  border: 1px solid #673ab7 !important;
+}
+.prj_icon {
+  font-weight: normal !important;
+  font-size: 12px;
+  color: #262626;
+}
+
+
+.avaterColor-0 {
+  background-color: #3c80bd;
+}
+
+.avaterColor-1 {
+  background-color: #48b799;
+}
+
+.avaterColor-2 {
+  background-color: #c76387;
+}
+
+.avaterColor-3 {
+  background-color: #9cab66;
+}
+
+.avaterColor-4 {
+  background-color: #30b4cc;
+}
+
+.avaterColor-5 {
+  background-color: #7173d2;
+}
+
+.avaterColor-6 {
+  background-color: #d2a771;
+}
+
+.avaterColor-7 {
+  background-color: #68b8d6;
+}
+
+.avaterColor-8 {
+  background-color: #8a8a8a;
+}
+
+.avaterColor-9 {
+  background-color: #826c6c;
+}
+
+.avaterColor-10 {
+  background-color: #348483;
+}
+
+.avaterColor-11 {
+  background-color: #5163a5;
+}
+
+
+
+.mnk_list_for {
+  display: flex;
+}
+.para_lkw h4 {
+  margin-bottom: 2px;
+  font-size: 13px;
+  color: #6f6f6f;
+}
+.para_lkw {
+  padding-left: 14px;
+}
+.icon_jkl mat-icon {
+  font-size: 18px;
+  padding-top: 5px;
+  color: #4a4a4a;
+}
+.plo_text h4 {
+  font-weight: bold;
+  color: #222;
+}
+
+.para_lkw p {
+  font-size: 15px;
+  color: #222;
+}

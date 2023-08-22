@@ -1,0 +1,177 @@
+td{
+  color:rgb(95, 93, 93);
+  font-weight:bold;
+  font-size: 1rem;
+  text-align: left;
+  white-space: nowrap;
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
+  width:47%;
+  padding-bottom:5px;
+}
+
+table {
+  table-layout: fixed ;
+  width:30%;
+  border-collapse: separate;
+}
+
+
+.project_brd{
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  padding-top: 4px;
+  margin-bottom: 22px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.pro_sub h3{
+  font-size: 18px;
+  color: #222;
+  padding-top: 10px;
+  font-weight: normal;
+  margin: 0px;
+  padding-bottom: 10px;
+}
+.edit_icon_user_set {
+  float: right;
+}
+.user_fl_section {
+  padding-top: 84px;
+  background: #fbfbfb;
+  min-height: 100vh;
+
+}
+.system_monitoring_sec {
+  /* height: 100%; */
+  padding-top: 95px;
+  background: #fbfbfb;
+}
+.system_mn{
+    padding-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.sys_mnt h4{
+  font-size: 18px;
+  margin-bottom: 0px;
+  padding-top: 7px;
+}
+.project_brd mat-icon{
+  position: relative;
+  top: 6px;
+  margin-right: 6px;
+}
+.project_brd {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 13px;
+  margin-bottom: 5px;
+  padding-left: 24px;
+  display: flex;
+}
+.project_brd button{
+  box-shadow: none !important;
+  text-align: left !important;
+  background: #fbfbfb;
+  width: auto;
+  font-size: 16px;
+  margin-left: 0px;
+  padding-left: 0px;
+  border-right: 1px solid #dddd;
+  border-radius: 0px !important;
+  margin-right: 18px;
+}
+.graph-con mat-card{
+  margin-bottom: 15px;
+}
+
+.user_section h4 {
+  font-size: 15px;
+  font-weight: bold;
+  color: #222;
+}
+.user_section {
+  margin-bottom: 12px;
+}
+.login_btn {
+  padding-top: 5px;
+}
+.mnk_list_for {
+  display: flex;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.para_lkw h4 {
+  margin-bottom: 2px;
+  font-size: 13px;
+  color: #6f6f6f;
+}
+.user_profile_pic {
+  margin-bottom: 22px;
+}
+
+
+.para_lkw {
+  padding-left: 14px;
+}
+.icon_jkl mat-icon {
+  font-size: 18px;
+  padding-top: 8px;
+  color: #4a4a4a;
+}
+.system-details {
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 12px;
+}
+.user_profile_pic img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #f5f5f5;
+}
+.edit_icon_user_set mat-icon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+.password_chg {
+  padding-left: 13px;
+  padding-right: 15px;
+  padding-top: 12px;
+}
+.sett_sedf {
+  background: #fff;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+/* .project_button_nt {
+  text-align: right;
+  margin-right: 5px;
+} */
+.project_button_nt button {
+  margin-right: 8px;
+  width: 130px;
+}
+/* .project_button_nt {
+  padding-bottom: 30px;
+} */
+
+
+.my-toast {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  /* transform: translateX(-200px); */
+  animation: fadeIn 0.54s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateX(-400px);
+  } to {
+    transform: translateX(20px);
+  }
+}

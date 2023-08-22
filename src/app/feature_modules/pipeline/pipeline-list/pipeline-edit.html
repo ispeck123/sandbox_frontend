@@ -1,0 +1,25 @@
+<div class="pipeline_edit_plk">
+  <div class="pp_heading_text">
+     <h2>Edit pipeline and related details</h2>
+</div>
+<!-- And Related Details -->
+<mat-dialog-content class="mat-typography">
+    <div
+      class="pipe_text_btn w-100">
+      <button
+        class="log-button mt-1 mb-1"
+        mat-raised-button
+        color="accent"
+        [routerLink]="[url]"
+        (click)="close()">
+        <mat-icon>edit</mat-icon>
+        Pipeline Edit
+      </button>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>
+</div>

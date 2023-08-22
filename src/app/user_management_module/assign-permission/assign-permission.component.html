@@ -1,0 +1,51 @@
+<div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+    <h3>User Permission Assignment</h3>
+  </div>
+</div>
+<div class="user_role_assign_section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <form [formGroup]="addRole" (ngSubmit)="assignPermission()">
+
+          <mat-form-field appearance="outline" *ngIf="roleDetails != undefined">
+            <mat-label>Select Role</mat-label>
+            <mat-select formControlName="userid">
+              <mat-option *ngFor="let roles of roleDetails.data" value="{{roles.ROLE_ID}}" selected>{{roles.ROLE_NAME}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <input type="hidden" formControlName="type" [ngModel]="role">
+          <mat-form-field appearance="outline" *ngIf="moduleList != undefined">
+            <mat-label>Select Module</mat-label>
+            <mat-select>
+              <mat-option>Select Module</mat-option>
+              <mat-option [value]="item.PER_MODULE_HASH_ID" (onSelectionChange)="getPermData(item.PER_MODULE_HASH_ID)"
+                selected *ngFor="let item of moduleList.data">{{item.MODULE_NAME}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="d-flex justify-content-start align-items-center  flex-row flex-wrap checkbox"
+            *ngIf="permissionDetails != undefined">
+            <mat-label formArrayName="PERMISSION" *ngFor="let permission of permArray.controls; let i = index"
+              class="w-50">
+              <mat-checkbox class="input-check me-2" type="checkbox"
+                *ngIf="permission != null && permissionDetails.data[i].PERMISSION_NAME != undefined"
+                [formControlName]="i" [checked]="checked">
+                {{ permissionDetails.data[i].PERMISSION_NAME}}
+              </mat-checkbox>
+            </mat-label>
+            <mat-checkbox class="input-check me-2" *ngIf="permissionDetails != undefined" (change)="selectAll()"> All
+            </mat-checkbox>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="log-button" mat-raised-button color="primary">
+              <mat-icon>save_alt</mat-icon> Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

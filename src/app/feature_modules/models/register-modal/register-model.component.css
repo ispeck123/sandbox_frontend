@@ -1,0 +1,90 @@
+.pro-content::before {
+    content: 'Modal' !important;
+}
+
+.project_brd {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    padding-top: 7px;
+    margin-bottom: 22px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.pro_sub h3 {
+    font-size: 18px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+}
+
+span.mdf_hg {
+    color: #673ab7;
+}
+
+span.create_icon mat-icon {
+    font-size: 18px;
+    position: relative;
+    top: 3px;
+}
+
+.reg_heading h4 {
+    margin-bottom: 2px;
+    font-size: 13px;
+    color: #6f6f6f;
+}
+
+.reg_heading {
+    margin-left: 14px;
+}
+
+.reg_secd {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.regis_name_text mat-icon {
+    font-size: 20px;
+    padding-top: 5px;
+    color: #4a4a4a;
+}
+
+.user_role_btn {
+    padding-top: 10px;
+}
+
+.user_role_btn button {
+    padding: 3px;
+}
+
+.modal-header h5 {
+    margin-bottom: 0px;
+}
+
+.regist_section button {
+    width: 100%;
+}
+
+.btn_plsa {
+    margin-bottom: 10px;
+}
+
+.btn_plsa button {
+    padding: 3px;
+}
+
+.user_role_btn {
+    padding-top: 10px;
+}
+
+.user_role_btn button {
+    padding: 3px;
+}
+
+.modal-header h5 {
+    margin-bottom: 0px;
+}

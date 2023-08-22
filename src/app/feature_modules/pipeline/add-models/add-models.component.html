@@ -1,0 +1,95 @@
+<!-- <div>
+  <h2>Pipeline</h2>
+</div> -->
+
+<div class="">
+    <div class="project_brd">
+        <div class="pro_sub d-flex justify-content-between">
+            <h3>Add Model</h3>
+            <button *ngIf="addmodel" mat-raised-button color="primary" (click)="addModelToList()"
+                [hidden]="buttonvisibles">
+                <mat-icon style="font-size: 20px;font-weight: bold;padding-bottom: 28px;">+</mat-icon>
+                Add Model
+            </button>
+        </div>
+    </div>
+
+    <div class="add_mdlg ">
+        <!-- <form [formGroup]="attachModel" (ngSubmit)="addModel()"> -->
+            <form [formGroup]="attachModel">
+            <mat-form-field appearance="outline" *ngIf="modelList != undefined">
+                <mat-label>Select Model</mat-label>
+                <mat-select formControlName="model_ids">
+                    <mat-option [value]="item.model_id" selected *ngFor="let item of modelList.data; let i = index">
+                        {{item.model_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="add_modal_chip">
+                <mat-chip-list aria-label="Fish selection">
+                    <mat-chip #select="matChip" *ngFor="let items of modellist;let i=index">
+                        <span> {{items}}</span>
+                        <mat-icon class="pe-4 cfg" (click)="removeModel(i)">cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <mat-divider class="my-2"></mat-divider>
+            <!-- Already Existing models -->
+            <div class="add_modal_chip mx-2" *ngIf="this.isCreate">
+                <div class="head_prt_section">
+                    <h3>Added Models</h3>
+                </div>
+                <mat-chip-list aria-label="Fish selection" class="py-2">
+                    <!-- <mat-chip #select="matChip" *ngFor="let items of modellist;let i=index"> -->
+                    <mat-chip #select="matChip" class="existingModelChip" *ngFor="let model of modelListByPipeline">
+                        <span> {{model.model_name}}</span>
+                        <button class="ms-auto option-btn" mat-icon-button aria-label="option menu" #moreClassOptionsBtn
+                            [matMenuTriggerFor]="menu">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item data-bs-toggle="modal" (click)="editmodel(model.model_id)">
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item (click)="openDeleteDialog(model.model_id, model.model_name)">
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <!-- Already Existing models ends here  -->
+
+            <div class="d-flex project_btn">
+                <button type="submit" class="stepper-button" mat-raised-button color="primary"
+                    style="margin-right: 10px;" [hidden]="buttonvisibles" (click)="addModel()">Submit</button>
+                <button class="stepper-button" mat-raised-button color="primary" [routerLink]="['/save-pipeline']"
+                    [hidden]="!buttonvisibles">Next </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delet Model Dialog -->
+<div class="modal fade" #deleteModal id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+                <!-- <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" >&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button type="button" mat-raised-button class="btn btn-secondary mx-2" data-dismiss="modal"
+                    (click)="closeDeleteDialog()">Close</button>
+                <button type="button" mat-raised-button class="btn btn-secondary deleteBtn" color=primary
+                    data-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

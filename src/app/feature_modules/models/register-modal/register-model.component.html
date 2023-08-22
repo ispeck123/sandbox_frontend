@@ -1,0 +1,163 @@
+<!-- <div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+  <h3>Register Model</h3>
+</div>
+</div> -->
+
+<div class="project_brd">
+    <div class="pro_sub d-flex justify-content-between">
+        <h3>
+            <span class="create_icon" [routerLink]="['/model-create']">Create Model
+              <mat-icon class="material-symbols-outlined">
+             chevron_right
+             </mat-icon>
+    </span>
+            <span class="create_icon" [routerLink]="['/model-class']">
+          Create Model Class <mat-icon class="material-symbols-outlined">chevron_right</mat-icon>
+       </span>
+            <span class="create_icon"> Model Verify
+         <mat-icon class="material-symbols-outlined">
+          chevron_right
+          </mat-icon>
+        </span>
+            <span class="mdf_hg">Register model</span>
+        </h3>
+    </div>
+</div>
+
+<!-- <mat-card-title>Project Details</mat-card-title> -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <div *ngIf="modalListById != undefined">
+                <div class="reg_secd" *ngFor="let modal of mData">
+                    <div class="rg_section_pl">
+                        <div class="row">
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        model_training
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Model Name</h4>
+                                    <p>{{ modal.model_name }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        person
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Created By</h4>
+                                    <p>{{ modal.created_by }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        perm_contact_calendar
+                                    </mat-icon>
+                                </div>
+
+                                <div class="reg_heading">
+                                    <h4>Algorithm Name</h4>
+                                    <p>{{ modal.algo_name }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        format_list_bulleted
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Model Type Name</h4>
+                                    <p>{{ modal.model_type_name }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        format_list_bulleted
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Framework</h4>
+                                    <p>{{ modal.framework_name }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        format_list_bulleted
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Model Registration</h4>
+                                    <p>{{ modal.is_registred ? 'Registered' : 'Not Registered' }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        format_list_bulleted
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Model Version</h4>
+                                    <p>{{ modal.model_version }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="regis_name_text">
+                                    <mat-icon class="material-symbols-outlined">
+                                        format_list_bulleted
+                                    </mat-icon>
+                                </div>
+                                <div class="reg_heading">
+                                    <h4>Model Verification</h4>
+                                    <p>{{ modal.is_verified ? 'Verified' : 'Not Verified' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="modalListById == undefined">
+                Model details can only be viewed when model is created.
+            </div>
+            <div class="d-flex justify-content-between mt-1">
+                <button type="submit" class="log-button" mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal">
+                Register Model
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show" id="dataModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal" aria-modal="false" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Register Model</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="regist_section">
+                    <div class="btn_plsa">
+                        <button type="button" class="" mat-raised-button color="primary" data-bs-dismiss="modal" (click)="registerModal(modelId)">
+                            Now
+                        </button>
+                    </div>
+                    <div class="btn_plsa">
+                        <button type="button" mat-raised-button color="primary" data-bs-dismiss="modal" aria-label="Close" (click)="registerLater()">
+                            Later
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

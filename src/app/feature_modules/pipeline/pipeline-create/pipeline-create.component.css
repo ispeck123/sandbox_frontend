@@ -1,0 +1,42 @@
+.project_brd{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    margin-bottom: 12px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  .pro_sub h3{
+    font-size: 20px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+  }
+  .project_btn button{
+    width: 150px;
+    padding: 3px;
+    text-align: center;
+    font-size: 15px;
+}
+.project_btn {
+    float: right;
+}
+.project_btn button mat-icon{
+    font-size: 19px;
+}
+.pipe_seda{
+  padding-left: 3px;
+}
+.frem_skp{
+  border-bottom: 1px solid #ddd;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+}
+.trrk_plt {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+  margin-bottom: 16px;
+}

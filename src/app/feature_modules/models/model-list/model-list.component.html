@@ -1,0 +1,154 @@
+<div class="project-list-section">
+    <div class="project_brd">
+        <div class="pro_sub d-flex justify-content-between">
+            <h3>Model List</h3>
+            <div class="create-button">
+                <button mat-raised-button color="primary" [routerLink]="['/model-create']" (click)="setEditModelUrlForClass('/model-create')">
+                    <mat-icon>add</mat-icon>
+                    Create Model
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="project_list_card">
+            <div *ngIf="modalList != undefined">
+                <div class="row">
+                    <div class="col-sm-3" *ngFor="let item of modalList.data; let i=index;">
+                        <mat-card>
+                            <div class="user_flt">
+                                <button class="ms-auto option-btn" mat-icon-button aria-label="option menu"
+                                    [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_horiz</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <!-- <button mat-menu-item (click)=" fetchModalById(item.model_id, 'edit')">
+                                        <span> Edit</span>
+                                    </button> -->
+                                    <button mat-menu-item routerLink="/modal-edit/{{item.model_id}}" (click)="setEditModelUrlForClass('/model-edit')">
+                                        <span> Edit</span>
+                                    </button>
+                                    <button mat-menu-item (click)=" fetchModalById(item.model_id, 'details')">
+                                        <span>Details </span>
+                                    </button>
+                                    <button mat-menu-item (click)="deleteDialog(item.model_id)">
+                                        <span>Delete</span>
+                                    </button>
+                                </mat-menu>
+                            </div>
+
+
+                            <div class="project_list_cricle avaterColor-{{colorVariation(i)}}">
+                                <h4>{{createAvaterName(item.model_name | uppercase)}}</h4>
+                            </div>
+                            <div class="project_heading">
+                                <h4>{{item.model_name}}</h4>
+                            </div>
+                            <div class="prj_icon">
+                                <mat-icon class="material-symbols-outlined">conversion_path </mat-icon>
+                                <span>{{item.model_version}} </span>
+                            </div>
+
+                            <div class="prj_icon">
+                                <mat-icon class="material-symbols-outlined">format_list_bulleted </mat-icon>
+                                <span> {{item.model_type}} </span>
+                            </div>
+
+                            <div class="prj_icon">
+                                <mat-icon class="material-symbols-outlined">person </mat-icon>
+
+                                <span>{{item.created_by}}</span>
+                            </div>
+                            <div class="strd_btn">
+                                <button type="submit" class="stepper-button" mat-stroked-button color="primary"
+                                    data-bs-toggle="modal" data-bs-target="#dataModal"
+                                    [disabled]="item.is_registered ? true : false" (click)=" setModelId(item.model_id)">
+                                    {{item.is_registered ? 'Registered' : 'Register'}}
+                                </button>
+                                <!-- <button type="button" class="stepper-button" mat-raised-button color="primary" (click)=" fetchModalById(item.model_id, 'details')" >Details</button>
+        <button class="stepper-button" mat-raised-button color="primary" (click)=" fetchModalById(item.model_id, 'edit')" >Edit</button> -->
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="modalList == undefined || listdata.length==0">
+                <div class="col-sm-12">
+                    <div class="pce_hml_text">
+                        <div class="gtr_plc">
+                            <div class="plt_hlr">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                                    width="512" height="512" x="0" y="0" viewBox="0 0 24 24"
+                                    style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                    <g>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m12 12c-.059 0-.117-.01-.173-.031l-9.5-3.5c-.197-.072-.327-.26-.327-.469s.131-.397.328-.469l6.5-2.39c.258-.094.547.038.642.297s-.038.546-.297.642l-5.225 1.92 8.052 2.967 8.052-2.967-5.225-1.921c-.259-.095-.392-.383-.297-.642s.383-.391.642-.297l6.5 2.39c.197.073.328.261.328.47s-.13.397-.327.469l-9.5 3.5c-.056.021-.114.031-.173.031z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m12 24c-.059 0-.117-.01-.172-.031l-5.31-1.95c-.259-.095-.392-.382-.297-.642.095-.259.383-.392.642-.297l5.137 1.887 5.138-1.887c.259-.096.546.038.642.297.095.259-.038.546-.297.642l-5.31 1.95c-.056.021-.114.031-.173.031z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m2.5 17.76c-.276 0-.5-.224-.5-.5v-9.26c0-.276.224-.5.5-.5s.5.224.5.5v9.26c0 .276-.224.5-.5.5z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m21.5 17.76c-.276 0-.5-.224-.5-.5v-9.26c0-.276.224-.5.5-.5s.5.224.5.5v9.26c0 .276-.224.5-.5.5z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m12 8c-.276 0-.5-.224-.5-.5v-4c0-.276.224-.5.5-.5s.5.224.5.5v4c0 .276-.224.5-.5.5z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m20.94 21.44c-.128 0-.256-.049-.354-.146l-2.44-2.44c-.195-.195-.195-.512 0-.707s.512-.195.707 0l2.44 2.44c.195.195.195.512 0 .707-.097.097-.225.146-.353.146z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m3.06 21.44c-.128 0-.256-.049-.354-.146-.195-.195-.195-.512 0-.707l2.44-2.44c.195-.195.512-.195.707 0s.195.512 0 .707l-2.44 2.44c-.097.097-.225.146-.353.146z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m12 24c-.276 0-.5-.224-.5-.5v-12c0-.276.224-.5.5-.5s.5.224.5.5v12c0 .276-.224.5-.5.5z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m12 4c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm0-3c-.551 0-1 .449-1 1s.449 1 1 1 1-.449 1-1-.449-1-1-1z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m22 24c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm0-3c-.551 0-1 .449-1 1s.449 1 1 1 1-.449 1-1-.449-1-1-1z"
+                                            fill="#000000" data-original="#000000"></path>
+                                        <path xmlns="http://www.w3.org/2000/svg"
+                                            d="m2 24c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm0-3c-.551 0-1 .449-1 1s.449 1 1 1 1-.449 1-1-.449-1-1-1z"
+                                            fill="#000000" data-original="#000000"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="rgt_ted">
+                                <h3> No model list yet</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show " id="dataModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+    aria-modal="false" role="dialog">
+    <div class="modal-dialog  modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dataModal">Register Modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="btn_plsa">
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="" mat-raised-button
+                        color="primary" (click)="registerModal(modelId)">
+                        Now
+                    </button>
+                    <button type="button" data-bs-dismiss="modal" aria-label="Close" class="" mat-raised-button
+                        color="primary">
+                        Later
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

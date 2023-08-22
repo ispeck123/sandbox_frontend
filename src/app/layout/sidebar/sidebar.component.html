@@ -1,0 +1,61 @@
+<!-- <div class="back-button">
+  <button
+  class="log-button"
+  mat-raised-button
+  color="primary"
+  [routerLink]="['/home']"
+>
+<mat-icon>arrow_back</mat-icon>
+    Go Back
+</button>
+</div> -->
+<!-- 
+<div class="sidebar d-flex flex-column">
+    <div routerLinkActive="active">
+        <a [routerLink]="['project-list']">
+            <mat-icon>folder</mat-icon>
+            <span>Projects</span>
+        </a>
+    </div>
+    <div routerLinkActive="active">
+        <a [routerLink]="['model-list']">
+            <mat-icon>theaters</mat-icon>
+            <span>Models</span>
+        </a>
+    </div>
+    <div routerLinkActive="active">
+        <a [routerLink]="['alert-list']">
+            <mat-icon>add_alert</mat-icon>
+            <span>Alerts</span>
+        </a>
+    </div>
+    <div routerLinkActive="active">
+        <a [routerLink]="['pipeline']">
+            <mat-icon>sports_hockey</mat-icon>
+            <span>Pipeline</span>
+        </a>
+    </div>
+</div> -->
+<div class="back-button">
+    <button class="log-button" mat-raised-button [routerLink]="['/home']">
+      <mat-icon>arrow_back</mat-icon>
+      Back to home
+   </button>
+  </div>
+ <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation" autosize>
+        <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action" [routerLink]="['project-list']" routerLinkActive="active">
+        <mat-icon>folder</mat-icon>Projects</button>
+
+            <button type="button" class="list-group-item list-group-item-action" [routerLink]="['model-list']" routerLinkActive="active">
+        <mat-icon>theaters</mat-icon>Models</button>
+
+            <button type="button" class="list-group-item list-group-item-action" [routerLink]="['alert-list']" routerLinkActive="active">
+        <mat-icon>add_alert</mat-icon>Alerts</button>
+
+            <button type="button" class="list-group-item list-group-item-action" [routerLink]="['pipeline']" routerLinkActive="active">
+          <mat-icon>sports_hockey</mat-icon>Pipeline</button>
+        </div>
+    </mat-sidenav>
+</mat-sidenav-container> 

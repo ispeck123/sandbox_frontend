@@ -1,0 +1,58 @@
+<div class="project_brd">
+  <div class="pro_sub d-flex justify-content-between">
+    <h3> <span class="create_icon" [routerLink]="['/model-create']"> {{ getUI() }} Model <mat-icon
+          class="material-symbols-outlined">
+          chevron_right
+        </mat-icon> </span>
+
+      <span class="create_icon" [routerLink]="['/model-class']"> Model Class <mat-icon
+          class="material-symbols-outlined">
+          chevron_right
+        </mat-icon> </span>
+      <span class="mdf_hg"> Model Verify</span>
+    </h3>
+  </div>
+</div>
+
+<!-- Uncomment it after solving the previous error -->
+<div class="model_verfi_sec">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="model-vb">
+          <form action="">
+            <div class="col-sm-8">
+              <div class="mod_heading_gh">
+                <h1>What is Lorem Ipsum?</h1>
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make 
+                  a type specimen book. It has survived not only five centuries...
+                </p>
+                <button type="submit" class="log-button mt-3" mat-raised-button color="primary" (click)="projectDeploy(pId)">
+                  <mat-icon>check_circle</mat-icon> Deploy project 
+                </button>
+                <div class="col mt-4">
+                  <h1>What is Lorem Ipsum?</h1>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make 
+                    a type specimen book. It has survived not only five centuries...
+                  </p>
+                </div>
+                <button class="stepper-button mt-3 w-100" [disabled]="!isModelVerified" mat-raised-button color="primary"
+                  [routerLink]="['/register-modal']">
+                  Register Model
+                </button>
+              </div>
+            </div>
+            <!-- <div class="col-sm-6">
+              <div class="mod_heading_gh">
+              </div>
+            </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

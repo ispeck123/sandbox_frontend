@@ -1,0 +1,185 @@
+.category {
+    flex-basis: 100%;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    margin-top: 4px;
+    padding-left: 0;
+}
+
+:host ::ng-deep mat-form-field .mat-form-field-outline-start {
+    background-color: white !important;
+}
+
+:host ::ng-deep mat-form-field .mat-form-field-outline-gap {
+    background-color: white !important;
+}
+
+:host ::ng-deep mat-form-field .mat-form-field-outline-end {
+    background-color: white !important;
+}
+
+h1 {
+    font-weight: 500;
+}
+
+.user_del_btn{
+    float: right;
+    display: inline-flex;
+}
+.user_del_btn button {
+    margin: 6px;
+}
+/* .chips{
+  min-width:200px;
+  background-color:#673ab7;
+  border-radius:10%/50%;
+  padding:10px;
+  color:#fff;
+} */
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #ffffff !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: #918f96 !important;
+}
+
+.attr-holder {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.attrVal {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.disable-div {
+    color: #918f96;
+    cursor: no-drop;
+}
+
+.project_brd {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 9px;
+    padding-top: 8px;
+    margin-bottom: 22px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.pro_sub h3 {
+    font-size: 18px;
+    color: #222;
+    padding-top: 10px;
+    font-weight: normal;
+    margin: 0px;
+}
+
+.create-button {
+    padding-top: 10px;
+    position: relative;
+    bottom: 4px;
+}
+
+.add_model_sec mat-card {
+    margin-bottom: 12px;
+}
+
+.fls_sec {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    margin-left: 4px;
+    margin-right: 8px;
+}
+
+.dfrt {
+    margin-right: 1px;
+    font-size: 18px;
+    position: relative;
+    margin-top: 6px;
+}
+
+.add_sd_btn {
+    float: right;
+}
+
+.mdf_sdf {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mdf_sdf mat-chip-list {
+    margin-right: 20px;
+    margin-bottom: 12px;
+}
+
+.user_flt mat-icon {
+    position: relative;
+    bottom: 2px;
+}
+
+.project_button_nt {
+    text-align: right;
+    margin-right: 5px;
+}
+
+.project_button_nt button {
+    width: 10%;
+    margin-right: 8px;
+}
+
+.project_button_nt {
+    padding-bottom: 30px;
+}
+
+.user_role_btn {
+    padding-top: 10px;
+}
+
+.user_role_btn button {
+    padding: 3px;
+}
+
+.modal-header h5 {
+    margin-bottom: 0px;
+}
+
+.no-select {
+    user-select: none;
+    pointer-events: none;
+}
+.sdf_text h4 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    width: 100%;
+}
+.cvbqwe{
+    display: flex;
+    width: 100%;
+}
+.orplk{
+    position: relative;
+    bottom: 8px;
+    margin-left: 5px;
+}
+.orplk mat-icon{
+    color: #222;
+}
+/* .mdf_sdf .user_flt{
+    display: none;
+}
+.mdf_sdf .user_flt mat-chip:hover{
+    display: block;
+} */
