@@ -38,7 +38,7 @@ export class ZoneDataService {
     this.data = {
       zone_coordinates: coordinates,
       created_by: uid,
-      file_id: this.fileid,
+      // file_id: this.fileid,
       source_id: this.sourcesessionid
     };
     const payload = this.data;
@@ -54,7 +54,7 @@ export class ZoneDataService {
       zone_id: 14,
       zone_coordinates: coordinates,
       modified_by: uid,
-      file_id: this.fileid,
+      // file_id: this.fileid,
       source_id: this.sourcesessionid
     }
 

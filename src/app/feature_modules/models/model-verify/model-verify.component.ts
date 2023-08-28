@@ -115,35 +115,60 @@ export class ModelVerifyComponent implements OnInit {
     }
   
     this._apiSubscription = this.projectData.projectDeploy(projectId)
-      .subscribe(
-        respArray => {
-          console.log('Project deploy response:', respArray);
+    .subscribe(
+      respArray => {
+        console.log('Project deploy response:', respArray);
+
+        if (respArray.response.project_deploy.inference_url) {
+          const sanitizedURL = encodeURI(respArray.response.project_deploy.inference_url);
+          const newWindow = window.open(sanitizedURL, '_blank');
           this.router.navigateByUrl("/project-list");
-          if(respArray.data.msg == 'Success') {
-                    this.audit.addAudit('userAuditLog',payload)
-                    .subscribe(respArray=>{
-                        console.log(respArray)
-                       
-                      })
-                  }
-                  else
-                  {
-                    alert(respArray.data.response.project_deploy.reason[0]);
-                    payload.Effect="Project deploy failed";
-                      payload.Status=0;
-                      this.audit.addAudit('userAuditLog',payload).subscribe(
-                        respArray=>{
-                          console.log(respArray)
-                        }
-                      )
-                  }
-          // Handle the response here
-        },
-        error => {
-          console.error('Error during project deploy:', error);
-          // Handle the error here
+      
+          if (newWindow) {
+
+           
+          } else {
+            
+          }
         }
-      );
+  
+        // if (respArray.response.project_deploy.inference_url) {
+        //   // Show an alert with the inference URL
+        //   alert(respArray.response.project_deploy.inference_url);
+  
+        //   // Open the URL in a new window
+        //   window.open(respArray.response.project_deploy.inference_url, '_blank');
+        // }
+  
+        // if (respArray.msg == 'Success') {
+        //   this.audit.addAudit('userAuditLog', payload)
+        //     .subscribe(auditResponse => {
+        //       console.log('Audit response:', auditResponse);
+        //       // Further handling if needed
+        //     });
+        // } 
+        else {
+          if (respArray.response.project_deploy.reason[0]) {
+            alert(respArray.response.project_deploy.reason[0]);
+          }
+  
+          payload.Effect = "Project deploy failed";
+          payload.Status = 0;
+          this.audit.addAudit('userAuditLog', payload)
+            .subscribe(auditResponse => {
+              console.log('Audit response:', auditResponse);
+              // Further handling if needed
+            });
+        }
+  
+        // Handle other parts of the response here if necessary
+      },
+      error => {
+        console.error('Error during project deploy:', error);
+        // Handle the error here
+      }
+    );
+  
   }
 
 }

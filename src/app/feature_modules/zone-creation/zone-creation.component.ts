@@ -631,7 +631,7 @@ startDrawing (e: any) {
     }[],
     createdBy: string, 
     source_id: number, 
-    file_id: number
+    // file_id: number
   };
   //   payloadToSend.zoneCoordinates = this.zoneCoordinates;
   //   payloadToSend.createdBy = this.getToken.getUser_name();
