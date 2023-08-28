@@ -20,6 +20,9 @@ export class DeployProjectComponent implements OnInit ,OnDestroy{
   projectUIData!: any;
   pId!: any;
   private _apiSubscription! : Subscription;
+item: any;
+projectId!: number;
+pro_id!: number;
 
   constructor(private projectData: ProjectDataService, 
     private tkService : GetTokenService,
@@ -29,6 +32,7 @@ export class DeployProjectComponent implements OnInit ,OnDestroy{
   ngOnInit(): void {
     //  this.pId = this.tkService.getProjectId();
     this.pId=localStorage.getItem("pro_id")
+    alert(this.pId)
      this.getProjectsById(this.pId);
      this.audit.addUrlAudit('userAuditLog');
   }
@@ -59,47 +63,101 @@ export class DeployProjectComponent implements OnInit ,OnDestroy{
     })
 }
 
-  projectDeploy(id:number){
-    const payload= {
-      Id     : this.tkService.getUser_id(),
-      Type   : 'Deploy Project',
-      Effect : 'Project deployed successfully',
-      Status : 1,
-    }
+//   projectDeploy(id:number){
+//     const payload= {
+//       Id     : this.tkService.getUser_id(),
+//       Type   : 'Deploy Project',
+//       Effect : 'Project deployed successfully',
+//       Status : 1,
+//     }
 
-    this.projectData.projectDeploy('projectDeploy', localStorage.getItem("pr_id")!)
-    .subscribe((respArray:any) => {
-      alert('ProjectDeploy')
-      console.clear();
-      console.log(respArray, respArray.data.msg);
-      if(respArray.data.msg == 'Success') {
-        this.audit.addAudit('userAuditLog',payload)
-        .subscribe(respArray=>{
-            console.log(respArray)
-          })
-          setTimeout(() => {
-            this.router.navigateByUrl("/project-list");
-          }, 5000);
-      }
-      else
-      {
-        alert(respArray.data.response.project_deploy.reason[0]);
-        payload.Effect="Project deploy failed";
-          payload.Status=0;
-          this.audit.addAudit('userAuditLog',payload).subscribe(
-            respArray=>{
-              console.log(respArray)
-            }
-          )
-      }
-      // this.closebutton.nativeElement.click();
-       //this.projectDepData = respArray;
-       //alert(this.projectDepData.status)
-    })
+//     this.projectData.projectDeploy('projectDeploy', localStorage.getItem("pr_id")!)
+//     .subscribe((respArray:any) => {
+//       alert('ProjectDeploy')
+//       console.clear();
+//       console.log(respArray, respArray.data.msg);
+//       if(respArray.data.msg == 'Success') {
+//         this.audit.addAudit('userAuditLog',payload)
+//         .subscribe(respArray=>{
+//             console.log(respArray)
+//           })
+//           setTimeout(() => {
+//             this.router.navigateByUrl("/project-list");
+//           }, 5000);
+//       }
+//       else
+//       {
+//         alert(respArray.data.response.project_deploy.reason[0]);
+//         payload.Effect="Project deploy failed";
+//           payload.Status=0;
+//           this.audit.addAudit('userAuditLog',payload).subscribe(
+//             respArray=>{
+//               console.log(respArray)
+//             }
+//           )
+//       }
+//       // this.closebutton.nativeElement.click();
+//        //this.projectDepData = respArray;
+//        //alert(this.projectDepData.status)
+//     })
+//   }
+
+//   ngOnDestroy() {
+//     this._apiSubscription.unsubscribe();
+//   }
+
+// }
+
+
+projectDeploy(id: number) {
+  const payload= {
+          Id     : this.tkService.getUser_id(),
+          Type   : 'Deploy Project',
+          Effect : 'Project deployed successfully',
+          Status : 1,
+        }
+  const projectId = localStorage.getItem('pro_id');
+  
+  if (!projectId) {
+    console.log('Project ID not available.');
+    return;
   }
 
-  ngOnDestroy() {
+  this._apiSubscription = this.projectData.projectDeploy(projectId)
+    .subscribe(
+      respArray => {
+        console.log('Project deploy response:', respArray);
+        this.router.navigateByUrl("/project-list");
+        if(respArray.data.msg == 'Success') {
+                  this.audit.addAudit('userAuditLog',payload)
+                  .subscribe(respArray=>{
+                      console.log(respArray)
+                     
+                    })
+                }
+                else
+                {
+                  alert(respArray.data.response.project_deploy.reason[0]);
+                  payload.Effect="Project deploy failed";
+                    payload.Status=0;
+                    this.audit.addAudit('userAuditLog',payload).subscribe(
+                      respArray=>{
+                        console.log(respArray)
+                      }
+                    )
+                }
+        // Handle the response here
+      },
+      error => {
+        console.error('Error during project deploy:', error);
+        // Handle the error here
+      }
+    );
+}
+
+ngOnDestroy() {
+  if (this._apiSubscription) {
     this._apiSubscription.unsubscribe();
   }
-
+}
 }

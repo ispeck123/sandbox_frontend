@@ -123,10 +123,19 @@ export class ProjectDataService {
   //   return this.http.post<any>(fastapi+'project/deploy' + '/' + id, { headers });
   // }
   
-  projectDeploy(url: string , id : number | string){
-    const headers = this.getToken.getLocalToken();
-    let payload:object = {};
-    return this.http.post<any>(this.fastapiurl+'project/deploy' + '/' + id, { headers });
+  // projectDeploy(url: string , id : number | string){
+  //   const headers = this.getToken.getLocalToken();
+  //   let payload:object = {};
+  //   return this.http.post<any>(this.fastapiurl+'project/deploy' + '/' + id, { headers });
+  // }
+
+  projectDeploy(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      // You might need to add more headers if required
+    });
+
+    return this.http.post<any>(this.fastapiurl+'project/deploy'+'/'+id, { headers });
   }
 
   weightFiledownload(project_id: string) {

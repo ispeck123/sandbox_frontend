@@ -21,6 +21,7 @@ export class SelectModelPipelineComponent implements OnInit,OnDestroy {
   pipelineList!: any;
   private _apiSubscription! : Subscription;
     dropvalidate:boolean = false;
+    modelsessionid:any;
 
   ngOnInit(): void {
    
@@ -74,11 +75,14 @@ export class SelectModelPipelineComponent implements OnInit,OnDestroy {
 
   // }
   getmodelid(id:any){
+    alert(id)
     if(id)
     {
       this.dropvalidate=false;
     }
     localStorage.setItem("model_id",id);
-    alert(localStorage.setItem("model_id",id))
+    this.modelsessionid= localStorage.getItem("model_id")
+    alert(this.modelsessionid)
+   
   }
 }

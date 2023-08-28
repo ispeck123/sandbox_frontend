@@ -624,15 +624,15 @@ startDrawing (e: any) {
     console.log("ZONE COORDINATES::AFTER SAVE:", this.zoneCoordinates);
 
     // ############# saving zones in database ################
-  //   let payloadToSend!: {
-  //   zoneCoordinates: {
-  //   polygons: ZoneCoordinates[],
-  //   rectangles: ZoneCoordinates[],       
-  //   }[],
-  //   createdBy: string, 
-  //   source_id: number, 
-  //   file_id: number
-  // };
+    let payloadToSend!: {
+    zoneCoordinates: {
+    polygons: ZoneCoordinates[],
+    rectangles: ZoneCoordinates[],       
+    }[],
+    createdBy: string, 
+    source_id: number, 
+    file_id: number
+  };
   //   payloadToSend.zoneCoordinates = this.zoneCoordinates;
   //   payloadToSend.createdBy = this.getToken.getUser_name();
   //   payloadToSend.source_id = 6;
@@ -674,7 +674,7 @@ startDrawing (e: any) {
         });
       } else {
         // @ create new or (first)zone API implementation
-  
+      
         this.zoneData.saveZone('createZone', this.zoneCoordinates).subscribe((respArray) => {
           this.zoneResp = respArray;
           console.log(this.zoneResp);

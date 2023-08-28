@@ -66,7 +66,7 @@
                                     <!-- <button style="margin-right: 5px;" type="submit" class="stepper-button" mat-stroked-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal" (click)="projectId(item.project_id,item.is_started)">
       {{item.is_started==true  ? 'Stop' : 'Start'}}
       </button> -->
-    <button type="submit" [disabled]="isButtonDisabled" class="stepper-button" mat-stroked-button color="primary" (click)="projectDeploy(item.project_id)">
+    <button type="submit"  class="stepper-button" mat-stroked-button color="primary" (click)="projectDeploy(item.project_id)">
       {{item.is_deployed ? 'Deployed' : 'Deploy'}}
     </button>
 

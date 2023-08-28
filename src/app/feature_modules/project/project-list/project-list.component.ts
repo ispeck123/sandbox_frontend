@@ -26,7 +26,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   projectDepData!: ProjectDeployConfig;
   private _apiSubscription!: Subscription;
   element!: boolean;
-  isButtonDisabled: boolean = false;
+  
+  isButtonDisabled: boolean = true ;
   constructor(private projectData: ProjectDataService, public dialog: MatDialog,
     public audit: AuditTrailService,
     private graphService: GraphService, private router: Router, private deleteDialog: MatDialog
@@ -109,15 +110,15 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   }
   projectDeploy(id: number) {
-    this.projectData.projectDeploy('projectDeploy', id)
-      .subscribe((respArray: any) => {
-        console.log(respArray.data.msg);
-        if (respArray.data.msg == 'Failed') {
-          alert(respArray.data.response.project_deploy.reason[0]);
-        } else {
-          this.isButtonDisabled = true; // Disable the button on successful response
-        }
-      });
+    // this.projectData.projectDeploy('projectDeploy', id)
+    //   .subscribe((respArray: any) => {
+    //     console.log(respArray.data.msg);
+    //     if (respArray.data.msg == 'Failed') {
+    //       alert(respArray.data.response.project_deploy.reason[0]);
+    //     } else {
+    //       this.isButtonDisabled = true; // Disable the button on successful response
+    //     }
+    //   });
   }
 
   // projectDeploy(id: number) {
