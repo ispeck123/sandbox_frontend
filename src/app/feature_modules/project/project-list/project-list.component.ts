@@ -20,7 +20,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   projectById!: ProjectListConfig;
   projectList!: ProjectListConfig;
   listdata: any = [];
-  project_Id!: any;
+  project_Id!: number;
   datetimestring:any;
   control!: boolean;
   projectDepData!: ProjectDeployConfig;
@@ -164,10 +164,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.dialog.open(ProjectEdit, dialogConfig);
   }
 
-  downloadweightFile(project_Id:any) {
-    this.projectData.weightFiledownload(this.project_Id)
+  downloadweightFile(id: number) {
+    this.projectData.weightFiledownload(id)
     .subscribe((resp:any) => {
-  
       const blob = new Blob([resp.body],{type:'application/octet-stream'});
       FileSaver.saveAs(blob,this.datetimestring+".pdf")  
       // this.spinner.hide()

@@ -138,9 +138,9 @@ export class ProjectDataService {
     return this.http.post<any>(this.fastapiurl+'project/deploy'+'/'+id, { headers });
   }
 
-  weightFiledownload(project_id: string) {
+  weightFiledownload(project_id: number) {
     const headers = this.getToken.getLocalToken();
-    return this.http.get(this.fastapiurl+'download_weight' + '/' + project_id , { responseType: 'arraybuffer' })
+    return this.http.get(this.fastapiurl+'download_weight' + '/' + project_id, { responseType: 'arraybuffer' })
       .pipe(
         map((arrayBuffer: ArrayBuffer) => {
           const fileBlob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
