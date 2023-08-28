@@ -24,16 +24,18 @@ export class ModelVerifyComponent implements OnInit {
   modelVerify!: ModelVerifyConfig;
   projectList!: ProjectListConfig;
   projectUIData!: any;
+  pro_id!: number;
   constructor(private modelDataService: ModelDataService,private projectData: ProjectDataService,
     private graphService: GraphService, private getToken: GetTokenService, private pipelineService: PipelineDataService,
     public audit: AuditTrailService, 
-    private router: Router
+    private router: Router, private tkService : GetTokenService,
   ) { }
 
   ngOnInit(): void {
     this.pId=localStorage.getItem("pro_id")
-    this.getProjectsById(this.pId);
-    this.audit.addUrlAudit('userAuditLog');
+    alert(this.pId)
+     this.getProjectsById(this.pId);
+     this.audit.addUrlAudit('userAuditLog');
   }
 
   getProjectsById(id:any){
@@ -98,43 +100,50 @@ export class ModelVerifyComponent implements OnInit {
   //       }
   //     })
   // }
-  projectDeploy(pId:number){
+  projectDeploy(id: number) {
     const payload= {
-      Id     : this.getToken.getUser_id(),
-      Type   : 'Deploy Project',
-      Effect : 'Project deployed successfully',
-      Status : 1,
+            Id     : this.tkService.getUser_id(),
+            Type   : 'Deploy Project',
+            Effect : 'Project deployed successfully',
+            Status : 1,
+          }
+    const projectId = localStorage.getItem('pro_id');
+    
+    if (!projectId) {
+      console.log('Project ID not available.');
+      return;
     }
-
-    this.modelDataService.projectDeploy('projectDeploy', parseInt(localStorage.getItem('pr_id')!))
-    .subscribe((respArray:any) => {
-      alert('ProjectDeploy')
-      console.clear();
-      console.log(respArray, respArray.data.msg);
-      if(respArray.data.msg == 'Success') {
-        this.audit.addAudit('userAuditLog',payload)
-        .subscribe(respArray=>{
-            console.log(respArray)
-          })
-          setTimeout(() => {
-            this.router.navigateByUrl("/project-list");
-          }, 5000);
-      }
-      else
-      {
-        alert(respArray.data.response.project_deploy.reason[0]);
-        payload.Effect="Project deploy failed";
-          payload.Status=0;
-          this.audit.addAudit('userAuditLog',payload).subscribe(
-            respArray=>{
-              console.log(respArray)
-            }
-          )
-      }
-      // this.closebutton.nativeElement.click();
-       //this.projectDepData = respArray;
-       //alert(this.projectDepData.status)
-    })
+  
+    this._apiSubscription = this.projectData.projectDeploy(projectId)
+      .subscribe(
+        respArray => {
+          console.log('Project deploy response:', respArray);
+          this.router.navigateByUrl("/project-list");
+          if(respArray.data.msg == 'Success') {
+                    this.audit.addAudit('userAuditLog',payload)
+                    .subscribe(respArray=>{
+                        console.log(respArray)
+                       
+                      })
+                  }
+                  else
+                  {
+                    alert(respArray.data.response.project_deploy.reason[0]);
+                    payload.Effect="Project deploy failed";
+                      payload.Status=0;
+                      this.audit.addAudit('userAuditLog',payload).subscribe(
+                        respArray=>{
+                          console.log(respArray)
+                        }
+                      )
+                  }
+          // Handle the response here
+        },
+        error => {
+          console.error('Error during project deploy:', error);
+          // Handle the error here
+        }
+      );
   }
 
 }
