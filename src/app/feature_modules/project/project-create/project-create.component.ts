@@ -40,7 +40,7 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
   resprojectid:any;
   respipelineid:any;
   projecttype!: ProjectTypeConfig;
-  
+  modelsessionid:any;
 
   constructor(
     private pipelineData: PipelineDataService,
@@ -56,7 +56,8 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
   
 
   ngOnInit(): void {
-    localStorage.removeItem('pr_id');
+    localStorage.removeItem('pr_id')
+    // this.modelsessionid= localStorage.getItem("model_id");
 
     this.projectId = this.route.snapshot.params['id'];
     this.isCreate  = !this.projectId;
@@ -255,6 +256,7 @@ return;
     } 
   }
   getPipeName(id:any) { 
+    localStorage.setItem("model_id",id);
     // localStorage.setItem('proTypeName', Name);
     localStorage.setItem("pipeline_id",id);
 

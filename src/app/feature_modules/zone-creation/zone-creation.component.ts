@@ -58,6 +58,7 @@ export class ZoneCreationComponent implements OnInit {
   isFirst: boolean = true;
   isSettings: boolean = false;
   sourcesessionid:any;
+  projectsessionid:any;
   sourcesessionlocationid:any;
   processingtype:any
   
@@ -150,6 +151,7 @@ export class ZoneCreationComponent implements OnInit {
   }
   ngOnInit(): void {
     this.sourcesessionid = localStorage.getItem("source_id_session");
+    this.projectsessionid=localStorage.getItem("pro_id");
     // alert(localStorage.getItem("source_id_session"))
     this.processingtype=localStorage.getItem("processing_type_name");
     // alert(localStorage.getItem("processing_type_name"))
@@ -631,6 +633,7 @@ startDrawing (e: any) {
     }[],
     createdBy: string, 
     source_id: number, 
+    project_id:number,
     // file_id: number
   };
   //   payloadToSend.zoneCoordinates = this.zoneCoordinates;

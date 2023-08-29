@@ -20,6 +20,7 @@ export class ZoneDataService {
 
   data!: any;
   sourcesessionid:any;
+  projectsessionid:any;
   fileid:any;
 
   Api_Path: string = '';
@@ -33,13 +34,15 @@ export class ZoneDataService {
   saveZone(url: string, coordinates: any[]) {
     const uid = this.getToken.getUser_name();
     this.sourcesessionid = localStorage.getItem("source_id_session");
+    this.projectsessionid=localStorage.getItem("pro_id");
     this.fileid=localStorage.getItem("source_location_session_id")
     const headers = this.getToken.getLocalToken();
     this.data = {
       zone_coordinates: coordinates,
       created_by: uid,
       // file_id: this.fileid,
-      source_id: this.sourcesessionid
+      source_id: this.sourcesessionid,
+      project_id:this.projectsessionid,
     };
     const payload = this.data;
     console.log(payload);
@@ -49,13 +52,15 @@ export class ZoneDataService {
   updateZoneCoordinates (url: string, coordinates: any[]) {
     const uid = this.getToken.getUser_name();
     this.sourcesessionid = localStorage.getItem("source_id_session");
+    this.projectsessionid=localStorage.getItem("pro_id");
     const headers = this.getToken.getLocalToken();
     this.data = {
       zone_id: 14,
       zone_coordinates: coordinates,
       modified_by: uid,
       // file_id: this.fileid,
-      source_id: this.sourcesessionid
+      source_id: this.sourcesessionid,
+      project_id:this.projectsessionid,
     }
 
     const payload = this.data;

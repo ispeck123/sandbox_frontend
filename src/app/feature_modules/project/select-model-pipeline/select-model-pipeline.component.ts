@@ -61,6 +61,8 @@ export class SelectModelPipelineComponent implements OnInit,OnDestroy {
   else{
     this.dropvalidate=false;
     localStorage.setItem('model_id',id);
+    localStorage.getItem('model_id');
+    alert(localStorage.getItem('model_id'))
     this.router.navigateByUrl('/config-model')
   }
    
