@@ -259,9 +259,7 @@ return;
     localStorage.setItem("model_id",id);
     // localStorage.setItem('proTypeName', Name);
     localStorage.setItem("pipeline_id",id);
-
   }
-
   setUrlData() {
     this.classChangeUi.setClassUi();
   }
