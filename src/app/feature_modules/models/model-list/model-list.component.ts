@@ -7,6 +7,7 @@ import { GraphService} from 'src/app/services/graph.service';
 import {Subscription} from 'rxjs';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import { HttpClient } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-model-list',
@@ -15,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ModelListComponent implements OnInit, OnDestroy  {
 
-  constructor(private modelDataService: ModelDataService,private graphService: GraphService, public dialog: MatDialog,public audit: AuditTrailService) { }
+  constructor(private modelDataService: ModelDataService,private spinner: NgxSpinnerService, private graphService: GraphService, public dialog: MatDialog,public audit: AuditTrailService) { }
   modalList!: ModelListConfig;
   modalListById!: ModelListConfig;
   modelId!:number;

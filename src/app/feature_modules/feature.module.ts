@@ -34,7 +34,8 @@ import { ModalEdit } from './models/model-list/model-list.component';
 import { PipelineEdit } from './pipeline/pipeline-list/pipeline-list.component';
 import { SystemMonitoringComponent } from './system-monitoring/system-monitoring.component';
 import { DatasourceEditComponent } from './datasource/datasource-edit/datasource-edit.component';
-import { ModelDeleteDialog } from "./models/model-list/model-list.component"
+import { ModelDeleteDialog } from "./models/model-list/model-list.component";
+import { NgxSpinnerModule } from 'ngx-spinner';
 
  @NgModule({
    declarations: [
@@ -79,7 +80,8 @@ import { ModelDeleteDialog } from "./models/model-list/model-list.component"
     RouterModule.forChild(FeatureOneRoutes),
     FormsModule,
     ReactiveFormsModule,
-    SharedModule, 
+    SharedModule,
+    NgxSpinnerModule, 
   ]
  })
  export class FeatureModule {}
