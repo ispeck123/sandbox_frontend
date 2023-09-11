@@ -95,7 +95,8 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
     this.graphService.showLoader=true;
     this.projectData.projectTypeData('projectTypes').subscribe((respArray) => {
       this.projectTypeList = respArray;
-      console.log(this.projectTypeList.data[0].project_type);
+
+      console.log("TYPE",this.projectTypeList);
 
       this.graphService.showLoader=false;
 

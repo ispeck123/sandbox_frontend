@@ -11,7 +11,7 @@ import servicedata from 'src/assets/service.json'
 export class ModelDataService {
    Api_Path:string = '';
    authorization:string = '';
-   fastapiurl='http://192.168.1.32:9000/'
+   fastapiurl='http://103.13.113.132:9000/'
 
   constructor(private http: HttpClient, private getToken:GetTokenService) {
       this.Api_Path       = servicedata.api_url;
@@ -23,6 +23,13 @@ export class ModelDataService {
     const headers = this.getToken.getLocalToken();
     const uid     = null;
     return this.http.get<ModelListConfig>(`${this.Api_Path}/${url}/${id}/${uid}`, {headers});
+  }
+
+  getRigisterModelList(url: string, model_id: any) {
+    const headers = this.getToken.getLocalToken();
+
+    return this.http.get<any>(this.fastapiurl+url+model_id,{ headers }
+      );
   }
   getModelType(url:string, id:number | string){
     const headers = this.getToken.getLocalToken();
@@ -63,13 +70,13 @@ export class ModelDataService {
 
   uploadConfigFile(url:string, payload:object){
     const headers = this.getToken.getLocalToken();
-    let fastapi='http://192.168.1.32:9000/';
+    let fastapi='http://103.13.113.132:9000/';
     var reqHeader = new HttpHeaders({ 'Content-Type': 'multipart/form-data', 'No-Auth': 'True' });
     return this.http.post<any>(fastapi+'artifact/store',payload);
   }
   uploadWeightFile(url:string, payload:object){
     const headers = this.getToken.getLocalToken();
-    let fastapi='http://192.168.1.32:9000/';
+    let fastapi='http://103.13.113.132:9000/';
     var reqHeader = new HttpHeaders({ 'Content-Type': 'multipart/form-data', 'No-Auth': 'True' });
     return this.http.post<any>(fastapi+'artifact/weight/store',payload);
   }

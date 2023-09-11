@@ -477,37 +477,37 @@ else{
 }
   }
 
-  // onFileSelection(e: Event) {
-  //   const target = e.target as HTMLInputElement;
-  //   const file: File = (target.files as FileList)[0];
-  //   this.fileName = file.name;
-  //   this.fileerrorShow=false;
-  //   // this.formData.append('filename', this.fileName);
-  //   this.formData.append('file', file, file.name);
-
-  //   // this.uploadSourceFile();
-  // }
   onFileSelection(e: Event) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
-    
-    if (file) {
-      const fileSizeInMB = file.size / (1024 * 1024); // Convert bytes to MB
-      
-      if (fileSizeInMB >= 100) {
-        this.fileName = file.name;
-        this.fileerrorShow = false;
-        this.formData.append('file', file, file.name);
-        
-        // Now, you can proceed with uploading the file or performing any other actions.
-        // this.uploadSourceFile();
-      } else {
-        // Display an error message because the file size is less than 100MB
-        this.fileerrorShow = true;
+    this.fileName = file.name;
+    this.fileerrorShow=false;
+    // this.formData.append('filename', this.fileName);
+    this.formData.append('file', file, file.name);
 
-      }
-    }
+    // this.uploadSourceFile();
   }
+  // onFileSelection(e: Event) {
+  //   const target = e.target as HTMLInputElement;
+  //   const file: File = (target.files as FileList)[0];
+    
+  //   if (file) {
+  //     const fileSizeInMB = file.size / (1024 * 1024); // Convert bytes to MB
+      
+  //     if (fileSizeInMB >= 100) {
+  //       this.fileName = file.name;
+  //       this.fileerrorShow = false;
+  //       this.formData.append('file', file, file.name);
+        
+  //       // Now, you can proceed with uploading the file or performing any other actions.
+  //       // this.uploadSourceFile();
+  //     } else {
+  //       // Display an error message because the file size is less than 100MB
+  //       this.fileerrorShow = true;
+
+  //     }
+  //   }
+  // }
   
     
  

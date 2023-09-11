@@ -123,6 +123,8 @@ export class PipelineCreateComponent implements OnInit {
  }
 
   pipelineCreateUpdate(){
+
+    this.graphService.showLoader=true;
     if(this.addPipeline.invalid){
       return;
           }
@@ -148,6 +150,7 @@ export class PipelineCreateComponent implements OnInit {
       respArray => {
         this.pipelineResp = respArray;
         console.log(this.pipelineResp);
+        this.graphService.showLoader=false
         if(this.pipelineResp.data.pipeline_id != null){
 
              localStorage.setItem('pid', this.pipelineResp.data.pipeline_id.toString());
@@ -155,6 +158,7 @@ export class PipelineCreateComponent implements OnInit {
              this.audit.addAudit('userAuditLog',payload).subscribe(
               respArray=>{
                 console.log(respArray)
+              
               }
             )
         }

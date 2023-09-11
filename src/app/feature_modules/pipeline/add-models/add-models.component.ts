@@ -20,7 +20,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class AddModelsComponent implements OnInit, OnDestroy {
   @ViewChild('deleteModal') private deleteModal!: ElementRef;
 
-  modelList!: ModelListConfig;
+  modelList!: any;
   attachModelResp!: AttachModelRespConfig;
   private _apiSubscription!: Subscription;
   modeltyp: any = [];
@@ -95,12 +95,11 @@ export class AddModelsComponent implements OnInit, OnDestroy {
 
   fetchModelListData() {
     this.graphService.showLoader = true;
-
-    this._apiSubscription = this.modelDataService.getModelListData('model', 'all')
+    this._apiSubscription = this.modelDataService.getRigisterModelList('registered/model/view/', 'all')
       .subscribe(
         respArray => {
-          this.modelList = respArray;
-          console.log('model data', this.modelList.data);
+          this.modelList = respArray.response;
+          console.log('MODEL_LIST', this.modelList);
           this.graphService.showLoader = false;
 
         }
@@ -165,9 +164,10 @@ export class AddModelsComponent implements OnInit, OnDestroy {
   }
 
   showSelectedList(id: any) {
-    this.modelDataService.getModelListData('model', id).subscribe(
+    alert("Hit")
+    this.modelDataService.getRigisterModelList('registered/model/view/', 'all').subscribe(
       respArray => {
-        let value = respArray.data;
+        let value = respArray.response;
         this.modellist.push(value[0].model_name);
         console.log(this.modellist);
       }
@@ -247,15 +247,13 @@ export class AddModelsComponent implements OnInit, OnDestroy {
     // delete this.modellist[i];
     this.modellist.splice(i, 1);
     console.log(this.items);
-
   }
   editmodel(id: any) {
     console.log(id)
     let url = `${'/modal-edit'}/${id}`
     localStorage.setItem('pmodeleditid', id);
     this.router.navigateByUrl(url);
-
-  }
+ }
   ngOnDestroy(): void {
     this._apiSubscription.unsubscribe();
   }

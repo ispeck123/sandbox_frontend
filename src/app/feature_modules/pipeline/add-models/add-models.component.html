@@ -20,7 +20,7 @@
             <mat-form-field appearance="outline" *ngIf="modelList != undefined">
                 <mat-label>Select Model</mat-label>
                 <mat-select formControlName="model_ids">
-                    <mat-option [value]="item.model_id" selected *ngFor="let item of modelList.data; let i = index">
+                    <mat-option [value]="item.model_id" selected *ngFor="let item of modelList.models; let i = index">
                         {{item.model_name}}
                     </mat-option>
                 </mat-select>

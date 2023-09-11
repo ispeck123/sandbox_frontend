@@ -29,7 +29,7 @@ import { SourceUploadResp } from '../data-models/project-model';
 export class PipelineDataService {
   Api_Path: string = '';
   authorization: string = '';
-  fastapiurl='http://192.168.1.32:9000'
+  fastapiurl='http://103.13.113.132:9000'
 
   constructor(private http: HttpClient, private getToken: GetTokenService) {
     this.Api_Path = servicedata.api_url;
@@ -156,6 +156,14 @@ export class PipelineDataService {
     return this.http.get<ClassListConfig>(`${this.Api_Path}/${url}/${mdl_id}`, {
       headers,
     });
+  }
+
+  getRigisterModelList(url: string, model_id: any) {
+    const headers = this.getToken.getLocalToken();
+
+    alert(this.fastapiurl+url+model_id)
+    return this.http.get<any>(this.fastapiurl+url+model_id,{ headers }
+      );
   }
 
   getClassList(url: string, id: number) {
