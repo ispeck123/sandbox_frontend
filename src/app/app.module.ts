@@ -22,7 +22,7 @@ import { ResetPasswordComponent } from './login-config/reset-password/reset-pass
 import { PassValidationDirective } from './directives/pass-validation.directive';
 import { UserSpModule } from './user_settings_profile/user-sp.module';
 import { LoaderComponent } from './loader/loader.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +49,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FeatureModule,
     SharedModule,
     UserSpModule,
-    NgxSpinnerModule, 
+    
     
    ],
   providers: [AuthService, RouteGuard],

@@ -11,7 +11,7 @@ import servicedata from 'src/assets/service.json'
 export class ModelDataService {
    Api_Path:string = '';
    authorization:string = '';
-   fastapiurl='http://164.52.218.100:9000/'
+   fastapiurl='http://192.168.1.32:9000/'
 
   constructor(private http: HttpClient, private getToken:GetTokenService) {
       this.Api_Path       = servicedata.api_url;
@@ -63,13 +63,13 @@ export class ModelDataService {
 
   uploadConfigFile(url:string, payload:object){
     const headers = this.getToken.getLocalToken();
-    let fastapi='http://164.52.218.100:9000/';
+    let fastapi='http://192.168.1.32:9000/';
     var reqHeader = new HttpHeaders({ 'Content-Type': 'multipart/form-data', 'No-Auth': 'True' });
     return this.http.post<any>(fastapi+'artifact/store',payload);
   }
   uploadWeightFile(url:string, payload:object){
     const headers = this.getToken.getLocalToken();
-    let fastapi='http://164.52.218.100:9000/';
+    let fastapi='http://192.168.1.32:9000/';
     var reqHeader = new HttpHeaders({ 'Content-Type': 'multipart/form-data', 'No-Auth': 'True' });
     return this.http.post<any>(fastapi+'artifact/weight/store',payload);
   }

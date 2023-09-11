@@ -14,7 +14,7 @@ export class ProjectDataService {
 
   readonly Api_Path: string = '';
   authorization: string     = '';
-  fastapiurl='http://164.52.218.100:9000/'
+  fastapiurl='http://192.168.1.32:9000/'
 
   constructor(private http: HttpClient, private getToken: GetTokenService) {
     this.Api_Path       = servicedata.api_url;

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 //import { environment } from 'src/environments/environment';
 import { ModelListConfig, ModelListData } from '../data-models/model';
@@ -29,7 +29,7 @@ import { SourceUploadResp } from '../data-models/project-model';
 export class PipelineDataService {
   Api_Path: string = '';
   authorization: string = '';
-  fastapiurl='http://164.52.218.100:9000'
+  fastapiurl='http://192.168.1.32:9000'
 
   constructor(private http: HttpClient, private getToken: GetTokenService) {
     this.Api_Path = servicedata.api_url;
@@ -250,6 +250,13 @@ export class PipelineDataService {
     return this.http.post(`${this.Api_Path}/deletePipeline/${pipelineId}`, null, {headers});
   }
 
+  // getPipeModelList(url: string, id: number | string) {
+  //   const headers = this.getToken.getLocalToken();
+  //   return this.http.get<any>(this.fastapiurl+'registered/model/view'+'/'+id, { headers });
+  // }
+      
+
+   
 }
 
 

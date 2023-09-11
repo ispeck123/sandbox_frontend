@@ -34,6 +34,7 @@ export class RegisterModelComponent implements OnInit, OnDestroy {
   }
 
   registerModal(id: number) {
+    this.graphService.showLoader=true;
     const payload = {
       Id: this.tkService.getUser_id(),
       Type: 'Register model',
@@ -43,6 +44,7 @@ export class RegisterModelComponent implements OnInit, OnDestroy {
 
     this.modelDataService.registerModel('modelRegister', id)
       .subscribe((respArray: any) => {
+        this.graphService.showLoader=false;
         console.log(respArray.data.msg)
         if (respArray.data.msg == 'Failed') {
           alert(respArray.data.response.model_register.reason[0])

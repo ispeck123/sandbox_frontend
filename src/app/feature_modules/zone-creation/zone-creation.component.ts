@@ -166,6 +166,7 @@ export class ZoneCreationComponent implements OnInit {
         const videoUrl = URL.createObjectURL(videoBlob);
         this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
         this.selectedZoneImage = this.videoUrl;  // Set selectedZoneImage here for videos
+        
         this.audit.addUrlAudit('userAuditLog');
         if (localStorage.getItem("urlForClass")?.includes("edit")) {
           this.updateZoneCoordinates = true;
@@ -187,7 +188,7 @@ export class ZoneCreationComponent implements OnInit {
           } else {
             this.updateZoneCoordinates = false;
           }
-        };
+        };8
         reader.readAsDataURL(fileBlob);
       }
     },
@@ -590,7 +591,7 @@ startDrawing (e: any) {
     
     let shapeObjsToSend = this.ctx.getObjects();
 
-    // console.log(shapeObjsToSend);
+    console.log(shapeObjsToSend);
     //  ############### COORDS CALCULATION AND Creating shapes on them ##################
     shapeObjsToSend.forEach((shape:any) => {
         if (shape.type === "rect") {
@@ -600,9 +601,9 @@ startDrawing (e: any) {
             const x = Math.floor(coordsTemp[i].x);
             const y = Math.floor(coordsTemp[i].y);
             let singleCoord = new Array(x, y);
-            // console.log(i, "::", [x, y]);
+            console.log(i, "::", [x, y]);
             coordsArr.push(singleCoord);
-            // console.log("CoordsARRAY::", coordsArr);
+            console.log("CoordsARRAY::", coordsArr);
           }
           this.zoneCoordinates[0].rectangles.push(new ZoneCoordinates(coordsArr, shape.fill, shape.strokeWidth, "50%"))
       } else if (shape.type === "polyline") {
@@ -677,7 +678,7 @@ startDrawing (e: any) {
         });
       } else {
         // @ create new or (first)zone API implementation
-      
+       console.log("zone identify",this.zoneCoordinates)
         this.zoneData.saveZone('createZone', this.zoneCoordinates).subscribe((respArray) => {
           this.zoneResp = respArray;
           console.log(this.zoneResp);
@@ -726,6 +727,7 @@ startDrawing (e: any) {
           // ############### DRAWING Saved Rectangles here ###############
           let newRectangles = shapes[shapeNameName];
           for (let i = 0; i < newRectangles.length; i++) {
+            console.log("\n\nNew rect GONS", newRectangles);
             const newRect = newRectangles[i];
             let newRectCoords = newRect.coordinates;
             let newLeft = newRectCoords[0][0];

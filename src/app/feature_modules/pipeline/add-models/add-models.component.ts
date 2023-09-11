@@ -260,6 +260,16 @@ export class AddModelsComponent implements OnInit, OnDestroy {
     this._apiSubscription.unsubscribe();
   }
 
+  // getModelByPipeline() {
+  //   alert('ssssssssssss')
+  //   console.log("Pipeline Id:: ", localStorage.getItem('pid'));
+  //   this.pipeDataService.getPipeModelList("registered/model/view", localStorage.getItem('pid')!)
+  //     .subscribe((res: ModelListConfig) => {
+  //       this.modelListByPipeline = res.data;
+  //       console.log("model by pipeline", this.modelListByPipeline);
+      
+  //     })
+  // }
   getModelByPipeline() {
     console.log("Pipeline Id:: ", localStorage.getItem('pid'));
     this.pipeDataService.getPipeModelList("modelByPipeline", localStorage.getItem('pid')!)

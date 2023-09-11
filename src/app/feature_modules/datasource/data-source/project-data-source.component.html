@@ -214,14 +214,14 @@
                                 #fileUpload>
                             <label for="logo" id="file-label" class="upload-field">
                             </label>
-                            <span *ngIf="fileerrorShow" style="color: red;">* Required</span>
+                            <!-- <span *ngIf="fileerrorShow" style="color: red;">* Required</span> -->
                         </div>
                         <div class="image-upload" *ngIf="fileflag=='VIDEO'">
                             <input type="file" required formControlName="filename" (change)="onFileSelection($event)"
                                 #fileUpload>
                             <label for="logo" id="file-label" class="upload-field">
                             </label>
-                            <span *ngIf="fileerrorShow" style="color: red;">* Required</span>
+                            <!-- <span *ngIf="fileerrorShow" style="color: red;">* Required</span> -->
                         </div>
 
 
@@ -283,7 +283,7 @@
     <!-- Save and next button start -->
     <div class="">
         <div class="project_button_nt">
-            <button type="button" mat-stroked-button color="primary" [routerLink]="['/project-create']">Back</button>
+            <button type="button" mat-stroked-button color="primary" [routerLink]="['/home']">Back</button>
             <button type="button" [disabled]="disableNxtBtn" *ngIf="NextVisibleFlag" class="stepper-button mt-2"
                 mat-raised-button color="primary" (click)="nexttype()"> Next
             </button>

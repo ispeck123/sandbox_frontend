@@ -249,11 +249,12 @@ export class ModelCreateComponent implements OnInit {
         this.addModel.value.is_registered = true;
         this.data = this.addModel.value;
         // console.log(this.data);
-        this.modelDataService
-          .saveModal('createModel', this.data)
+        this.graphService.showLoader = true;
+        this.modelDataService.saveModal('createModel', this.data)
           .subscribe((respArray) => {
             // console.log('eeeeee');
             this.modelResp = respArray;
+            this.graphService.showLoader = false;
             // console.log( this.modelResp)
             // console.log( this.modelResp.data)
             if (this.modelResp.data.model_id != null) {

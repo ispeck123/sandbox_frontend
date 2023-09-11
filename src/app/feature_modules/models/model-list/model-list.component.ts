@@ -7,7 +7,7 @@ import { GraphService} from 'src/app/services/graph.service';
 import {Subscription} from 'rxjs';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import { HttpClient } from '@angular/common/http';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-model-list',
@@ -16,7 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ModelListComponent implements OnInit, OnDestroy  {
 
-  constructor(private modelDataService: ModelDataService,private spinner: NgxSpinnerService, private graphService: GraphService, public dialog: MatDialog,public audit: AuditTrailService) { }
+  constructor(private modelDataService: ModelDataService, private graphService: GraphService, public dialog: MatDialog,public audit: AuditTrailService) { }
   modalList!: ModelListConfig;
   modalListById!: ModelListConfig;
   modelId!:number;
@@ -81,14 +81,16 @@ export class ModelListComponent implements OnInit, OnDestroy  {
 
 
   registerModal(id:number){
+    this.graphService.showLoader=true;
     this.modelDataService.registerModel('modelRegister', id)
     .subscribe((respArray:any) => {
-      
+      this.graphService.showLoader=false;
       console.log(respArray.data.msg)
       if(respArray.data.msg == 'Failed'){
        alert(respArray.data.response.model_register.reason[0])
       }
     })
+   
   }
 
 

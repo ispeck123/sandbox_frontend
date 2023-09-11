@@ -6,6 +6,7 @@ import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import {Subscription} from 'rxjs';
 import { Router } from '@angular/router';
 import { PipelineDataService } from 'src/app/services/pipeline-data.service';
+import { GraphService } from 'src/app/services/graph.service';
 
 @Component({
   selector: 'app-deploy-project',
@@ -27,7 +28,7 @@ pro_id!: number;
   constructor(private projectData: ProjectDataService, 
     private tkService : GetTokenService,
     public audit: AuditTrailService, 
-    private router: Router, private pipelineService: PipelineDataService) { }
+    private router: Router, private pipelineService: PipelineDataService,  private graphService : GraphService,) { }
 
   ngOnInit(): void {
     //  this.pId = this.tkService.getProjectId();
@@ -117,6 +118,7 @@ projectDeploy(id: number) {
           Status : 1,
         }
   const projectId = localStorage.getItem('pro_id');
+  this.graphService.showLoader=true;
   
   if (!projectId) {
     console.log('Project ID not available.');
@@ -126,6 +128,7 @@ projectDeploy(id: number) {
   this._apiSubscription = this.projectData.projectDeploy(projectId)
     .subscribe(
       respArray => {
+        this.graphService.showLoader=false;
         console.log('Project deploy response:', respArray);
         this.router.navigateByUrl("/project-list");
         if(respArray.data.msg == 'Success') {
@@ -153,6 +156,7 @@ projectDeploy(id: number) {
         // Handle the error here
       }
     );
+ 
 }
 
 ngOnDestroy() {
