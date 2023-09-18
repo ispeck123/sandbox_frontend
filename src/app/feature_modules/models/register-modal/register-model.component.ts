@@ -44,7 +44,7 @@ export class RegisterModelComponent implements OnInit, OnDestroy {
 
     this.modelDataService.registerModel('modelRegister', id)
       .subscribe((respArray: any) => {
-        this.graphService.showLoader=false;
+        // this.graphService.showLoader=false;
         console.log(respArray.data.msg)
         if (respArray.data.msg == 'Failed') {
           alert(respArray.data.response.model_register.reason[0])
@@ -68,6 +68,7 @@ export class RegisterModelComponent implements OnInit, OnDestroy {
         //this.projectDepData = respArray;
         //alert(this.projectDepData.status)
         console.log("data", localStorage.getItem('pmodeleditid'))
+        this.graphService.showLoader=false;
 
         if (localStorage.getItem('pmodeleditid')) {
           console.log(localStorage.getItem('pmodeleditid'))

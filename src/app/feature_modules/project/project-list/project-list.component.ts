@@ -164,14 +164,37 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.dialog.open(ProjectEdit, dialogConfig);
   }
 
-  downloadweightFile(id: number) {
-    this.projectData.weightFiledownload(id)
-    .subscribe((resp:any) => {
-      const blob = new Blob([resp.body],{type:'application/octet-stream'});
-      FileSaver.saveAs(blob,this.datetimestring+".pdf")  
-      // this.spinner.hide()
-    });
+
+
+  downloadweightFile(project_id: number) {
+    this.graphService.showLoader = true;
+    this.projectData.weightFiledownload(project_id)
+      .subscribe((resp: any) => {
+
+     
+        let filename = 'default_filename.pt';
+  
+        const blob = new Blob([resp.body], { type: 'application/octet-stream' });
+        FileSaver.saveAs(blob, filename);
+        this.graphService.showLoader = false;
+      });
   }
+  
+
+  // downloadweightFile(project_id: number) {
+  //   this.graphService.showLoader=true;
+  //   this.projectData.weightFiledownload(project_id)
+  //   .subscribe((resp:any) => {
+  //     const blob = new Blob([resp.body],{type:'application/octet-stream'});
+  //     FileSaver.saveAs(blob,this.datetimestring+".pt")  
+  //     // this.spinner.hide()
+  //     this.graphService.showLoader=false;
+
+  //   });
+  // }
+
+
+  
   deletePopup (projectCard: HTMLElement) {
     const projectId = (<HTMLElement>projectCard).getAttribute("id");
     console.log(projectId, " is going to deleted...");

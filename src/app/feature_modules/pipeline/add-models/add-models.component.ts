@@ -34,6 +34,7 @@ export class AddModelsComponent implements OnInit, OnDestroy {
   isCreate!: boolean;
   items!: FormArray;
   deletableModelId!: number;
+  
 
   deleteModalClickListenerSubscriber!: any;
   modelListByPipeline: ModelListData[] = [];
@@ -293,6 +294,7 @@ export class AddModelsComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.deleteModelFromPipeline(this.deletableModelId);
     }, 100);
+  
   }
 
   closeDeleteDialog() {
@@ -330,7 +332,9 @@ export class AddModelsComponent implements OnInit, OnDestroy {
         console.log("model deleted from pipeline", res);
       }, (err) => {
         console.log("error in delete model from pipline", err);
+   
       });
+      window.location.reload();
   }
 
 }

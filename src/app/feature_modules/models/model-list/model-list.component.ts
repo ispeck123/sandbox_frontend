@@ -79,19 +79,34 @@ export class ModelListComponent implements OnInit, OnDestroy  {
 
 }
 
-
-  registerModal(id:number){
-    this.graphService.showLoader=true;
-    this.modelDataService.registerModel('modelRegister', id)
-    .subscribe((respArray:any) => {
-      this.graphService.showLoader=false;
-      console.log(respArray.data.msg)
-      if(respArray.data.msg == 'Failed'){
-       alert(respArray.data.response.model_register.reason[0])
+registerModal(id: number) {
+  this.graphService.showLoader = true;
+  this.modelDataService.registerModel('modelRegister', id)
+    .subscribe((respArray: any) => {
+      this.graphService.showLoader = false;
+      
+      console.log(respArray.data.msg);
+      if (respArray.data.msg == 'Failed') {
+        alert(respArray.data.response.model_register.reason[0]);
+      } else {
+        // Registration was successful, so refresh the page
+        window.location.reload();
       }
-    })
+    });
+}
+
+  // registerModal(id:number){
+  //   this.graphService.showLoader=true;
+  //   this.modelDataService.registerModel('modelRegister', id)
+  //   .subscribe((respArray:any) => {
+  //     this.graphService.showLoader=false;
+  //     console.log(respArray.data.msg)
+  //     if(respArray.data.msg == 'Failed'){
+  //      alert(respArray.data.response.model_register.reason[0])
+  //     }
+  //   })
    
-  }
+  // }
 
 
 

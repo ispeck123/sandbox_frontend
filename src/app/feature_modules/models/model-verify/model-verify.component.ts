@@ -33,7 +33,7 @@ export class ModelVerifyComponent implements OnInit {
 
   ngOnInit(): void {
     this.pId=localStorage.getItem("pro_id")
-    alert(this.pId)
+    // alert(this.pId)
      this.getProjectsById(this.pId);
      this.audit.addUrlAudit('userAuditLog');
   }
@@ -113,12 +113,12 @@ export class ModelVerifyComponent implements OnInit {
       console.log('Project ID not available.');
       return;
     }
-  
+   this.graphService.showLoader=true;
     this._apiSubscription = this.projectData.projectDeploy(projectId)
     .subscribe(
       respArray => {
         console.log('Project deploy response:', respArray);
-
+      this.graphService.showLoader=false;
         if (respArray.response.project_deploy.inference_url) {
           const sanitizedURL = encodeURI(respArray.response.project_deploy.inference_url);
           const newWindow = window.open(sanitizedURL, '_blank');

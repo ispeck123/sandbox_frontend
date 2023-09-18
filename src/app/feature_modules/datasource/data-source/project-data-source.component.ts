@@ -41,7 +41,7 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   private _apiSubscription!: Subscription;
   sourceIdToBeDeleted!: number;
   attatchedSources!: any[];
-  disableNxtBtn = true;
+  disableNxtBtn:boolean = true;
   purpose_type: any;
   purpose !: purposeTypeConfig;
   projectTypeFlag:any;
@@ -63,6 +63,7 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   source_stored_location: any;
   file_type_name:any;
 
+
   constructor(
     private pipelineData: PipelineDataService,
     private modelDataService: ModelDataService,
@@ -76,6 +77,7 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   ) {
     this.username = this.getTk.getUser_name();
     console.log(this.username)
+    this.attatchedSources = [];
   }
 
   ngOnInit(): void {
@@ -437,17 +439,28 @@ FetchAllByCondition(){
   // @ Deleting Source From Project # # # # # # # # 
 
   // @ Checking Source Attached to current project or not
+  // isSourceAttatched(source_id: number) {
+  
+  //   if (localStorage.getItem("pr_id") !== null) {
+  //     let isAttatched = this.attatchedSources.includes(source_id, 0);
+  //     return isAttatched;
+  //   } else {
+  //     return false;
+  //   }
+  //   // console.clear();
+  //   // console.log(source_id, "source attatched", isAttatched);
+  // }
   isSourceAttatched(source_id: number) {
-    // console.log("Local Stroge PR_ID:: ", localStorage.getItem("pr_id"))
     if (localStorage.getItem("pr_id") !== null) {
-      let isAttatched = this.attatchedSources.includes(source_id, 0);
-      return isAttatched;
-    } else {
-      return false;
+      if (Array.isArray(this.attatchedSources)) {
+        let isAttatched = this.attatchedSources.includes(source_id, 0);
+        return isAttatched;
+      }
+
     }
-    // console.clear();
-    // console.log(source_id, "source attatched", isAttatched);
+    return false;
   }
+  
 
 
   editDatasource(id: any) {
@@ -480,13 +493,52 @@ else{
   onFileSelection(e: Event) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
-    this.fileName = file.name;
-    this.fileerrorShow=false;
-    // this.formData.append('filename', this.fileName);
-    this.formData.append('file', file, file.name);
-
-    // this.uploadSourceFile();
+  
+    if (file) {
+      const allowedExtensions = ['zip', 'png', 'mp4'];
+      const fileExtension = file.name.split('.').pop();
+      const lowerCaseExtension = fileExtension!.toLowerCase();
+  
+      if (allowedExtensions.includes(lowerCaseExtension)) {
+        // Valid file selected
+        this.fileName = file.name;
+        this.fileerrorShow = false;
+        this.formData.append('file', file, file.name);
+      } else {
+        this.fileerrorShow = true;
+        this.fileName = '';
+  
+        // Clear the chosen file input
+        target.value = '';
+  
+        if (this.fileflag === "FILE" && !allowedExtensions.includes('zip')) {
+          alert("Please upload only ZIP files.");
+        } else if (this.fileflag === "IMAGE" && !allowedExtensions.includes('png')) {
+          alert("Please upload only PNG files.");
+        } else if (this.fileflag === "VIDEO" && !allowedExtensions.includes('mp4')) {
+          alert("Please upload only MP4 files.");
+        } else {
+          alert("Invalid file type selected.");
+        }
+      }
+    } else {
+      // No file chosen
+      this.fileName = '';
+      this.fileerrorShow = false;
+    }
   }
+  
+
+  // onFileSelection(e: Event) {
+  //   const target = e.target as HTMLInputElement;
+  //   const file: File = (target.files as FileList)[0];
+  //   this.fileName = file.name;
+  //   this.fileerrorShow=false;
+  //   // this.formData.append('filename', this.fileName);
+  //   this.formData.append('file', file, file.name);
+
+  //   // this.uploadSourceFile();
+  // }
   // onFileSelection(e: Event) {
   //   const target = e.target as HTMLInputElement;
   //   const file: File = (target.files as FileList)[0];
@@ -521,6 +573,7 @@ else{
  //  }
 
  nexttype(){
+  this.graphService.showLoader=true;
   this.projectTypeFlag= localStorage.getItem("pr_type")
    localStorage.setItem('pr_id', this.project_id);
   this.projectService.getProjectType('projecttype', this.projectTypeFlag)
@@ -528,6 +581,7 @@ else{
     respArray => {
       this.projecttype = respArray.data[0];
       this.projecttype=this.projecttype.operation_type_name
+      this.graphService.showLoader=false;
       if(this.projecttype=="Training")
 {
   this.router.navigate(['config-model']);

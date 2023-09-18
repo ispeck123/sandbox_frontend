@@ -9,6 +9,7 @@ import { ModelDataService } from 'src/app/services/model-data.service';
 import { MatChip } from '@angular/material/chips';
 import { ProjectDataService } from 'src/app/services/project-data.service';
 import { Router } from '@angular/router';
+import { GraphService } from 'src/app/services/graph.service';
 
 @Component({
   selector: 'app-project-config-model',
@@ -65,7 +66,7 @@ export class ProjectConfigModelComponent implements OnInit {
     private getTk: GetTokenService,
     private getToken: GetTokenService,private modelDataService: ModelDataService,
     public audit: AuditTrailService,private pipelineData: PipelineDataService,
-    public router: Router
+    public router: Router, private graphService : GraphService,
   ) {
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.modes = ['code', 'text', 'tree', 'view'];
@@ -282,6 +283,7 @@ export class ProjectConfigModelComponent implements OnInit {
  
 
   upload() {
+  
     var protypecheck = localStorage.getItem('proTypeName');
     
     if (protypecheck == "Training") {
@@ -291,7 +293,7 @@ export class ProjectConfigModelComponent implements OnInit {
       }
     } else if (protypecheck == "Inference") {
       if (this.selectedFiles.length !== 1) {
-        alert('Please select 2 files to upload.');
+        alert('Please select files to upload.');
         return;
       }
     }
@@ -319,12 +321,14 @@ export class ProjectConfigModelComponent implements OnInit {
   
     
       if (this.artifacttypesessionid[i]=== 4) {
+        this.graphService.showLoader=true;
         this.modelDataService.uploadWeightFile('artifact/weight/store', formData).subscribe(
           (respArray) => {
             console.log('Response from Server:', respArray); // Log the response from the API
             
             if (respArray.msg === 'success' || respArray.msg === 'Success') {
               this.proType = this.getToken.getProjectType();
+              this.graphService.showLoader=false;
               // alert(this.proType)
               this.addFiles.reset();
               if (this.proType == "Training") {
@@ -342,6 +346,7 @@ export class ProjectConfigModelComponent implements OnInit {
           }
         );
       } else {
+        this.graphService.showLoader=true;
         // Call the default API for other artifact_type_id values
         this.modelDataService.uploadConfigFile('artifact/store', formData).subscribe(
           (respArray) => {
@@ -349,6 +354,7 @@ export class ProjectConfigModelComponent implements OnInit {
             
             if (respArray.msg === 'success' || respArray.msg === 'Success') {
               this.proType = this.getToken.getProjectType();
+              this.graphService.showLoader=false;
               // alert(this.proType)
               this.addFiles.reset();
               if (this.proType == "Training") {
@@ -367,6 +373,7 @@ export class ProjectConfigModelComponent implements OnInit {
           
         );
       }
+
     }
     
     alert("File Upload Success");

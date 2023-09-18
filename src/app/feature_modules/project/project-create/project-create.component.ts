@@ -41,6 +41,8 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
   respipelineid:any;
   projecttype!: ProjectTypeConfig;
   modelsessionid:any;
+  projectTypeSelected: boolean = false;
+  filteredPipeline:any;
 
   constructor(
     private pipelineData: PipelineDataService,
@@ -67,7 +69,7 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
     }
 
     this.getProjectType();
-    this.getPipeline();
+    // this.getPipeline();
     this.username = this.getToken.getUser_name();
     this.audit.addUrlAudit('userAuditLog');
   }
@@ -170,11 +172,13 @@ return;
       this.buttonvisible=true;
       // console.log(this.projectResp.data.project_id)
       // delete this.addProject.value.pipeline_id;
-      console.log("Create project data to sent to server:: ", this.addProject.value)
+      console.log("Create project data to sent to server:: ", this.addProject.value);
+      this.graphService.showLoader=true;
       this.projectData
         .createProjectData('createProject', this.addProject.value)
         .subscribe((respArray) => {
           this.projectResp = respArray;
+          this.graphService.showLoader=false;
           console.log("project submited res",this.projectResp)
           if(this.projectResp.data.project_id != null) {
             this.resprojectid=this.projectResp.data.project_id,
@@ -257,6 +261,7 @@ return;
     } 
   }
   getPipeName(id:any) { 
+    
     localStorage.setItem("model_id",id);
     // localStorage.setItem('proTypeName', Name);
     localStorage.setItem("pipeline_id",id);
@@ -277,5 +282,21 @@ return;
    
     });
     }
+
+    onProjectTypeChange(projectTypeId: string) {
+      if (projectTypeId) {
+        this._apiSubscription = this.projectData.getProjecttype('get_pipeline_by_type_id', projectTypeId)
+          .subscribe((respArray) => {
+            this.filteredPipeline = respArray.response.pipelines;
+            console.log("ALL pipeline ",this.filteredPipeline)
+          });
+    
+        this.projectTypeSelected = true;
+      } else {
+        this.projectTypeSelected = false;
+        this.filteredPipeline = []; // Clear the pipeline data when no project type is selected
+      }
+    }
+    
 
 }

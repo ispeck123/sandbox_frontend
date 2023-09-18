@@ -13,12 +13,12 @@
                 <div class="">
                     <div class="rounded-1 zone_lpl">
                         <div class="zxc_cret">
-                          <video *ngIf="videoUrl"  id="zonImage" #zoneImageContainer alt="" width="100%" height="500" controls autoplay>
+                          <video *ngIf="videoUrl"  id="zonImage" #zoneImageContainer alt="" width="1280" height="720" controls autoplay>
                             <source [src]="selectedZoneImage" type="video/mp4">
                           </video>
                           <img *ngIf="processingtype == 'IMAGE'" [src]="selectedZoneImage" id="zonImage" #zoneImageContainer alt="" width="100%" height="500" />
                           <div class="canvasPlaceholder">
-                            <canvas #canvas id="drawBoard" width="100%" height="500" style="position: absolute; top: 0; left: 0"></canvas>
+                            <canvas #canvas id="drawBoard" width="1280" height="720" style="position: absolute; top: 0; left: 0"></canvas>
                           </div>
                         </div>
                       </div>

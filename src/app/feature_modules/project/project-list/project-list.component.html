@@ -18,6 +18,7 @@
                 <div class="row">
                     <div class="col-sm-3" *ngFor="let item of listdata; let i=index;">
                         <mat-card >
+                            
                             <div class="user_flt">
                                 <button class="ms-auto option-btn" mat-icon-button aria-label="option menu" [matMenuTriggerFor]="menu">
                                     <mat-icon>more_horiz</mat-icon>
@@ -32,9 +33,10 @@
                                     <button mat-menu-item (click)="getProjectsById(item.project_id, 'details')">
                                         <span>Details </span>
                                     </button>
-                                    <button mat-menu-item *ngIf="item.project_type_name === 'Training'" (click)="downloadweightFile(project_Id)">
-                                        <span>Download</span>
+                                    <button mat-menu-item *ngIf="item.project_type_name === 'Training' && item.is_deployed === 1" (click)="downloadweightFile(item.project_id)">
+                                        <span>Download Weight File</span>
                                     </button>
+                                    
                                     <button mat-menu-item (click)="deletePopup(projectCard)">
                                         <span>Delete </span>
                                     </button>
@@ -66,9 +68,9 @@
                                     <!-- <button style="margin-right: 5px;" type="submit" class="stepper-button" mat-stroked-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal" (click)="projectId(item.project_id,item.is_started)">
       {{item.is_started==true  ? 'Stop' : 'Start'}}
       </button> -->
-    <button type="submit"  class="stepper-button" mat-stroked-button color="primary" (click)="projectDeploy(item.project_id)">
+    <!-- <button type="submit"  class="stepper-button" mat-stroked-button color="primary" (click)="projectDeploy(item.project_id)">
       {{item.is_deployed ? 'Deployed' : 'Deploy'}}
-    </button>
+    </button> -->
 
                                 </div>
                             </div>

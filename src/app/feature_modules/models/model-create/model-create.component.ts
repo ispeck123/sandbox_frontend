@@ -241,7 +241,7 @@ export class ModelCreateComponent implements OnInit {
 
     if (this.isCreate) {
       if (this.addModel.value.model_name == "" || this.addModel.value.model_version == "" || this.addModel.value.model_type == "" ||
-        this.addModel.value.model_category_id == "" || this.addModel.value.algo_id == "" || this.addModel.value.framework_id == "" || this.addModel.value.description == "") {
+        this.addModel.value.model_category_id == "" || this.addModel.value.algo_id == "" || this.addModel.value.framework_id == ""  ) {
         alert("Please fill the required fields")
       }
       else {

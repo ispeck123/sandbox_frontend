@@ -33,7 +33,7 @@ pro_id!: number;
   ngOnInit(): void {
     //  this.pId = this.tkService.getProjectId();
     this.pId=localStorage.getItem("pro_id")
-    alert(this.pId)
+    // alert(this.pId)
      this.getProjectsById(this.pId);
      this.audit.addUrlAudit('userAuditLog');
   }
@@ -118,19 +118,30 @@ projectDeploy(id: number) {
           Status : 1,
         }
   const projectId = localStorage.getItem('pro_id');
-  this.graphService.showLoader=true;
+
   
   if (!projectId) {
     console.log('Project ID not available.');
     return;
   }
-
+this.graphService.showLoader=true;
   this._apiSubscription = this.projectData.projectDeploy(projectId)
     .subscribe(
       respArray => {
-        this.graphService.showLoader=false;
         console.log('Project deploy response:', respArray);
-        this.router.navigateByUrl("/project-list");
+        this.graphService.showLoader=false;
+        if (respArray.response.project_deploy.mlflow_url) {
+          const sanitizedURL = encodeURI(respArray.response.project_deploy.mlflow_url);
+          const newWindow = window.open(sanitizedURL, '_blank');
+          this.router.navigateByUrl("/project-list");
+      
+          if (newWindow) {
+
+           
+          } else {
+            
+          }
+        }
         if(respArray.data.msg == 'Success') {
                   this.audit.addAudit('userAuditLog',payload)
                   .subscribe(respArray=>{

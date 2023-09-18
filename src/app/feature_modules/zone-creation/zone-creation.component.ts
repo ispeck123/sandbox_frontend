@@ -22,6 +22,7 @@ import { ProjectDataService } from 'src/app/services/project-data.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { saveAs } from 'file-saver';
+import { GraphService } from 'src/app/services/graph.service';
 
 
 @Component({
@@ -117,6 +118,7 @@ export class ZoneCreationComponent implements OnInit {
     private zoneData: ZoneDataService, 
     private router: Router,
       private projectService: ProjectDataService,
+      private graphService : GraphService,
   
     @Inject(DOCUMENT) private document: Document
   ) {
@@ -150,6 +152,7 @@ export class ZoneCreationComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.graphService.showLoader=true;
     this.sourcesessionid = localStorage.getItem("source_id_session");
     this.projectsessionid=localStorage.getItem("pro_id");
     // alert(localStorage.getItem("source_id_session"))
@@ -161,6 +164,7 @@ export class ZoneCreationComponent implements OnInit {
   .subscribe(
     respArrayBuffer => {
       console.log("file:", respArrayBuffer);
+      this.graphService.showLoader=false;
       if (this.processingtype == 'VIDEO') {
         const videoBlob = new Blob([respArrayBuffer], { type: 'video/mp4' });
         const videoUrl = URL.createObjectURL(videoBlob);

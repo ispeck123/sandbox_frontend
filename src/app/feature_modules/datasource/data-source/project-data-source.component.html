@@ -284,11 +284,12 @@
     <div class="">
         <div class="project_button_nt">
             <button type="button" mat-stroked-button color="primary" [routerLink]="['/home']">Back</button>
-            <button type="button" [disabled]="disableNxtBtn" *ngIf="NextVisibleFlag" class="stepper-button mt-2"
+            <button type="button"  *ngIf="NextVisibleFlag" class="stepper-button mt-2"
                 mat-raised-button color="primary" (click)="nexttype()"> Next
             </button>
         </div>
     </div>
+    <!-- [disabled]="disableNxtBtn" -->
     <!-- Save and next button end  -->
 </div>
 

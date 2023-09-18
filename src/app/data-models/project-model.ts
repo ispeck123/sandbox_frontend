@@ -26,12 +26,14 @@ export interface ProjectListData {
 }
 
 export interface ProjectTypeConfig {
+  pipeline_type_id: number;
   response: any;
   message: string
   data: ProjectTypeData[]
 }
 
 export interface ProjectTypeData {
+  processing_type_id: number;
   project_type_id: number
   description: string
   created_by: string
