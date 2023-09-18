@@ -77,14 +77,14 @@ export class SelectModelPipelineComponent implements OnInit,OnDestroy {
 
   // }
   getmodelid(id:any){
-    alert(id)
+    // alert(id)
     if(id)
     {
       this.dropvalidate=false;
     }
     localStorage.setItem("model_id",id);
     this.modelsessionid= localStorage.getItem("model_id")
-    alert(this.modelsessionid)
+    // alert(this.modelsessionid)
    
   }
 }

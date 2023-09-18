@@ -26,6 +26,7 @@ export interface ProjectListData {
 }
 
 export interface ProjectTypeConfig {
+  // msg: string;
   pipeline_type_id: number;
   response: any;
   message: string

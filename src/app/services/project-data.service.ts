@@ -145,7 +145,7 @@ export class ProjectDataService {
         map((arrayBuffer: ArrayBuffer) => {
           const fileBlob = new Blob([arrayBuffer], { type: 'application/octet-stream' });
          
-          console.log(fileBlob);
+          console.log("SERVICE FILE RRESPONSE",fileBlob);
           return fileBlob;
         })
       );

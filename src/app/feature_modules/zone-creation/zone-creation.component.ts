@@ -128,7 +128,7 @@ export class ZoneCreationComponent implements OnInit {
   title = 'zone-detection-app';
   ctx!: any;
   canvasWidth = 1200; 
-  canvasHeight = 500;
+  canvasHeight = 720;
 
   @HostListener("click", ['$event']) onClickOutside (event: MouseEvent) {
     console.log((<HTMLElement>event.target).innerHTML === (<HTMLElement>this.canvas.nativeElement).innerHTML);

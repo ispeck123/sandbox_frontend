@@ -99,6 +99,10 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
       this.projectTypeList = respArray;
 
       console.log("TYPE",this.projectTypeList);
+      if (respArray.message === 'failed') {
+       
+        alert('API response failed');
+      }
 
       this.graphService.showLoader=false;
 
@@ -177,7 +181,9 @@ return;
       this.projectData
         .createProjectData('createProject', this.addProject.value)
         .subscribe((respArray) => {
-          this.projectResp = respArray;
+         this.projectResp = respArray;
+         
+
           this.graphService.showLoader=false;
           console.log("project submited res",this.projectResp)
           if(this.projectResp.data.project_id != null) {

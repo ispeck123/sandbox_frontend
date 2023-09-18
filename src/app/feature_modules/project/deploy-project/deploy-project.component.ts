@@ -50,6 +50,7 @@ pro_id!: number;
           this.projectUIData.pipeline_name = res.data[0].pipeline_name;
           this.projectUIData.processing_type_name = res.data[0].processing_type_name;
         }, (err) => {
+          alert('An error occurred while fetching data from the API.');
           
         }, () => {
           // this.projectDataforUI = projectData;
@@ -165,6 +166,8 @@ this.graphService.showLoader=true;
       error => {
         console.error('Error during project deploy:', error);
         // Handle the error here
+
+        alert('An error occurred while fetching data from the API.');
       }
     );
  

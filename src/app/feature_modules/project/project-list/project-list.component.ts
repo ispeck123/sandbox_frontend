@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, SecurityContext } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProjectDeployConfig, ProjectListConfig } from 'src/app/data-models/project-model';
 import { AddAuditConfig } from 'src/app/data-models/user.model';
@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { PipelineDataService } from 'src/app/services/pipeline-data.service';
 import { HttpClient } from '@angular/common/http';
 import FileSaver from 'file-saver';
+import { DomSanitizer } from '@angular/platform-browser';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-project-list',
@@ -30,7 +32,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   isButtonDisabled: boolean = true ;
   constructor(private projectData: ProjectDataService, public dialog: MatDialog,
     public audit: AuditTrailService,
-    private graphService: GraphService, private router: Router, private deleteDialog: MatDialog
+    private graphService: GraphService, private router: Router, private deleteDialog: MatDialog,private sanitizer: DomSanitizer
   ) { }
   auditData!: AddAuditConfig;
   ngOnInit(): void {
@@ -44,6 +46,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this._apiSubscription = this.projectData.getProjectList('projects', 'all')
       .subscribe(respArray => {
         if (respArray.message == "Token invalid") {
+          alert('API response failed');
           localStorage.removeItem("tk");
           localStorage.removeItem("uid");
           this.router.navigate(['/login']);
@@ -169,17 +172,20 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   downloadweightFile(project_id: number) {
     this.graphService.showLoader = true;
     this.projectData.weightFiledownload(project_id)
-      .subscribe((resp: any) => {
-
-     
-        let filename = 'default_filename.pt';
+      .subscribe((resp:any) => {
   
-        const blob = new Blob([resp.body], { type: 'application/octet-stream' });
-        FileSaver.saveAs(blob, filename);
+        console.log("FILE",resp)
+        // var blob=new Blob([resp],{type : mediaType});
+        saveAs(resp,"project_"+project_id+"_weight.pt");
         this.graphService.showLoader = false;
       });
   }
   
+  
+  // private sanitizeFilename(filename: string): any {
+  //   // Sanitize the filename using DomSanitizer
+  //   this.sanitizer.sanitize(SecurityContext.URL, filename);
+  // }
 
   // downloadweightFile(project_id: number) {
   //   this.graphService.showLoader=true;

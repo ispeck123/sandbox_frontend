@@ -77,7 +77,7 @@ export class ProjectConfigModelComponent implements OnInit {
     this.projectsessionId= localStorage.getItem("pro_id")
     this.pipelinesessionid= localStorage.getItem("pipeline_id")
     this.modelsessionid= localStorage.getItem("model_id")
-    alert(this.modelsessionid)
+    // alert(this.modelsessionid)
     this.sourcesessionid= localStorage.getItem("source_id_session")
     // alert(this.modelsessionid)
     this.projectService.getProjectType('projecttype', this.pr_type)
