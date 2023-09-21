@@ -8,7 +8,7 @@ import { ModelDataService } from 'src/app/services/model-data.service';
 import { PipelineDataService } from 'src/app/services/pipeline-data.service';
 import { ProjectDataService } from 'src/app/services/project-data.service';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs-compat/operator/takeUntil';
 // import { FILE } from 'dns';
@@ -62,6 +62,7 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   rtspurl:string='';
   source_stored_location: any;
   file_type_name:any;
+  route_PRID:any;
 
 
   constructor(
@@ -74,6 +75,7 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
     private router: Router,
     private renderer: Renderer2,
     private projectData: ProjectDataService,
+    private route: ActivatedRoute
   ) {
     this.username = this.getTk.getUser_name();
     console.log(this.username)
@@ -81,6 +83,8 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+      this.route_PRID = localStorage.getItem("tab");
+
 
 this.projectTypeFlag= localStorage.getItem("pr_type")
 if(this.projectTypeFlag==null || this.projectTypeFlag=="undefined"){
@@ -101,7 +105,7 @@ this.sourcebuttonflag=false;
   }
 FetchAllByCondition(){
   this.graphService.showLoader = true;
-  this._apiSubscription = this.pipelineData.getSourceListCondition('condition', this.projectTypeFlag)
+  this._apiSubscription = this.pipelineData.getSourceListCondition('condition',this.projectTypeFlag,localStorage.getItem('uid')!)
     .subscribe(
       respArray => {
         this.sourceList = respArray;
@@ -111,7 +115,7 @@ FetchAllByCondition(){
       }
     )
     if (localStorage.getItem('pr_id') !== null) {
-      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!)
+      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!,localStorage.getItem("uid")!)
         .subscribe((res: ProjectListConfig) => {
           // console.clear();
           // console.log("Project List :: " , res.data[0]);
@@ -131,7 +135,7 @@ FetchAllByCondition(){
     this.fetchSouceLocationList();
     this.fetchSourceList();
     if (localStorage.getItem('pr_id') !== null) {
-      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!)
+      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!,localStorage.getItem("uid")!)
         .subscribe((res: ProjectListConfig) => {
           // console.clear();
           // console.log("Project List :: " , res.data[0]);
@@ -302,7 +306,7 @@ FetchAllByCondition(){
             this.sourceResp = respArray;
             this.closebutton.nativeElement.click();
             
-            this._apiSubscription = this.pipelineData.getSourceList('source', 'all')
+            this._apiSubscription = this.pipelineData.getSourceList('source', 'all',localStorage.getItem('uid')! )
               .subscribe(
                 respArray => {
                   this.sourceList = respArray;
@@ -336,9 +340,12 @@ FetchAllByCondition(){
 
   fetchSourceList() {
     this.graphService.showLoader = true;
-    this._apiSubscription = this.pipelineData.getSourceList('source', 'all')
+    this._apiSubscription = this.pipelineData.getSourceList('source', 'all',localStorage.getItem('uid')!)
       .subscribe(
         respArray => {
+          console.log(respArray)
+          
+          
           this.sourceList = respArray;
           this.listdata = this.sourceList.data;
           this.graphService.showLoader = false;
@@ -369,7 +376,7 @@ FetchAllByCondition(){
   // @ select clicked Data Source # # # # # # # 
   selectSource(source: SourceData, e: Event) {
 
-     this._apiSubscription = this.pipelineData.getSourceList('source', source.source_id)
+     this._apiSubscription = this.pipelineData.getSourceList('source', source.source_id, localStorage.getItem('uid')!)
      .subscribe(
        respArray => {
         console.log('file',respArray);
@@ -379,9 +386,14 @@ FetchAllByCondition(){
 
 
       //  alert(this.source_stored_location)
-
-
-      this.NextVisibleFlag=true;
+      if(this.route_PRID=="tab")
+      {
+        this.NextVisibleFlag=true;
+      }
+      else
+      {
+        this.NextVisibleFlag=false;
+      }
     this.source_id_sec=source.source_stored_location_id
     localStorage.setItem('source_id_session', String(source.source_id));
     localStorage.setItem('source_location_session_id',this.source_stored_location );

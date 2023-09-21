@@ -21,9 +21,9 @@ export class ProjectDataService {
     this.authorization  = localStorage.getItem('tk')!;
     console.log()  
   }
-  getProjecttype(url: string, id: number | string): Observable<ProjectTypeConfig> {
+  getProjecttype(url: string, id: number | string,userid:any): Observable<ProjectTypeConfig> {
     const headers = this.getToken.getLocalToken();
-    return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id, { headers });
+    return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id +'/' +userid, { headers });
   }
   projectTypeData(url:string){
     const headers = this.getToken.getLocalToken();
@@ -42,18 +42,25 @@ export class ProjectDataService {
   }
 
 
-  getProjectList(url: string, id: string | number){
+  getProjectList(url: string, id: string | number,userid:any){
     const headers = this.getToken.getLocalToken();
     console.log('l',headers)
-    const uid = null;
-    console.log("object",url,id,uid)
+    console.log("object",url,id,userid);
+    console.log("URL",`${this.Api_Path}/${url}/${id}/${userid}`)
 
-    return this.http.get<ProjectListConfig>(`${this.Api_Path}/${url}/${id}/${uid}`, {headers})
+    return this.http.get<ProjectListConfig>(`${this.Api_Path}/${url}/${id}/${userid}`, {headers})
            .pipe(map(object =>{
-            console.log("object",object)
-             let pro_letters = object.data[0].project_name.split('').map(word => word[0])
-                .join('');
-              return  {...object, pro_letters: pro_letters};
+            if(object.data.length==0)
+            {
+              return {...object, pro_letters: null};
+            }
+            else{
+              console.log("object",object)
+              let pro_letters = object.data[0].project_name.split('').map(word => word[0])
+                 .join('');
+               return  {...object, pro_letters: pro_letters};
+            }
+            
            }))
   }
 

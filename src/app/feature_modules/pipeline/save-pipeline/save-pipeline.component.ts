@@ -29,7 +29,7 @@ export class SavePipelineComponent implements OnInit {
   }
   
   getPipelinedata(id:any){
-    this.pipelineData.getPipelineData('pipeline', id).subscribe(
+    this.pipelineData.getPipelineData('pipeline', id,localStorage.getItem("uid")!).subscribe(
       respArray=>{
         this.pipelinedata=respArray.data;
         console.log("Pipeline Data",this.pipelinedata);

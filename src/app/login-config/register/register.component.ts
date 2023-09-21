@@ -23,15 +23,15 @@ export class RegisterComponent implements OnInit {
   hide:boolean = true;
   hideConf:boolean = true;
   isMatch:boolean = true;
-  password : string = '';
+
 
   registerForm = new FormGroup({
 
-    UserFullName       : new FormControl('',[Validators.required]),
+    UserFullName : new FormControl('',[Validators.required]),
     Email      : new FormControl('', [Validators.required, Validators.email]),
     UserName   : new FormControl('', [Validators.required]),
-    Password   : new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(32), PassStrengthValidator()] ),
-    repeatpass : new FormControl('', [Validators.required])
+    Password   : new FormControl('', [Validators.required]  ),
+    repeatpass : new FormControl('')
 
 
  })
@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
   this.login_register.registerData('createUser',this.data)
   .subscribe(response =>{
 
-      alert(response.message );
+     alert(response.message );
       
       this.router.navigateByUrl('/login');
 
@@ -63,10 +63,10 @@ public hideConfEye(e:Event) {
 }
 
 
-passwordMatch(e:Event){
-  console.log(1);
-   (this.password == (e.target as HTMLInputElement).value) ? this.isMatch = true : this.isMatch = false;
-}
+// passwordMatch(e:Event){
+//   console.log(1);
+//    (this.password == (e.target as HTMLInputElement).value) ? this.isMatch = true : this.isMatch = false;
+// }
 
 
 }

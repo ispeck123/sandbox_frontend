@@ -30,14 +30,23 @@ export class PipelineListComponent implements OnInit, OnDestroy {
 
   public getPipelineList() {
     this.graphService.showLoader = true;
-    this._apiSubscription = this.pipelineData.getPipelineData('pipeline', 'all')
+    this._apiSubscription = this.pipelineData.getPipelineData('pipeline', 'all',localStorage.getItem("uid")!)
       .subscribe(
         respArray => {
+
+          console.log("pipeline....", respArray)
+          if(respArray.data==null){
+            this.graphService.showLoader = false;
+        }
+        else{
           this.pipelineList = respArray;
           this.listdata = this.pipelineList.data;
           this.graphService.showLoader = false;
 
           console.log("pipeline list",this.pipelineList);
+
+
+        }
 
         }
       )
@@ -56,7 +65,7 @@ export class PipelineListComponent implements OnInit, OnDestroy {
 
   fetchPipeById(id: number, checkVal: string) {
 
-    this.pipelineData.getPipelineData('pipeline', id)
+    this.pipelineData.getPipelineData('pipeline', id,localStorage.getItem("uid")!)
       .subscribe(
         respArray => {
           this.pipelineById = respArray;

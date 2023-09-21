@@ -28,6 +28,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   projectDepData!: ProjectDeployConfig;
   private _apiSubscription!: Subscription;
   element!: boolean;
+
   
   isButtonDisabled: boolean = true ;
   constructor(private projectData: ProjectDataService, public dialog: MatDialog,
@@ -43,9 +44,14 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   getProjects() {
     this.graphService.showLoader = true;
-    this._apiSubscription = this.projectData.getProjectList('projects', 'all')
+    this._apiSubscription = this.projectData.getProjectList('projects', 'all',localStorage.getItem("uid")!)
       .subscribe(respArray => {
-        if (respArray.message == "Token invalid") {
+        console.log("list....",respArray)
+        if(respArray.length==0){
+            alert("NO DATA FOUND !")
+            this.graphService.showLoader = false;
+        }
+        else if (respArray.message == "Token invalid") {
           alert('API response failed');
           localStorage.removeItem("tk");
           localStorage.removeItem("uid");
@@ -77,7 +83,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   }
 
   getProjectsById(id: number, checkVal: string) {
-    this.projectData.getProjectList('projects', id)
+    this.projectData.getProjectList('projects', id,localStorage.getItem("uid")!)
       .subscribe(respArray => {
         this.projectById = respArray;
         console.log('m', respArray)
@@ -244,7 +250,7 @@ export class ProjectDetails implements OnInit {
       let projectData = this.projectList.projectData.data[0];
       this.projectDataforUI = projectData;
       if (projectData.pipeline_id !== null) {
-        this.pipelineService.getPipelineData("pipeline", projectData.pipeline_id)
+        this.pipelineService.getPipelineData("pipeline", projectData.pipeline_id,localStorage.getItem("uid")!)
         .subscribe((res) => {
           projectData.pipeline_name = res.data[0].pipeline_name;
           projectData.processing_type_name = res.data[0].processing_type_name;
@@ -259,7 +265,7 @@ export class ProjectDetails implements OnInit {
         projectData.sources = new Array();
         for (let i = 0; i < projectData.source_ids.length; i++) {
           const source_id = projectData.source_ids[i];
-          this.pipelineService.getSourceList("source", source_id).subscribe((res: any) => {
+          this.pipelineService.getSourceList("source", source_id,localStorage.getItem('uid')!).subscribe((res: any) => {
             // console.log("Data sources:: ", res);
             if (res.data !== null) {
               console.log("Data sources:: ", res.data);

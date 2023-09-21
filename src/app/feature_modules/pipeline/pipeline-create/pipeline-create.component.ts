@@ -97,7 +97,7 @@ export class PipelineCreateComponent implements OnInit {
 
   fetchPipeById(id:number){
     console.log(id)
-    this.pipelineData.getPipelineData('pipeline', id)
+    this.pipelineData.getPipelineData('pipeline', id,localStorage.getItem("uid")!)
    .subscribe(
      respArray => {
        this.pipelineById = respArray;

@@ -324,7 +324,7 @@ export class AddModelClassComponent implements OnInit {
   }
 
   fetchModelListData() {
-    this.modelDataService.getModelListData('model', 'all')
+    this.modelDataService.getModelListData('model', 'all',localStorage.getItem('uid')!)
       .subscribe(
         respArray => {
           this.modelList = respArray;

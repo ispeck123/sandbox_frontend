@@ -39,13 +39,13 @@ export class ModelVerifyComponent implements OnInit {
   }
 
   getProjectsById(id:any){
-    this._apiSubscription=this.projectData.getProjectList('projects', id)
+    this._apiSubscription=this.projectData.getProjectList('projects', id,localStorage.getItem("uid")!)
     .subscribe( respArray => {
       this.projectList = respArray;
       this.projectUIData = respArray.data[0];
 
       if (this.projectUIData.pipeline_id !== null) {
-        this.pipelineService.getPipelineData("pipeline", this.projectUIData.pipeline_id)
+        this.pipelineService.getPipelineData("pipeline", this.projectUIData.pipeline_id,localStorage.getItem("uid")!)
         .subscribe((res) => {
           this.projectUIData.pipeline_name = res.data[0].pipeline_name;
           this.projectUIData.processing_type_name = res.data[0].processing_type_name;

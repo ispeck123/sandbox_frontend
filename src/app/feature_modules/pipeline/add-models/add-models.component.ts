@@ -66,7 +66,7 @@ export class AddModelsComponent implements OnInit, OnDestroy {
 
   fetchPipeById(id: number) {
     console.log(id)
-    this.pipeDataService.getPipelineData('pipeline', id)
+    this.pipeDataService.getPipelineData('pipeline', id,localStorage.getItem("uid")!)
       .subscribe(
         respArray => {
         }
@@ -96,7 +96,7 @@ export class AddModelsComponent implements OnInit, OnDestroy {
 
   fetchModelListData() {
     this.graphService.showLoader = true;
-    this._apiSubscription = this.modelDataService.getRigisterModelList('registered/model/view/', 'all')
+    this._apiSubscription = this.modelDataService.getRigisterModelList('registered/model/view/', 'all',localStorage.getItem('uid')!)
       .subscribe(
         respArray => {
           this.modelList = respArray.response;
@@ -166,7 +166,7 @@ export class AddModelsComponent implements OnInit, OnDestroy {
 
   showSelectedList(id: any) {
     alert("Hit")
-    this.modelDataService.getRigisterModelList('registered/model/view/', 'all').subscribe(
+    this.modelDataService.getRigisterModelList('registered/model/view/', 'all',localStorage.getItem('uid')!).subscribe(
       respArray => {
         let value = respArray.response;
         this.modellist.push(value[0].model_name);

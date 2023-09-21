@@ -26,7 +26,7 @@ export class ProjectModelComponent implements OnInit,OnDestroy {
   }
 
   fetchModelListData(){
-    this._apiSubscription=this.modelDataService.getModelListData('model', 'ALL')
+    this._apiSubscription=this.modelDataService.getModelListData('model', 'ALL',localStorage.getItem('uid')!)
     .subscribe(
       respArray => {
             this.modelList = respArray;
@@ -68,7 +68,7 @@ export class ProjectModelComponent implements OnInit,OnDestroy {
   }
 
   fetchModelByID(model_id:number){
-    this.modelDataService.getModelListData('model', model_id)
+    this.modelDataService.getModelListData('model', model_id,localStorage.getItem('uid')!)
     .subscribe(
       respArray => {
             this.individualModel = respArray;

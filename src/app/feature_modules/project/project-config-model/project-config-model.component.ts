@@ -270,16 +270,29 @@ export class ProjectConfigModelComponent implements OnInit {
   }
 
 
+  // selectFiles(event: any, artifact_type_id: any, items: any) {
+  //   if (event.target.files.length > 0) {
+  //     this.artifacttypesessionid.push(artifact_type_id);
+  //     this.selectedFiles.push(event.target.files[0]);
+  //     items.isVisible = false;
+  //     items.selectedFile = this.selectedFiles[0];
+  
+  //     console.log("Selected files: ", this.selectedFiles);
+  //   }
+  // }
   selectFiles(event: any, artifact_type_id: any, items: any) {
+    console.log()
     if (event.target.files.length > 0) {
       this.artifacttypesessionid.push(artifact_type_id);
-      this.selectedFiles.push(event.target.files[0]);
+      const selectedFile = event.target.files[0];
+      this.selectedFiles.push(selectedFile );
       items.isVisible = false;
+      items.selectedFile = selectedFile;
   
       console.log("Selected files: ", this.selectedFiles);
     }
   }
-
+  
  
 
   upload() {
@@ -310,6 +323,7 @@ export class ProjectConfigModelComponent implements OnInit {
     
     
     for (let i = 0; i < this.selectedFiles.length; i++) {
+      console.log("SUBMIT",this.selectedFiles[i])
       formData.append('file', this.selectedFiles[i]);
       formData.append('artifact_type_id', this.artifacttypesessionid[i]);
 
@@ -331,6 +345,10 @@ export class ProjectConfigModelComponent implements OnInit {
               this.graphService.showLoader=false;
               // alert(this.proType)
               this.addFiles.reset();
+              alert("File Upload Success");
+
+
+              
               if (this.proType == "Training") {
                 this.router.navigateByUrl('/deploy-project');
               }
@@ -355,6 +373,7 @@ export class ProjectConfigModelComponent implements OnInit {
             if (respArray.msg === 'success' || respArray.msg === 'Success') {
               this.proType = this.getToken.getProjectType();
               this.graphService.showLoader=false;
+              alert("File Upload Success");
               // alert(this.proType)
               this.addFiles.reset();
               if (this.proType == "Training") {
@@ -376,7 +395,7 @@ export class ProjectConfigModelComponent implements OnInit {
 
     }
     
-    alert("File Upload Success");
+  
   }
   
   

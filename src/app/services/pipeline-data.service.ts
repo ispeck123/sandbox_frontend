@@ -36,11 +36,11 @@ export class PipelineDataService {
     // this.getsource();
   }
 
-  getPipelineData(url: string, id: number | string) {
+  getPipelineData(url: string, id: number | string ,userid:any ) {
     const headers = this.getToken.getLocalToken();
-    const uid = null;
+    
     return this.http.get<PipelineListConfig>(
-      `${this.Api_Path}/${url}/${id}/${uid}`,
+      `${this.Api_Path}/${url}/${id}/${userid}`,
       { headers }
     );
   }
@@ -194,19 +194,19 @@ export class PipelineDataService {
     );
   }
 
-  getSourceList(url: string, id: number | string) {
+  getSourceList(url: string, id: number | string ,userid:any) {
     const headers = this.getToken.getLocalToken();
     const uid = this.getToken.getUser_name();
     return this.http.get<SourceListConfig>(
-      `${this.Api_Path}/${url}/${id}/${uid}`,
+      `${this.Api_Path}/${url}/${id}/${userid}`,
       { headers }
     );
   }
-  getSourceListCondition(url: string, id: number | string) {
+  getSourceListCondition(url: string, id: number | string ,userid:any ) {
     const headers = this.getToken.getLocalToken();
     const uid = this.getToken.getUser_name();
     return this.http.get<SourceListConfig>(
-      `${this.Api_Path}/${url}/${id}`,
+      `${this.Api_Path}/${url}/${id}/${userid}`,
       { headers }
     );
   }

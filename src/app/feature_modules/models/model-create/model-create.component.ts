@@ -202,7 +202,7 @@ export class ModelCreateComponent implements OnInit {
   });
 
   fetchModalById(id: number) {
-    this.modelDataService.getModelListData('model', id)
+    this.modelDataService.getModelListData('model', id,localStorage.getItem('uid')!)
       .subscribe(
         (respArray) => {
           this.modalListById = respArray;

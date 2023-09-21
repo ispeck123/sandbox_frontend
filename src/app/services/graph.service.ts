@@ -13,6 +13,7 @@ export class GraphService {
   Api_Path:string = '';
   authorization:string = '';
   private _showLoader: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private _loaderMessage: BehaviorSubject<string> = new BehaviorSubject<string>(''); // Add a message BehaviorSubject
 
   constructor(private http: HttpClient, private getToken:GetTokenService) {
     this.Api_Path       = servicedata.api_url;
@@ -79,9 +80,15 @@ getHeaders(id: number | string):HttpHeaders{
   get showLoader(){
     return this._showLoader.asObservable();
   }
-
+  
   set showLoader(value:any){
     console.log(value);
     this._showLoader.next(value);
   }
+
+  set LoaderMessage(message: string) {
+    this._loaderMessage.next(message);
+  }
+
+
 }

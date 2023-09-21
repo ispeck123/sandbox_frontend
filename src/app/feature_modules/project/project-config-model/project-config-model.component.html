@@ -33,23 +33,21 @@
                              <button mat-stroked-button class="stepper-button mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#dataModal" color="primary" (click)="openArtifact(items)">
                         {{items.artifacts_type_name}}
                         </button>
-                        <!-- *ngIf="items.artifacts_type_name !='Hyperparameter'" -->
                             <div class="upload_btn_ispkl" >
-
-                                <button >
-                                  <span style="position: relative;
-                                  left: 33px;"><mat-icon>cloud_upload</mat-icon>Upload</span>
-                                  <input type="file" id="myFile" name="filename" accept=".pt,.pb,.pth,.weights,.tf,.h5,.caffe" (change)="selectFiles($event,items.artifacts_type_id,items)" required>
-                                   <div *ngIf="items.isVisible" >No chosen file</div>
-                                </button>
-                               
-
+                                <button>
+                                    <span style="position: relative;">
+                                      <mat-icon>cloud_upload</mat-icon>Upload
+                                    </span>
+                                    <input type="file" [id]="'myFile' + i" [name]="'filename' + i" accept=".pt,.pb,.pth,.weights,.tf,.h5,.caffe"
+                                           (change)="selectFiles($event, items.artifacts_type_id, items)" required>
+                                    <div *ngIf="!items.selectedFile">No chosen file</div>
+                                    <div *ngIf="items.selectedFile">Selected file: {{ items.selectedFile.name }}</div>
+                                  </button>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
-                <div class="configur_sec">
+                <!-- <div class="configur_sec">
                     <h4>
                         Where can I get some?
                     </h4>
@@ -57,7 +55,7 @@
                     <button mat-stroked-button class="stepper-button mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#advancedModal" color="primary">
                         Advanced
                     </button>
-                </div>
+                </div> -->
                 
 
             </div>

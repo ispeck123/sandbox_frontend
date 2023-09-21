@@ -31,9 +31,10 @@ export class ModelListComponent implements OnInit, OnDestroy  {
   fetchModelListData(){
     this.graphService.showLoader = true;
     console.log("data-----------------",this.graphService.showLoader);
-    this._apiSubscription=this.modelDataService.getModelListData('model', 'all')
+    this._apiSubscription=this.modelDataService.getModelListData('model', 'all',localStorage.getItem('uid')!)
     .subscribe(
       respArray => {
+        
             this.graphService.showLoader = false;
             console.log("data-----------------",this.graphService.showLoader);
 
@@ -46,15 +47,24 @@ export class ModelListComponent implements OnInit, OnDestroy  {
 
   fetchModalById(id:number, checkVal:string){
 
-     this.modelDataService.getModelListData('model', id)
+     this.modelDataService.getModelListData('model', id,localStorage.getItem('uid')!)
     .subscribe(
       respArray => {
-
-        this.modalListById = respArray;
+        if(respArray.data==null)
+        {
+       
+          this.graphService.showLoader = false;
+        }
+        else{
+          this.modalListById = respArray;
         if(!(checkVal != 'details'))
           this.dialogData(this.modalListById, checkVal)
         else
           this.dialogData(id, checkVal)
+
+        }
+
+        
       }
 
     )
@@ -80,11 +90,13 @@ export class ModelListComponent implements OnInit, OnDestroy  {
 }
 
 registerModal(id: number) {
+  
   this.graphService.showLoader = true;
+  this.graphService.LoaderMessage="Please Wait....";
   this.modelDataService.registerModel('modelRegister', id)
     .subscribe((respArray: any) => {
       this.graphService.showLoader = false;
-      
+      alert("Do not register again !")
       console.log(respArray.data.msg);
       if (respArray.data.msg == 'Failed') {
         alert(respArray.data.response.model_register.reason[0]);

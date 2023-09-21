@@ -81,7 +81,7 @@ export class DatasourceEditComponent implements OnInit,OnDestroy {
   
   fetchProjectList(){
     this.graphService.showLoader=true;
-     this.projectService.getProjectList('projects', 'all')
+     this.projectService.getProjectList('projects', 'all',localStorage.getItem("uid")!)
      .subscribe(
       respArray => {
         this.projectlist = respArray;

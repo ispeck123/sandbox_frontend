@@ -35,7 +35,7 @@ export class SelectModelPipelineComponent implements OnInit,OnDestroy {
   }
 
   getProjectPipeline(id:any){
-    this.projectData.getProjectList('projects', id)
+    this.projectData.getProjectList('projects', id,localStorage.getItem("uid")!)
     .subscribe(respArray => {
       console.log(respArray.data[0].pipeline_id)   
       this.pipeline_id = respArray.data[0].pipeline_id;
@@ -44,8 +44,9 @@ export class SelectModelPipelineComponent implements OnInit,OnDestroy {
   }
   public getPipelineList() {
     this._apiSubscription=this.pipelineData
-      .getPipelineData('pipeline', 'all')
+      .getPipelineData('pipeline', 'all',localStorage.getItem("uid")!)
       .subscribe((respArray) => {
+        
         this.pipelineList = respArray.data;
         console.log("PIPELINE LIST",this.pipelineList);
       });

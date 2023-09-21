@@ -110,9 +110,10 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
   }
    getPipeline() {
     this.graphService.showLoader=true;
-    this.pipelineData.getPipelineData('pipeline', 'all')
+    this.pipelineData.getPipelineData('pipeline', 'all',localStorage.getItem("uid")!)
     .subscribe(
       respArray => {
+        console.log("pipeline project",respArray)
         this.pipelineList = respArray;
         console.log("pipeline list:",this.pipelineList);
         this.pipelinedata = this.pipelineList.data;
@@ -133,7 +134,7 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
 
   getProjectsById(id:number){
 
-    this._apiSubscription=this.projectData.getProjectList('projects', id)
+    this._apiSubscription=this.projectData.getProjectList('projects', id,localStorage.getItem("uid")!)
 
     .subscribe( respArray => {
 
@@ -193,6 +194,7 @@ return;
             localStorage.setItem("pro_id",this.resprojectid);
             
             alert('Project Created');
+            localStorage.setItem('tab', "tab".toString());
             this.router.navigateByUrl('/project-datasource');
             // alert(localStorage.getItem("pr_id"))
             localStorage.setItem('pr_type', (this.addProject.get('project_type_id')?.value).toString());
@@ -282,7 +284,7 @@ return;
     }
   }
   getProjectTypeflag(id:any){
-    this._apiSubscription=this.projectData.getProjecttype('get_pipeline_by_type_id', id)
+    this._apiSubscription=this.projectData.getProjecttype('get_pipeline_by_type_id', id,localStorage.getItem('uid')!)
     .subscribe((respArray) => {
     this.projecttype = respArray;
    
@@ -291,7 +293,7 @@ return;
 
     onProjectTypeChange(projectTypeId: string) {
       if (projectTypeId) {
-        this._apiSubscription = this.projectData.getProjecttype('get_pipeline_by_type_id', projectTypeId)
+        this._apiSubscription = this.projectData.getProjecttype('get_pipeline_by_type_id', projectTypeId,localStorage.getItem('uid')!)
           .subscribe((respArray) => {
             this.filteredPipeline = respArray.response.pipelines;
             console.log("ALL pipeline ",this.filteredPipeline)

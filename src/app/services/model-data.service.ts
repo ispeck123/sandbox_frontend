@@ -1,9 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AddModelRespConfig, AlgoListConfig, ArtifactConfig,artifactfileRespConfig, artifactStoreRespConfig, AttrDataTypeConfig, FrameworkListConfig, ModalTypeConfig, ModelCategoryconfig, ModelConfigType, ModelListConfig, ModelVerifyConfig } from '../data-models/model';
 import { GetTokenService } from './get-token.service';
 import servicedata from 'src/assets/service.json'
+
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,16 +21,18 @@ export class ModelDataService {
   }
 
 
-  getModelListData(url:string, id:number | string){
+  getModelListData(url:string, id:number | string, userid:any){
     const headers = this.getToken.getLocalToken();
-    const uid     = null;
-    return this.http.get<ModelListConfig>(`${this.Api_Path}/${url}/${id}/${uid}`, {headers});
+    // const uid     = null;
+    return this.http.get<ModelListConfig>(`${this.Api_Path}/${url}/${id}/${userid}`, {headers});
   }
 
-  getRigisterModelList(url: string, model_id: any) {
+
+
+  getRigisterModelList(url: string, model_id: any ,userid:any) {
     const headers = this.getToken.getLocalToken();
 
-    return this.http.get<any>(this.fastapiurl+url+model_id,{ headers }
+    return this.http.get<any>(this.fastapiurl+url+model_id+"?userid="+userid,{ headers }
       );
   }
   getModelType(url:string, id:number | string){
@@ -80,6 +84,9 @@ export class ModelDataService {
     var reqHeader = new HttpHeaders({ 'Content-Type': 'multipart/form-data', 'No-Auth': 'True' });
     return this.http.post<any>(fastapi+'artifact/weight/store',payload);
   }
+
+
+  
 
   getModelConfigType(url:string ){
     const headers = this.getToken.getLocalToken();
