@@ -40,9 +40,8 @@ const routes: Routes = [
     component: ForgotPasswordComponent
   },
   {
-    path: 'reset_password',
-    component: ResetPasswordComponent,
-    canActivate:[PassLinkGuard]
+    path: 'reset_password/:id',
+    component: ResetPasswordComponent
   },
   {
     path: 'accessdenied',
