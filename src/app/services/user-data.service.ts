@@ -80,6 +80,13 @@ export class UserDataService {
     );
   }
 
+  userUpdate(url: string, payload: any,id:any ) {
+    const authToken = this.getToken.getLocalToken();
+    return this.http.put<UserDetailsConfig>(
+      `${this.Api_Path}/${url}/${id}`, payload,{ headers:authToken });
+  }
+ 
+
   userPermissionByRoleId(url: string, payload: number, token: string) {
     const headers = new HttpHeaders().set('authorization', token);
 

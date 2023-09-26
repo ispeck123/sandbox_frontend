@@ -84,6 +84,7 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
       this.route_PRID = localStorage.getItem("tab");
+      localStorage.removeItem("tab");
 
 
 this.projectTypeFlag= localStorage.getItem("pr_type")

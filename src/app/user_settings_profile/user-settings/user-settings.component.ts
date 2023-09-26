@@ -6,8 +6,10 @@ import { UserDataService } from 'src/app/services/user-data.service';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import {Subscription} from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { filter } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+
+
 
 @Component({
   selector: 'app-user-settings',
@@ -20,6 +22,7 @@ export class UserSettingsComponent implements OnInit,OnDestroy {
   canSubmitNow = false;
   showCurrentPassword = false;
   showNewPassword = false;
+  
 
   // TD version of form ################# 
   userDetailsData!: UserDetailsConfig;
@@ -27,17 +30,30 @@ export class UserSettingsComponent implements OnInit,OnDestroy {
   private _apiSubscription! : Subscription;
   passwordChangedSuccessfully: boolean = false;
   errorMsg!: string | null;
+  USERNAME:any;
+  EMAIL:any;
+  ngEmail:any;
+  
 
   token:string='';
+  EMAILChangedSuccessfully: boolean=false;
+  modal: any;
+ 
     constructor( private userData: UserDataService, private getToken: GetTokenService,
-    private graphService : GraphService,public audit: AuditTrailService
+    private graphService : GraphService,public audit: AuditTrailService,private fb: FormBuilder
 
-      ) { }
+      ) {
+        // this.EMAIL = this.fb.group({
+        //   EMAIL: ['', [Validators.required, Validators.email]],
+        // });
+       }
 
   ngOnInit(): void {
+    this.getUserDetails();
+ 
     this.initializeChangePasswordForm();
 
-    this.getUserDetails();
+   
     this.audit.addUrlAudit('userAuditLog');
   }
 
@@ -52,11 +68,24 @@ export class UserSettingsComponent implements OnInit,OnDestroy {
       .subscribe((resp) => {
         this.userDetailsData = resp;
         this.temp = this.userDetailsData.data[0];
-        // console.log("TEMP Data:: ", this.temp.USER_NAME);
-        // const role_id = this.userDetailsData.data[0].USER_ROLE_ID;
-        // const username = this.userDetailsData.data[0].USER_NAME;
+        console.log("User data",this.temp)
+        this.USERNAME=this.temp.USER_NAME
+        this.EMAIL=this.temp.USER_EMAIL
+        const inputElement = document.getElementById("UserNameFromTs") as HTMLInputElement;
+        const inputElements = document.getElementById("UserEmailFromTs") as HTMLInputElement;
+      
+        inputElement.value = this.USERNAME;
+        inputElements.value=this.EMAIL;
+
         this.graphService.showLoader=false;
       });
+  }
+
+  updateEmail(event: Event) {
+  
+    const inputElement = event.target as HTMLInputElement;
+    const newValue = inputElement.value;
+    this.EMAIL = newValue;
   }
 
   initializeChangePasswordForm () {
@@ -79,6 +108,8 @@ export class UserSettingsComponent implements OnInit,OnDestroy {
     }
 
   }
+
+
 
   sendRequest () {
     const payload = {
@@ -141,6 +172,29 @@ export class UserSettingsComponent implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     this._apiSubscription.unsubscribe();
+  }
+
+  saveEmail(){
+ 
+    let userid:number = this.getToken.getUser_id();
+
+    const payload = {
+      // EMAIL: this.EMAIL.value,
+      Email: this.ngEmail
+    };
+    this._apiSubscription=this.userData
+  .userUpdate("userUpdate",payload,userid)
+  .subscribe((resp) => {
+    this.EMAILChangedSuccessfully = true;
+    alert("EMAIL Changed Successfully")
+    this.errorMsg = null;
+    console.log('Response:', resp);
+    
+        });
+  }
+
+  close() {
+    // this.dialogRef.close();
   }
 }
 

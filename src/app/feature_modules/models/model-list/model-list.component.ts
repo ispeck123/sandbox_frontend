@@ -96,7 +96,7 @@ registerModal(id: number) {
   this.modelDataService.registerModel('modelRegister', id)
     .subscribe((respArray: any) => {
       this.graphService.showLoader = false;
-      alert("Do not register again !")
+      alert("Registration Under process.\n Do not register the same model again !")
       console.log(respArray.data.msg);
       if (respArray.data.msg == 'Failed') {
         alert(respArray.data.response.model_register.reason[0]);

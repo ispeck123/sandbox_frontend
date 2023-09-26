@@ -25,7 +25,7 @@
                             <div class="mnk_list_for">
 
                                 <div class="para_lkw">
-                                    <h4> Name </h4>
+                                    <h4> Username </h4>
                                     <p>{{temp.USER_NAME}}</p>
                                 </div>
                             </div>
@@ -80,19 +80,19 @@
                 </div>
                 <div class="modal-body">
                     <mat-form-field appearance="outline">
-                        <mat-label> Name</mat-label>
-                        <input matInput placeholder="Enter Name" >
+                        <mat-label> Username</mat-label>
+                        <input matInput disabled id="UserNameFromTs" >
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label> Email</mat-label>
-                        <input matInput placeholder="Enter email" >
+                        <input matInput id="UserEmailFromTs" [(ngModel)]="ngEmail" >
                     </mat-form-field>
                 </div>
                 <div class="modal-footer">
 
                     <div class="project_button_nt">
                         <button type="button" mat-stroked-button color="primary">Cancel</button>
-                        <button type="button" class="stepper-button mt-2" mat-raised-button color="primary">
+                        <button type="button" class="stepper-button mt-2" mat-raised-button color="primary" (click)="saveEmail()">
        Save
     </button>
                     </div>

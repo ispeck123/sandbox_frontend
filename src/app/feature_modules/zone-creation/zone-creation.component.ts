@@ -715,7 +715,7 @@ startDrawing (e: any) {
     }
     else{
       // this.router.navigate(['select-model-pipeline']);
-      this.router.navigate(['deploy-project']);
+      this.router.navigate(['model-class']);
     }
   
   }

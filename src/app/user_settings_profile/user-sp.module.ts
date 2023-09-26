@@ -5,7 +5,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { SharedModule } from '../shared_module/shared-module.module';
 import { UserSpRoutingModule } from './user-sp-routing.module';
 import { MaterialModule } from '../services/material/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserSpRoutingModule,
     SharedModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class UserSpModule { }

@@ -53,7 +53,7 @@ export class ProjectConfigModelComponent implements OnInit {
   noFileChosen_1: boolean = true;
   noFileChosen_2: boolean = true;
   proType:any;
-
+  counter:any=0;
   progress: { percentage: number } = { percentage: 0 };
 
   // public editorOptions!: JsonEditorOptions;
@@ -299,6 +299,8 @@ export class ProjectConfigModelComponent implements OnInit {
   
     var protypecheck = localStorage.getItem('proTypeName');
     
+// FILE LENGTH CHECKING
+
     if (protypecheck == "Training") {
       if (this.selectedFiles.length !== 3) {
         alert('Please select 3 files to upload.');
@@ -310,78 +312,48 @@ export class ProjectConfigModelComponent implements OnInit {
         return;
       }
     }
-    
-    // ... (other parts of your code)
-    
+
+// FILE LENGTH CHECKING
     var formData = new FormData();
-    
     formData.append('model_id', this.modelsessionid);
     formData.append('pipeline_id', this.pipelinesessionid);
     formData.append('project_id', this.projectsessionId);
-    // formData.append('location', "Mongo");
     formData.append('sourceid', this.sourcesessionid);
-    
-    
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      console.log("SUBMIT",this.selectedFiles[i])
       formData.append('file', this.selectedFiles[i]);
       formData.append('artifact_type_id', this.artifacttypesessionid[i]);
-
-      if (this.artifacttypesessionid[i] === 4) {
-        formData.append('location', 'default');
-      } else {
-        formData.append('location', 'Mongo');
-      }
-  
-    
-      if (this.artifacttypesessionid[i]=== 4) {
+      formData.forEach((value, key) => {
+        console.log(`Key: ${key}, Value: ${value}`);
+      });
         this.graphService.showLoader=true;
-        this.modelDataService.uploadWeightFile('artifact/weight/store', formData).subscribe(
-          (respArray) => {
-            console.log('Response from Server:', respArray); // Log the response from the API
-            
-            if (respArray.msg === 'success' || respArray.msg === 'Success') {
-              this.proType = this.getToken.getProjectType();
-              this.graphService.showLoader=false;
-              // alert(this.proType)
-              this.addFiles.reset();
-              alert("File Upload Success");
-
-
-              
-              if (this.proType == "Training") {
-                this.router.navigateByUrl('/deploy-project');
-              }
-              if (this.proType == "Inference") {
-                this.router.navigateByUrl('/zone-creation');
-              } 
-            } else {
-              alert(respArray.msg);
-            }
-          },
-          (error) => {
-            console.error('Error during API call:', error); // Log API call errors
-          }
-        );
-      } else {
-        this.graphService.showLoader=true;
-        // Call the default API for other artifact_type_id values
         this.modelDataService.uploadConfigFile('artifact/store', formData).subscribe(
           (respArray) => {
-            console.log('Response from Server:', respArray); // Log the response from the API
-            
             if (respArray.msg === 'success' || respArray.msg === 'Success') {
+              this.counter=this.counter+1;
               this.proType = this.getToken.getProjectType();
               this.graphService.showLoader=false;
-              alert("File Upload Success");
-              // alert(this.proType)
               this.addFiles.reset();
-              if (this.proType == "Training") {
-                this.router.navigateByUrl('/deploy-project');
+              if(protypecheck=="Training")
+              {
+                if(this.counter==3)
+                {
+                  alert("File Upload Success !")
+                  this.router.navigateByUrl('/deploy-project');
+                }
               }
-              if (this.proType == "Inference") {
-                this.router.navigateByUrl('/zone-creation');
-              } 
+              else{
+                if(this.counter==1)
+                {
+                  alert("File Upload Success !")
+                  this.router.navigateByUrl('/zone-creation');
+                }
+              }
+              // if (this.proType == "Training") {
+              //   this.router.navigateByUrl('/deploy-project');
+              // }
+              // if (this.proType == "Inference") {
+              //   this.router.navigateByUrl('/zone-creation');
+              // } 
             } else {
               alert(respArray.msg);
             }
@@ -389,13 +361,39 @@ export class ProjectConfigModelComponent implements OnInit {
           (error) => {
             console.error('Error during API call:', error); // Log API call errors
           }
-          
         );
-      }
+      // }
+      // } else {
+      //   this.graphService.showLoader=true;
+      //   // Call the default API for other artifact_type_id values
+      //   this.modelDataService.uploadConfigFile('artifact/store', formData).subscribe(
+      //     (respArray) => {
+      //       console.log('Response from Server:', respArray); // Log the response from the API
+            
+      //       if (respArray.msg === 'success' || respArray.msg === 'Success') {
+      //         this.proType = this.getToken.getProjectType();
+      //         this.graphService.showLoader=false;
+      //         // alert("File Upload Success");
+      //         // alert(this.proType)
+      //         this.addFiles.reset();
+      //         if (this.proType == "Training") {
+      //           this.router.navigateByUrl('/deploy-project');
+      //         }
+      //         if (this.proType == "Inference") {
+      //           this.router.navigateByUrl('/zone-creation');
+      //         } 
+      //       } else {
+      //         alert(respArray.msg);
+      //       }
+      //     },
+      //     (error) => {
+      //       console.error('Error during API call:', error); // Log API call errors
+      //     }
+          
+      //   );
+      // }
 
-    }
-    
-  
+     }
   }
   
   

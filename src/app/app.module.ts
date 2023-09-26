@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './services/material/material.module';
 import { LoginSelectionComponent } from './login-config/login-selection/login-selection.component';
 import { RegisterComponent } from './login-config/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MainlayoutComponent } from './layout/mainlayout/mainlayout.component';
 import { FeatureModule } from './feature_modules/feature.module';
@@ -22,6 +22,10 @@ import { ResetPasswordComponent } from './login-config/reset-password/reset-pass
 import { PassValidationDirective } from './directives/pass-validation.directive';
 import { UserSpModule } from './user_settings_profile/user-sp.module';
 import { LoaderComponent } from './loader/loader.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -49,6 +53,11 @@ import { LoaderComponent } from './loader/loader.component';
     FeatureModule,
     SharedModule,
     UserSpModule,
+    FormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule
     
     
    ],
