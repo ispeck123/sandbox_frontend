@@ -21,7 +21,7 @@ export class ProjectDataService {
     this.authorization  = localStorage.getItem('tk')!;
     console.log()  
   }
-  getProjecttype(url: string, id: number | string,userid:any): Observable<ProjectTypeConfig> {
+  getProjecttype(url: string, id: any,userid:any): Observable<ProjectTypeConfig> {
     const headers = this.getToken.getLocalToken();
     return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id +'/' +userid, { headers });
   }

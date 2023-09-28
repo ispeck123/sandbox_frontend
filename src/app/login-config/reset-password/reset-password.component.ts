@@ -53,8 +53,8 @@ export class ResetPasswordComponent implements OnInit {
       token: this.auth
      });
 
-    this.passService.savePassword('saveResetPassword', this.resetPass.value)
-    .subscribe((respArray:any) =>{
+    this.passService.savePassword('saveResetPassword', this.resetPass.value,this.id)
+    .subscribe((respArray:any) =>{  
       if(respArray.message == 'Password changed successfully'){
         alert(respArray.message);
         setTimeout(()=>{
@@ -62,7 +62,6 @@ export class ResetPasswordComponent implements OnInit {
         },200);
       }
     })
-
   }
 
 }

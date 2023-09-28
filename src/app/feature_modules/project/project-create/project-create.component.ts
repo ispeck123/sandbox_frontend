@@ -43,6 +43,8 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
   modelsessionid:any;
   projectTypeSelected: boolean = false;
   filteredPipeline:any;
+  isCreateMode!:boolean;
+
 
   constructor(
     private pipelineData: PipelineDataService,
@@ -60,6 +62,13 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     localStorage.removeItem('pr_id')
     // this.modelsessionid= localStorage.getItem("model_id");
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isCreateMode = false;
+    } else {
+  
+      this.isCreateMode = true;
+    }
 
     this.projectId = this.route.snapshot.params['id'];
     this.isCreate  = !this.projectId;
@@ -73,6 +82,7 @@ export class ProjectCreateComponent implements OnInit,OnDestroy {
     this.username = this.getToken.getUser_name();
     this.audit.addUrlAudit('userAuditLog');
   }
+    
 
 
   checkDataAvaibility(){
@@ -235,9 +245,17 @@ return;
     .updateProject('updateProject', this.addProject.value)
     .subscribe((respArray) => {
       this.projectResp = respArray;
-      if(this.projectResp.message == 'success' || this.projectResp.message == 'Success')
-      {
-        alert("Project Updated");
+      if(this.projectResp.data.project_id != null) {
+        this.resprojectid=this.projectResp.data.project_id,
+        // this.respipelineid=this.projectResp.data.pipeline_id
+        localStorage.setItem("pr_id",this.resprojectid);
+        localStorage.setItem("pro_id",this.resprojectid);
+        
+        alert('Project Updated  Successful');
+        localStorage.setItem('tab', "tab".toString());
+        this.router.navigateByUrl('/project-datasource');
+        // alert(localStorage.getItem("pr_id"))
+        localStorage.setItem('pr_type', (this.addProject.get('project_type_id')?.value).toString());
         this.audit.addAudit('userAuditLog',payload).subscribe(
           respArray=>{
             console.log(respArray)
@@ -245,15 +263,34 @@ return;
         )
       }
       else{
-        alert('Please Try again')
-        payload.Effect="Project update failed";
-          payload.Status=0;
-          // this.audit.addAudit('userAuditLog',payload).subscribe(
-          //   respArray=>{
-          //     console.log(respArray)
-          //   }
-          // )
+        alert('Please Try again');
+        payload.Effect="Project creation failed";
+        payload.Status=0;
+        this.audit.addAudit('userAuditLog',payload).subscribe(
+          respArray=>{
+            console.log(respArray)
+          }
+        )
       }
+      // if(this.projectResp.message == 'success' || this.projectResp.message == 'Success')
+      // {
+      //   alert("Project Updated");
+      //   this.audit.addAudit('userAuditLog',payload).subscribe(
+      //     respArray=>{
+      //       console.log(respArray)
+      //     }
+      //   )
+      // }
+      // else{
+      //   alert('Please Try again')
+      //   payload.Effect="Project update failed";
+      //     payload.Status=0;
+      //     // this.audit.addAudit('userAuditLog',payload).subscribe(
+      //     //   respArray=>{
+      //     //     console.log(respArray)
+      //     //   }
+      //     // )
+      // }
       
         // this.router.navigateByUrl('/project-list');
       console.log(respArray);

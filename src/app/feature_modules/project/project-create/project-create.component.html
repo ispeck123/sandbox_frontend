@@ -8,20 +8,22 @@
       <form [formGroup]="addProject" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
           <mat-label>Project Name</mat-label>
-          <input matInput placeholder="Enter Project Name" formControlName="project_name" (input)="checkDataAvaibility()" >
+          <input matInput  placeholder="Enter Project Name" formControlName="project_name" (input)="checkDataAvaibility()" [disabled]="!isCreateMode">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Select Project Type</mat-label>
-          <mat-select #id formControlName="project_type_id" (selectionChange)="onProjectTypeChange(id.value)">
-            <mat-option [value]="projectType.project_type_id" *ngFor="let projectType of projectTypeList.data" (onSelectionChange)="getProTypeName(projectType.project_type)">
+          <mat-select #id formControlName="project_type_id" (selectionChange)="onProjectTypeChange(id.value)" [disabled]="!isCreateMode">
+            
+            
+            <mat-option [value]="projectType.project_type_id" *ngFor="let projectType of projectTypeList.data" (onSelectionChange)="getProTypeName(projectType.project_type)"  >
               {{projectType.project_type}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" *ngIf="projectTypeSelected">
           <mat-label>Select Pipeline</mat-label>
-          <mat-select #id formControlName="pipeline_id" (selectionChange)="getPipeName(id.value)">
+          <mat-select #id formControlName="pipeline_id" (selectionChange)="getPipeName(id.value)" [disabled]="!isCreateMode" >
             <mat-option *ngFor="let pipe of filteredPipeline" [value]="pipe.pipeline_id">{{pipe.pipeline_name}}</mat-option>
           </mat-select>
         </mat-form-field>

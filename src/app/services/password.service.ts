@@ -33,8 +33,8 @@ verifyPassLink(linkCode: string | undefined) {
 
   }
 
-  savePassword(url:string, payload:object){
-    return this.http.post(`${this.Api_Path}/${url}`, payload);
+  savePassword(url:string, payload:object,id:any){
+    return this.http.post(`${this.Api_Path}/${url}/${id}`, payload);
   }
 
 
