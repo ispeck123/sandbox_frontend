@@ -35,6 +35,8 @@ import { PipelineEdit } from './pipeline/pipeline-list/pipeline-list.component';
 import { SystemMonitoringComponent } from './system-monitoring/system-monitoring.component';
 import { DatasourceEditComponent } from './datasource/datasource-edit/datasource-edit.component';
 import { ModelDeleteDialog } from "./models/model-list/model-list.component";
+import { DashboardComponent } from './project/dashboard/dashboard.component';
+import { SchedulerComponent } from "./project/scheduler/scheduler.component";
 
 
  @NgModule({
@@ -73,7 +75,7 @@ import { ModelDeleteDialog } from "./models/model-list/model-list.component";
     DatasourceEditComponent, 
     ProjectDeleteDialog, 
     ModelDeleteDialog, 
-    DeletePipelineDialogComponent
+    DeletePipelineDialogComponent, DashboardComponent, SchedulerComponent,
   ],
    imports: [
     CommonModule,

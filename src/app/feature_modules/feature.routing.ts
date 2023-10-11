@@ -27,6 +27,8 @@ import { SavePipelineComponent } from "./pipeline/save-pipeline/save-pipeline.co
 import { RegisterModelComponent } from "./models/register-modal/register-model.component";
 import { SystemMonitoringComponent } from "./system-monitoring/system-monitoring.component";
 import { DatasourceEditComponent } from "./datasource/datasource-edit/datasource-edit.component";
+import { DashboardComponent } from "./project/dashboard/dashboard.component";
+import { SchedulerComponent } from "./project/scheduler/scheduler.component";
 
 export const FeatureOneRoutes: Routes = [
   {
@@ -35,6 +37,12 @@ export const FeatureOneRoutes: Routes = [
     canActivate: [RouteGuard],
     canActivateChild: [RouteGuard],
     children: [
+      {
+        path: 'dashboard', component: DashboardComponent, data: { allowedRoles: [''] }
+      },
+      {
+        path: 'scheduler', component: SchedulerComponent, data: { allowedRoles: [''] }
+      },
       {
         path: 'project-list', component: ProjectListComponent, data: { allowedRoles: [''] }
       },
@@ -57,7 +65,8 @@ export const FeatureOneRoutes: Routes = [
         path: 'datasource-edit/:id', component: DatasourceEditComponent, data: { allowedPermission: ['Datasource Edit'] }
       },
       {
-        path: 'config-model', component: ProjectConfigModelComponent, data: { allowedPermission: ['Model Configuration'] }
+        // path: 'config-model', component: ProjectConfigModelComponent, data: { allowedPermission: ['Model Configuration'] }
+        path: 'config-model', component: ProjectConfigModelComponent
       },
       {
         path: 'alert-rules', component: ProjectAlertRulesComponent, data: { allowedPermission: ['Create And Choose Alert Rules'] }

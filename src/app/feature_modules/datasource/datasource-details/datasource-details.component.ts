@@ -1,8 +1,8 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SourceFileListConfig, SourceUploadResp } from 'src/app/data-models/project-model';
 import { GraphService } from 'src/app/services/graph.service';
 import { ProjectDataService } from 'src/app/services/project-data.service';
-import {Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 
 @Component({
@@ -10,17 +10,17 @@ import { AuditTrailService } from 'src/app/services/audit-trail.service';
   templateUrl: './datasource-details.component.html',
   styleUrls: ['./datasource-details.component.css']
 })
-export class DatasourceDetailsComponent implements OnInit, OnDestroy  {
+export class DatasourceDetailsComponent implements OnInit, OnDestroy {
   fileName: string = '';
-  formData= new FormData();
+  formData = new FormData();
   sourceUpload!: SourceUploadResp;
   sourceFileList!: SourceFileListConfig;
-  private _apiSubscription! : Subscription;
-  constructor(private projectService : ProjectDataService,
-    private graphService : GraphService,
+  private _apiSubscription!: Subscription;
+  constructor(private projectService: ProjectDataService,
+    private graphService: GraphService,
     public audit: AuditTrailService
 
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.fetchSourceList();
@@ -43,26 +43,26 @@ export class DatasourceDetailsComponent implements OnInit, OnDestroy  {
     this.uploadSourceFile();
   }
   uploadSourceFile() {
-   this.projectService.uploadSourceFile
-   ('sourceFileUpload', this.formData)
+    this.projectService.uploadSourceFile
+      ('sourceFileUpload', this.formData)
       .subscribe((respArray) => {
-        this.sourceUpload= respArray;
+        this.sourceUpload = respArray;
         console.log(this.sourceUpload)
       });
   }
 
-  fetchSourceList(){
-    this.graphService.showLoader=true;
-    this._apiSubscription =this.projectService.sourceFileList('sourceFileList','all')
-    .subscribe(
-      respArray => {
-        this.sourceFileList = respArray;
-        console.log(respArray);
+  fetchSourceList() {
+    this.graphService.showLoader = true;
+    this._apiSubscription = this.projectService.sourceFileList('sourceFileList', 'all')
+      .subscribe(
+        respArray => {
+          this.sourceFileList = respArray;
+          console.log(respArray);
 
-        this.graphService.showLoader=false;
+          this.graphService.showLoader = false;
 
-      }
-    )
+        }
+      )
   }
 
   ngOnDestroy(): void {

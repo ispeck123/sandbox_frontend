@@ -1,0 +1,73 @@
+<h2>Scheduler View</h2>
+<div class="create-button" >
+  <button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal">
+      <mat-icon>add</mat-icon>
+Add Schedule Time
+  </button>
+</div>
+
+<table class="table-striped">
+  <thead>
+    <tr>
+      <th>Project name </th>
+      <th>Operation name</th>
+      
+      <th>Pipeline name</th>
+      <th>Processing name</th>
+      <th>Model name</th>
+      <th>Model type name</th>
+      <th>Framework name</th>
+      <th>Source name</th>
+      <th>File_name</th>
+      <th>Docker name</th>
+      <th>Docker image name</th>
+      <th>Container status</th>
+      <th>Scheduled by</th>
+      <th>Scheduled on</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of viewlist">
+      <td>{{ item.project_name }}</td>
+      <td>{{item.operation_type_name}}</td>
+      <td>{{item.pipeline_name}}</td>
+      <td>{{item.processing_type_name}}</td>
+      <td>{{item.model_name}}</td>
+      <td>{{item.model_type_name}}</td>
+      <td>{{item.framework_name}}</td>
+      <td>{{item.source_name}}</td>
+      <td>{{item.original_file_name}}</td>
+      <td>{{item.docker_container_name}}</td>
+      <td>{{item.docker_image_name}}</td>
+      <td>{{ item.docker_container_current_status }}</td>
+      <td>{{item.scheduled_by}}</td>
+      <td>{{item.scheduled_on}}</td>
+    
+    </tr>
+     
+    <!-- Add more rows for other properties -->
+  </tbody>
+</table>
+
+  <div class="modal fade show" id="dataModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal"
+  aria-modal="false" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="dataModal">Add Schedule Time</h5>
+              <button type="button" class="btn-close" #closebutton data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+          </div>
+          <div class="project_header">
+            <form >
+              <mat-form-field appearance="outline">
+                <mat-label>Project Name</mat-label>
+                <input matInput  placeholder="Enter Project Name" formControlName="project_name">
+              </mat-form-field>
+      </form>
+            </div>
+         
+      </div>
+  </div>
+</div>

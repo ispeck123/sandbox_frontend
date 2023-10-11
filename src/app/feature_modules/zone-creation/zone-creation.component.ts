@@ -163,7 +163,7 @@ export class ZoneCreationComponent implements OnInit {
     this.projectService.getSourceFile('source/file/view', this.sourcesessionid, localStorage.getItem("source_location_session_id"))
   .subscribe(
     respArrayBuffer => {
-      console.log("file:", respArrayBuffer);
+      // console.log("file:", respArrayBuffer);
       this.graphService.showLoader=false;
       if (this.processingtype == 'VIDEO') {
         const videoBlob = new Blob([respArrayBuffer], { type: 'video/mp4' });

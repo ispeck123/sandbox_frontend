@@ -200,7 +200,7 @@ export class PipelineDataService {
     return this.http.get<SourceListConfig>(
       `${this.Api_Path}/${url}/${id}/${userid}`,
       { headers }
-    );
+    );  
   }
   getSourceListCondition(url: string, id: number | string ,userid:any ) {
     const headers = this.getToken.getLocalToken();

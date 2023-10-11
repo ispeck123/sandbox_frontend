@@ -19,6 +19,7 @@ export interface ModelListData {
   created_on: string
   status: string
   framework_id: number
+  is_started:any
 }
 
 export interface FrameworkListConfig {

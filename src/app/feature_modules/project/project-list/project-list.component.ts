@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy, SecurityContext } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProjectDeployConfig, ProjectListConfig } from 'src/app/data-models/project-model';
+import { ProjectDeployConfig, ProjectListConfig, ProjectTypeConfig } from 'src/app/data-models/project-model';
 import { AddAuditConfig } from 'src/app/data-models/user.model';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import { GraphService } from 'src/app/services/graph.service';
@@ -21,32 +21,65 @@ import { saveAs } from 'file-saver';
 export class ProjectListComponent implements OnInit, OnDestroy {
   projectById!: ProjectListConfig;
   projectList!: ProjectListConfig;
-  listdata: any = [];
+  listdata: any;
   project_Id!: number;
   datetimestring:any;
   control!: boolean;
   projectDepData!: ProjectDeployConfig;
   private _apiSubscription!: Subscription;
   element!: boolean;
+  Is_Canned_Check:any;
+  role:any;
+  useflowmode:any;
+
+
 
   
   isButtonDisabled: boolean = true ;
+
   constructor(private projectData: ProjectDataService, public dialog: MatDialog,
     public audit: AuditTrailService,
     private graphService: GraphService, private router: Router, private deleteDialog: MatDialog,private sanitizer: DomSanitizer
   ) { }
   auditData!: AddAuditConfig;
   ngOnInit(): void {
-    localStorage.removeItem("pr_id");
-    this.getProjects();
-    this.audit.addUrlAudit('userAuditLog');
-  }
+    this.role= localStorage.getItem("role");
+    this.listdata = [];
+    this.Is_Canned_Check=localStorage.getItem('cannedProject');
+    this.useflowmode=localStorage.getItem('useflow');
+    // alert(this.Is_Canned_Check);
+   
+;
+    if(this.useflowmode=='useflow'){
 
+      this.getuselist();
+    }
+    else{
+      this.getProjects();
+      this.audit.addUrlAudit('userAuditLog');
+  
+    }
+    localStorage.removeItem("pr_id")
+    
+  }
+getuselist(){
+  this.projectData.viewUseProject("used/project/view",'all', localStorage.getItem("uid")!).subscribe(
+    (resp: any) => {
+     
+      this.projectList=resp.response.projects;
+      console.log('Success:', this.projectList);
+     this.listdata = this.projectList;
+
+      this.graphService.showLoader = false;
+})
+}
   getProjects() {
     this.graphService.showLoader = true;
     this._apiSubscription = this.projectData.getProjectList('projects', 'all',localStorage.getItem("uid")!)
       .subscribe(respArray => {
-        console.log("list....",respArray)
+       
+        this.projectList=respArray;
+        console.log("list....",this.projectList)
         if(respArray.length==0){
             alert("NO DATA FOUND !")
             this.graphService.showLoader = false;
@@ -58,19 +91,30 @@ export class ProjectListComponent implements OnInit, OnDestroy {
           this.router.navigate(['/login']);
         }
         else {
-          this.projectList = respArray;
           this.listdata = this.projectList.data;
-          console.log("PROJECT LIST:: ", this.listdata);
+          if(this.Is_Canned_Check=="canned")
+          {
+            console.log("Before Canned Array",this.listdata)
+            this.listdata = this.listdata.filter((item: { is_canned: number; }) => item.is_canned === 1);
+            console.log("After Canned Array",this.listdata)
+          }
+          else
+          {
+            this.listdata = this.listdata.filter((item: { is_canned: number; }) => item.is_canned === 0);
+           
+          }
+        
           // this.projectList
           this.graphService.showLoader = false;
         }
-        console.log(this.projectList)
       })
   }
   colorVariation(index: number) {
     return index % 10;
   }
-
+  editflow(){
+  localStorage.setItem('editflow','editflow')
+  }
   createAvaterName(userName: string) {
     const name = userName.trim().split(' ');
     let avater: string;
@@ -186,24 +230,36 @@ export class ProjectListComponent implements OnInit, OnDestroy {
         this.graphService.showLoader = false;
       });
   }
-  
-  
-  // private sanitizeFilename(filename: string): any {
-  //   // Sanitize the filename using DomSanitizer
-  //   this.sanitizer.sanitize(SecurityContext.URL, filename);
-  // }
 
-  // downloadweightFile(project_id: number) {
-  //   this.graphService.showLoader=true;
-  //   this.projectData.weightFiledownload(project_id)
-  //   .subscribe((resp:any) => {
-  //     const blob = new Blob([resp.body],{type:'application/octet-stream'});
-  //     FileSaver.saveAs(blob,this.datetimestring+".pt")  
-  //     // this.spinner.hide()
-  //     this.graphService.showLoader=false;
+  // use_project(project_id:any,userid:any){
 
+  //   const jsonObject = {
+  //     project_id: project_id,
+  //     user_id: localStorage.getItem('uid'),
+  //     // pipeline_id: localStorage.getItem('pipeline_id')
+  //   };
+  //   const jsonString = JSON.stringify(jsonObject);
+  //   // console.log('JSON Object:', jsonString);
+  //   this.projectData.createuseproject("used/project/create",jsonObject).subscribe((resp:any) => {
+
+      
   //   });
   // }
+  
+  useProject(projectId: any, userId: string) {
+    localStorage.setItem("useflow",'useflow');
+    this.projectData.createUseProject("used/project/create",projectId, localStorage.getItem("uid")!).subscribe(
+      (resp: any) => {
+        console.log('Success:', resp); 
+      },
+      (error: any) => {
+        console.error('Error:', error); 
+      }
+    );
+   
+    this.router.navigateByUrl('/project-datasource');
+  }
+  
 
 
   
@@ -228,6 +284,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this._apiSubscription.unsubscribe();
   }
 }
+
 
 // Project Details dialog COMPONENT # # # # # # # # # # #  
 @Component({

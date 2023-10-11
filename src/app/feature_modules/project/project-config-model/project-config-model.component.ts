@@ -8,7 +8,7 @@ import { PipelineDataService } from 'src/app/services/pipeline-data.service';
 import { ModelDataService } from 'src/app/services/model-data.service';
 import { MatChip } from '@angular/material/chips';
 import { ProjectDataService } from 'src/app/services/project-data.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GraphService } from 'src/app/services/graph.service';
 
 @Component({
@@ -54,19 +54,24 @@ export class ProjectConfigModelComponent implements OnInit {
   noFileChosen_2: boolean = true;
   proType:any;
   counter:any=0;
+  // project_id: number;
+  // artifact_type_id: number;
   progress: { percentage: number } = { percentage: 0 };
 
   // public editorOptions!: JsonEditorOptions;
   form!: FormGroup;
   data: any;
   fileName: string = '';
+  items: any;
+  project_id: any;
+  artifact_type_id: any;
   // @ViewChild(JsonEditorComponent, { static: false }) editor!: JsonEditorComponent;
   constructor(
     private projectService: ProjectDataService,
     private getTk: GetTokenService,
     private getToken: GetTokenService,private modelDataService: ModelDataService,
     public audit: AuditTrailService,private pipelineData: PipelineDataService,
-    public router: Router, private graphService : GraphService,
+    public router: Router, private graphService : GraphService, private route: ActivatedRoute
   ) {
     this.editorOptions = new JsonEditorOptions();
     this.editorOptions.modes = ['code', 'text', 'tree', 'view'];
@@ -97,8 +102,21 @@ export class ProjectConfigModelComponent implements OnInit {
     if(Object.keys({})== null){
       return;
     }
+    // this.route.paramMap.subscribe(params => {
+    //   this.project_id = +params.get('project_id');
+    //   this.artifact_type_id = +params.get('artifact_type_id');
+    // });
+    if (this.items.selectedFile) {
+      this.getFileInformation(this.project_id, this.artifact_type_id);
+    }
   }
-
+  getFileInformation(project_id: number,artifact_type_id :number) {
+    this.modelDataService.getFileInformation('artifact/by/project_id', project_id,artifact_type_id )
+      .subscribe(response => {
+      
+        console.log("fileeeeeeeeeeeeeeeeee",response);
+      });
+  }
   
 
   getModels(id:any){
@@ -112,6 +130,7 @@ export class ProjectConfigModelComponent implements OnInit {
   }
 
   showJson(d: Event) {
+    console.log(d);
     this.visibleData = d;
   }
 
@@ -186,7 +205,11 @@ export class ProjectConfigModelComponent implements OnInit {
   }
 
   openArtifact(data:any){
+    console.log("=========")
     console.log(data)
+    console.log(this.attrFile)
+    
+    console.log("========")
     console.log(this.attrFile[0].length)
      for(var i=0;i<this.attrFile[0].length;i++)
      {

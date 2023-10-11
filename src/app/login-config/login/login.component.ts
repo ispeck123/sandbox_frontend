@@ -3,6 +3,7 @@ import {ThemePalette} from '@angular/material/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/login_authorization.service';
 import { GraphService } from 'src/app/services/graph.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 export interface CheckboxColor {
@@ -17,7 +18,7 @@ export interface CheckboxColor {
 export class LoginComponent implements OnInit {
 
   constructor(private authservice: AuthService,
-   private graphService : GraphService
+   private graphService : GraphService,private globalservice:GlobalService
     
     ) { }
 
@@ -54,8 +55,8 @@ export class LoginComponent implements OnInit {
   this.data = this.loginForm.value;
   this.authservice.authHelper(this.data);
   this.graphService.showLoader=false;
+  this.globalservice.swalSuccess("Login Success !")
 
-  console.log(this.data);
 }
 
 

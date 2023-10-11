@@ -126,7 +126,7 @@ projectDeploy(id: number) {
     return;
   }
 this.graphService.showLoader=true;
-  this._apiSubscription = this.projectData.projectDeploy(projectId)
+  this._apiSubscription = this.projectData.projectDeploy(projectId,localStorage.getItem('uid')!)
     .subscribe(
       respArray => {
         console.log('Project deploy response:', respArray);

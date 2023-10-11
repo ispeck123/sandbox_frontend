@@ -6,6 +6,7 @@ export interface LoginReg {
 export interface LoginRegisterConfig {
   accessToken: string
   userid: number
+  role:any
 }
 
 

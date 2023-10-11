@@ -58,12 +58,17 @@
                                 <mat-icon class="material-symbols-outlined">person </mat-icon>
 
                                 <span>{{item.created_by}}</span>
+                                {{item.is_started}}
                             </div>
+                           
                             <div class="strd_btn">
-                                <button type="submit" class="stepper-button" mat-stroked-button color="primary"
+                                <button type="submit" *ngIf="item.is_started==0" class="stepper-button" mat-stroked-button color="primary"
                                     data-bs-toggle="modal" data-bs-target="#dataModal"
                                     [disabled]="item.is_registered ? true : false" (click)=" setModelId(item.model_id)">
                                     {{item.is_registered ? 'Registered' : 'Register'}}
+                                </button>
+                                <button *ngIf="item.is_started==1"  type="submit" class="stepper-button" mat-stroked-button color="primary" disabled>
+                                        Registration Under-Process
                                 </button>
                                 <!-- <button type="button" class="stepper-button" mat-raised-button color="primary" (click)=" fetchModalById(item.model_id, 'details')" >Details</button>
         <button class="stepper-button" mat-raised-button color="primary" (click)=" fetchModalById(item.model_id, 'edit')" >Edit</button> -->

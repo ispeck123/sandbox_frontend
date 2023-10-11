@@ -6,6 +6,8 @@ import { GetTokenService } from './get-token.service';
 import { map } from "rxjs/operators";
 import servicedata from 'src/assets/service.json'
 import { Observable } from 'rxjs';
+import { SourceData } from '../data-models/pipeline-model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +42,6 @@ export class ProjectDataService {
     const headers = this.getToken.getLocalToken();
     return this.http.put<ProjectCreateResp>(`${this.Api_Path}/${url}`, payload , {headers});
   }
-
 
   getProjectList(url: string, id: string | number,userid:any){
     const headers = this.getToken.getLocalToken();
@@ -79,7 +80,10 @@ export class ProjectDataService {
     let name ='vivek';
     return this.http.get<SourceFileListConfig>(`${this.Api_Path}/${url}/${id}/${name}`, {headers});
   }
-
+  sourceview(source_id : number | string,userid:any){
+    const headers = this.getToken.getLocalToken();
+    return this.http.get<ProjectTypeConfig>(this.fastapiurl +'source/view' + '/' + source_id +'?userid='+userid , { headers });
+  }
  
   getSourceLocation(url: string , id : number | string){
     const headers = this.getToken.getLocalToken();
@@ -136,13 +140,13 @@ export class ProjectDataService {
   //   return this.http.post<any>(this.fastapiurl+'project/deploy' + '/' + id, { headers });
   // }
 
-  projectDeploy(id: string): Observable<any> {
+  projectDeploy(id: string,userid:string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       // You might need to add more headers if required
     });
 
-    return this.http.post<any>(this.fastapiurl+'project/deploy'+'/'+id, { headers });
+    return this.http.post<any>(this.fastapiurl+'project/deploy'+'/'+id +'?userid='+userid, { headers });
   }
 
   weightFiledownload(project_id: number) {
@@ -157,6 +161,30 @@ export class ProjectDataService {
         })
       );
   }
+
+  createUseProject(url:string,projectId: any, created_by: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token') 
+    });
+    const body = {
+      project_id: projectId,
+      created_by: created_by,
+      
+    };
+
+    return this.http.post<any>(this.fastapiurl+ url, body, { headers });
+  }
+  // createuseproject(url: string, id: any,created_by:string): Observable<ProjectTypeConfig> {
+  //     const headers = this.getToken.getLocalToken();
+  //     return this.http.post<ProjectTypeConfig>(this.fastapiurl + url + '/' + id +  created_by, { headers });
+  //   }
+
+  viewUseProject(url: string, id: any,userid:string): Observable<ProjectTypeConfig> {
+      const headers = this.getToken.getLocalToken();
+      return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id  +'?userid='+userid, { headers });
+    }
+
   // weightFiledownload(url: string , project_id : number | string){
   //   const headers = this.getToken.getLocalToken();
   //   let payload:object = {};
@@ -177,4 +205,16 @@ export class ProjectDataService {
     const headers = this.getToken.getLocalToken();
     return this.http.post(`${this.Api_Path}/deleteProject/${id}`, null, { headers })
   }
-}
+  updateSourceByProjectId(project_id: number): Observable<any> {
+    const headers = this.getToken.getLocalToken();
+    return this.http.get<ProjectTypeConfig>(this.fastapiurl + 'source/by/project_id' + '/' + project_id , { headers });
+  }
+
+
+  getschedular(url:string,id:number|string,):Observable<any> {
+    const headers = this.getToken.getLocalToken();
+    return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id , { headers });
+  }
+
+  }
+

@@ -23,6 +23,7 @@ export interface ProjectListData {
   is_started: boolean
   is_stopped: boolean
   pro_letters: string
+  is_canned:any
 }
 
 export interface ProjectTypeConfig {

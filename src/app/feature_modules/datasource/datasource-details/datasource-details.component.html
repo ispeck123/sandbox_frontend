@@ -1,80 +1,97 @@
 <div class="project_brd">
-    <div class="pro_sub d-flex justify-content-between">
-        <h3>Datasource details</h3>
-        <div class="create-button">
-            <button mat-raised-button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal" color="primary">
-      <mat-icon>add</mat-icon>
-      Files
-    </button>
-        </div>
+  <div class="pro_sub d-flex justify-content-between">
+    <h3>Datasource details</h3>
+    <div class="create-button">
+      <button mat-raised-button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal"
+        color="primary">
+        <mat-icon>add</mat-icon>
+        Files
+      </button>
     </div>
+  </div>
 </div>
 
 
 <div class="table-responsive tgbg">
-    <table class="table table-hover">
-        <thead class="hed_sec_pl">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Source Name</th>
-                <th scope="col">Fps</th>
-                <th scope="col">Process Type Name</th>
-                <th scope="col">Files</th>
-                <th scope="col">Source Stored Location Name</th>
-            </tr>
-        </thead>
-        <tbody *ngIf="sourceFileList != undefined">
-            <tr *ngFor="let item of sourceFileList.data; let i = index">
-                <th scope="row">{{i+1}}</th>
-                <td>{{item.source_name}}</td>
-                <td>{{item.fps}}</td>
-                <td>{{item.processing_type_name}}</td>
-                <td>{{item.files}}</td>
-                <td>{{item.source_stored_location_name}}</td>
+  <table class="table table-hover">
+    <thead class="hed_sec_pl">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Source Name</th>
+        <th scope="col">Fps</th>
+        <th scope="col">Process Type Name</th>
+        <th scope="col">Files</th>
+        <th scope="col">Source Stored Location Name</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="sourceFileList != undefined">
+      <tr *ngFor="let item of sourceFileList.data; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td>{{item.source_name}}</td>
+        <td>{{item.fps}}</td>
+        <td>{{item.processing_type_name}}</td>
+        <td>{{item.files}}</td>
+        <td>{{item.source_stored_location_name}}</td>
 
-            </tr>
-        </tbody>
-    </table>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div class="modal fade show " id="dataModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal" aria-modal="false" role="dialog">
-    <div class="modal-dialog  modal-dialog-centered ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="dataModal">Add New File</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Select File Type</mat-label>
-                        <mat-select>
-                            <mat-option></mat-option>
-                            <mat-option value="" selected>RTSP</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+<div class="modal fade show " id="dataModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="dataModal"
+  aria-modal="false" role="dialog">
+  <div class="modal-dialog  modal-dialog-centered ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dataModal">Add New File</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <mat-form-field appearance="outline">
+            <mat-label>Select File Type</mat-label>
+            <mat-select>
+              <mat-option></mat-option>
+              <mat-option value="" selected>RTSP</mat-option>
+            </mat-select>
+          </mat-form-field>
 
 
 
-                    <div class="image-upload">
-                        <input type="file" (change)="onFileSelection($event)" #fileUpload>
-                        <label for="logo" id="file-label" class="upload-field">
+          <div class="image-upload">
+            <input type="file" (change)="onFileSelection($event)" #fileUpload>
+            <label for="logo" id="file-label" class="upload-field">
               <div class="file-thumbnail">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Capa_1" enable-background="new 0 0 512 512" height="512" 
-                viewBox="0 0 512 512" width="512"><linearGradient  id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="256" x2="256" y1="377.5"
-                 y2="45.5"><stop  offset="0" stop-color="#fd5900"></stop><stop  offset="1" stop-color="#ffde00"></stop>
-                </linearGradient><linearGradient  id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="241" x2="241" y1="466.5" y2="196.5">
-                  <stop  offset="0" stop-color="#ffe59a"></stop><stop  offset="1" stop-color="#ffffd5"></stop></linearGradient><g><g><path d="m406 377.5h-120c-8.284 0-15-6.716-15-15v-61c0-7.633 5.7-13.934 13.076-14.878l-43.076-51.691-43.076 51.692c7.376.943 13.076 7.244 13.076 14.877v61c0 8.284-6.716 15-15 15h-90c-58.449 0-106-47.552-106-106 0-40.678 23.742-77.63 60.096-95.146 2.712-72.619 62.634-130.854 135.904-130.854 44.991 0 87.168 22.882 112.37 60.339 2.63-.23 5.131-.339 7.63-.339 40.696 0 77.659 23.75 95.165 60.124 56.061 2.701 100.835 49.157 100.835 105.876 0 58.448-47.551 106-106 106z" fill="url(#SVGID_1_)"></path></g>
-                  <path  d="m286 466.5h-90c-8.284 0-15-6.716-15-15v-135h-15c-5.82 0-11.115-3.367-13.584-8.638s-1.666-11.494 2.061-15.965l75-90c2.85-3.42 7.072-5.397 11.523-5.397s8.673 1.977 11.523 5.397l75 90c3.726 4.471 4.529 10.694 2.061 15.965s-7.764 8.638-13.584 8.638h-15v135c0 8.284-6.716 15-15 15z" fill="url(#SVGID_2_)"></path></g></svg>
-                  <div class="file-upload">
-                    {{fileName || "No file uploaded yet."}}
-                    </div>
-                  <h3 id="filename"><label for="merchantExcel">Upload File</label></h3>
-                    </div>
-                    </label>
-            </div>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Capa_1"
+                  enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512">
+                  <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="256" x2="256" y1="377.5" y2="45.5">
+                    <stop offset="0" stop-color="#fd5900"></stop>
+                    <stop offset="1" stop-color="#ffde00"></stop>
+                  </linearGradient>
+                  <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="241" x2="241" y1="466.5" y2="196.5">
+                    <stop offset="0" stop-color="#ffe59a"></stop>
+                    <stop offset="1" stop-color="#ffffd5"></stop>
+                  </linearGradient>
+                  <g>
+                    <g>
+                      <path
+                        d="m406 377.5h-120c-8.284 0-15-6.716-15-15v-61c0-7.633 5.7-13.934 13.076-14.878l-43.076-51.691-43.076 51.692c7.376.943 13.076 7.244 13.076 14.877v61c0 8.284-6.716 15-15 15h-90c-58.449 0-106-47.552-106-106 0-40.678 23.742-77.63 60.096-95.146 2.712-72.619 62.634-130.854 135.904-130.854 44.991 0 87.168 22.882 112.37 60.339 2.63-.23 5.131-.339 7.63-.339 40.696 0 77.659 23.75 95.165 60.124 56.061 2.701 100.835 49.157 100.835 105.876 0 58.448-47.551 106-106 106z"
+                        fill="url(#SVGID_1_)"></path>
+                    </g>
+                    <path
+                      d="m286 466.5h-90c-8.284 0-15-6.716-15-15v-135h-15c-5.82 0-11.115-3.367-13.584-8.638s-1.666-11.494 2.061-15.965l75-90c2.85-3.42 7.072-5.397 11.523-5.397s8.673 1.977 11.523 5.397l75 90c3.726 4.471 4.529 10.694 2.061 15.965s-7.764 8.638-13.584 8.638h-15v135c0 8.284-6.716 15-15 15z"
+                      fill="url(#SVGID_2_)"></path>
+                  </g>
+                </svg>
+                <div class="file-upload">
+                  {{fileName || "No file uploaded yet."}}
+                </div>
+                <h3 id="filename"><label for="merchantExcel">Upload File</label></h3>
+              </div>
+            </label>
+          </div>
 
-            <!-- <div class="d-flex justify-content-center align-items-center">
+          <!-- <div class="d-flex justify-content-center align-items-center">
             <div class="w-50 mb-5 mt-4" >
               <mat-label><b>Upload File</b></mat-label>
               <input type="file" class="file-input" (change)="onFileSelection($event)" #fileUpload>
@@ -89,13 +106,13 @@
 
 
 
-            </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="log-button" mat-raised-button color="primary">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="log-button" mat-raised-button color="primary">
           Save changes
         </button>
-            <!-- <button
+        <!-- <button
           type="button"
           class="log-button mt-2"
           mat-raised-button
@@ -104,7 +121,7 @@
         >
           Close
         </button> -->
-        </div>
+      </div>
     </div>
-</div>
+  </div>
 </div>

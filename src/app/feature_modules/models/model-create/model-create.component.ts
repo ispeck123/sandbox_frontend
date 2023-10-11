@@ -17,6 +17,7 @@ import { GetTokenService } from 'src/app/services/get-token.service';
 import { GraphService } from 'src/app/services/graph.service';
 import { ModelDataService } from 'src/app/services/model-data.service';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-model-create',
@@ -32,6 +33,7 @@ export class ModelCreateComponent implements OnInit {
     private graphService: GraphService,
     public audit: AuditTrailService,
     private router: Router,
+    private globalService:GlobalService,
     @Inject(DOCUMENT) private document: Document,
     private cd: ChangeDetectorRef
   ) { }
@@ -245,31 +247,19 @@ export class ModelCreateComponent implements OnInit {
         alert("Please fill the required fields")
       }
       else {
-        // console.log("This AdModel::", this.addModel);
         this.addModel.value.is_registered = true;
         this.data = this.addModel.value;
-        // console.log(this.data);
         this.graphService.showLoader = true;
         this.modelDataService.saveModal('createModel', this.data)
           .subscribe((respArray) => {
-            // console.log('eeeeee');
             this.modelResp = respArray;
             this.graphService.showLoader = false;
-            // console.log( this.modelResp)
-            // console.log( this.modelResp.data)
             if (this.modelResp.data.model_id != null) {
               this.isNewModel = false;
               this.showSubmitButton = false;
               this.showNextButton = true;
-              // console.log(this.modelResp.data.model_id)
               localStorage.setItem('mid', this.modelResp.data.model_id.toString());
-              alert(this.modelResp.message);
-              // this.addModel.reset();
-              // this.audit.addAudit('userAuditLog', payload).subscribe(
-              //   respArray => {
-              //     // console.log(respArray)
-              //   }
-              // )
+              this.globalService.swalSuccess(this.modelResp.message);
               this.router.navigateByUrl('/model-list');
             }
             else {

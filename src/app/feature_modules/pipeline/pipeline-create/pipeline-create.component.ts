@@ -124,7 +124,7 @@ export class PipelineCreateComponent implements OnInit {
 
   pipelineCreateUpdate(){
 
-    this.graphService.showLoader=true;
+    // this.graphService.showLoader=true;
     if(this.addPipeline.invalid){
       return;
           }

@@ -9,19 +9,20 @@ import { PipelineDataService } from 'src/app/services/pipeline-data.service';
 import { ProjectDataService } from 'src/app/services/project-data.service';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+
+import { Subscription } from 'rxjs/Subscription';
 import { takeUntil } from 'rxjs-compat/operator/takeUntil';
 // import { FILE } from 'dns';
 
 @Component({
   selector: 'app-project-data-source',
   templateUrl: './project-data-source.component.html',
-  styleUrls: ['./project-data-source.component.css']     
+  styleUrls: ['./project-data-source.component.css']
 })
 export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   @ViewChild('closebutton') closebutton!: { nativeElement: { click: () => void; }; };
   @ViewChild("deleteModal") private deleteModal!: ElementRef;
-
+  subscription!: Subscription;
   listdata: any = [];
   value: number = 30;
   data: [] = [];
@@ -29,42 +30,43 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   processingTypeList!: ProcessingTypeConfig;
   ProjectTypeList!: ProjectTypeConfig;
   projectlist!: ProjectListConfig;
-  file:any;
+  file: any;
   sourceResp: any;
   username!: string;
   sourceList!: SourceListConfig;
   sourceLocation!: SourceLocationConfig;
-  projecttype:any;
+  projecttype: any;
   selectedDataSource: any = { source_id: null };
   toastMessage = "Select one item only!";
   toastSubscription!: any;
   private _apiSubscription!: Subscription;
   sourceIdToBeDeleted!: number;
   attatchedSources!: any[];
-  disableNxtBtn:boolean = true;
+  disableNxtBtn: boolean = true;
   purpose_type: any;
   purpose !: purposeTypeConfig;
-  projectTypeFlag:any;
-  ProcessingTypeflag:any;
+  projectTypeFlag: any;
+  ProcessingTypeflag: any;
   // projectTypeList!: ProjectTypeConfig;
-  buttondisable:boolean=true;
+  buttondisable: boolean = true;
   fileName: string = '';
-  formData= new FormData();
+  formData = new FormData();
   sourceUpload!: SourceUploadResp;
   fileflag: any;
-  projecttypeflag:any;
-  sourcebuttonflag: boolean=false;
-  project_id:any;
-  source_id_sec:any;
-  NextVisibleFlag:boolean=false;
-  fileerrorShow:boolean=false;
-  rtsperrorShow:boolean=false;
-  rtspurl:string='';
+  projecttypeflag: any;
+  sourcebuttonflag: boolean = false;
+  project_id: any;
+  source_id_sec: any;
+  NextVisibleFlag: boolean = false;
+  fileerrorShow: boolean = false;
+  rtsperrorShow: boolean = false;
+  rtspurl: string = '';
   source_stored_location: any;
-  file_type_name:any;
-  route_PRID:any;
+  file_type_name: any;
+  route_PRID: any;
   isCreateMode: boolean = true;
-
+  flowmode:any;
+  useflowmode:any;
 
   constructor(
     private pipelineData: PipelineDataService,
@@ -84,47 +86,79 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-      this.route_PRID = localStorage.getItem("tab");
-      localStorage.removeItem("tab");
+    this.useflowmode=localStorage.getItem('useflow');
 
-    
+    this.flowmode=localStorage.getItem('editflow');
+    this.route_PRID = localStorage.getItem("tab");
+    localStorage.removeItem("tab");
+
+    if(this.flowmode=='editflow' || this.useflowmode=='useflow'){
+      const projectId = parseInt(localStorage.getItem("pro_id")!);
+      this.projectService.updateSourceByProjectId(projectId)
+      .subscribe(
+        (response) => {
+        
+          this.sourceList = response.response;
+
+          console.log("list",this.sourceList)
+          this.listdata = this.sourceList.data;
+          this.graphService.showLoader = false;
+          this.selectedDataSource.source_id=this.listdata[0].source_id
+          
+          this.NextVisibleFlag=true;
 
 
-this.projectTypeFlag= localStorage.getItem("pr_type")
-if(this.projectTypeFlag==null || this.projectTypeFlag=="undefined"){
-  this.sourcebuttonflag=true;
-  this.FetchAll();
-}
+        },
+        (error) => {
+          console.error('Error updating source:', error);
+
+        }
+      );
+
+    }
 else{
-this.FetchAllByCondition();
-this.sourcebuttonflag=false;
-}
-   // this.FetchAll();
-    this.getProjectType();
-    
+  this.projectTypeFlag = localStorage.getItem("pr_type")
+  if (this.projectTypeFlag == null || this.projectTypeFlag == "undefined") {
+    this.sourcebuttonflag = true;
+    this.FetchAll();
   }
+  else {
+    this.FetchAllByCondition();
+    this.sourcebuttonflag = false;
+  }
+}
+    // this.FetchAll();
+    this.getProjectType();
 
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   getUIClass() {
     return localStorage.getItem("urlForClass")?.includes("/project-edit") ? 'Project Update' : 'Project Create';
   }
-FetchAllByCondition(){
-  this.graphService.showLoader = true;
-  this._apiSubscription = this.pipelineData.getSourceListCondition('condition',this.projectTypeFlag,localStorage.getItem('uid')!)
-    .subscribe(
-      respArray => {
-        this.sourceList = respArray;
-        this.listdata = this.sourceList.data;
-        this.graphService.showLoader = false;
-        console.log(this.sourceList.data);
-      }
-    )
+  FetchAllByCondition() {
+    this.graphService.showLoader = true;
+    this._apiSubscription = this.pipelineData.getSourceListCondition('condition', this.projectTypeFlag, localStorage.getItem('uid')!)
+      .subscribe(
+        respArray => {
+          this.sourceList = respArray;
+          this.listdata = this.sourceList.data;
+          
+          this.graphService.showLoader = false;
+          console.log(this.sourceList.data);
+          // this.NextVisibleFlag=true;
+        }
+      )
     if (localStorage.getItem('pr_id') !== null) {
-      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!,localStorage.getItem("uid")!)
+      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!, localStorage.getItem("uid")!)
         .subscribe((res: ProjectListConfig) => {
           // console.clear();
           // console.log("Project List :: " , res.data[0]);
           this.attatchedSources = res.data[0].source_ids;
-          if (this.attatchedSources.length  < 1) {
+          if (this.attatchedSources.length < 1) {
             this.disableNxtBtn = true;
           } else {
             this.disableNxtBtn = false;
@@ -132,19 +166,19 @@ FetchAllByCondition(){
         });
     }
     this.audit.addUrlAudit('userAuditLog');
-}
+  }
   FetchAll() {
     this.fetchArealist();
     this.processingTypeData();
     this.fetchSouceLocationList();
     this.fetchSourceList();
     if (localStorage.getItem('pr_id') !== null) {
-      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!,localStorage.getItem("uid")!)
+      this.projectService.getProjectList("projects", localStorage.getItem('pr_id')!, localStorage.getItem("uid")!)
         .subscribe((res: ProjectListConfig) => {
           // console.clear();
-          // console.log("Project List :: " , res.data[0]);
+          console.log("Project List :: " , res.data[0]);
           this.attatchedSources = res.data[0].source_ids;
-          if (this.attatchedSources.length  < 1) {
+          if (this.attatchedSources.length < 1) {
             this.disableNxtBtn = true;
           } else {
             this.disableNxtBtn = false;
@@ -155,26 +189,26 @@ FetchAllByCondition(){
   }
 
   addSource = new FormGroup({
-    source_name: new FormControl('',Validators.required),
-    area_id: new FormControl('',Validators.required),
-    fps: new FormControl('',Validators.required),
-    process_type: new FormControl('',Validators.required),
+    source_name: new FormControl('', Validators.required),
+    area_id: new FormControl('', Validators.required),
+    fps: new FormControl('', Validators.required),
+    process_type: new FormControl('', Validators.required),
     project_id: new FormControl('',),
-    source_stored_location_id: new FormControl('',Validators.required),
+    source_stored_location_id: new FormControl('', Validators.required),
     created_by: new FormControl('',),
     modified_by: new FormControl('',),
     description: new FormControl('',),
-    filename:new FormControl('',),
+    filename: new FormControl('',),
     rtspurl: new FormControl('',),
-    project_type: new FormControl('',Validators.required)
+    project_type: new FormControl('', Validators.required)
 
   })
-  addProject   = new FormGroup({
-    project_name   : new FormControl(''),
+  addProject = new FormGroup({
+    project_name: new FormControl(''),
     project_type_id: new FormControl(''),
-    created_by     : new FormControl(''),
-    modified_by    : new FormControl(''),
-    pipeline_id    : new FormControl('')
+    created_by: new FormControl(''),
+    modified_by: new FormControl(''),
+    pipeline_id: new FormControl('')
   });
 
   fetchArealist() {
@@ -189,11 +223,10 @@ FetchAllByCondition(){
   getProTypeName(proTypeName: string) {
     // alert(proTypeName)
     localStorage.setItem('proTypeName', proTypeName);
-    
-    if(this.addProject.value.project_name!='' && proTypeName!='')
-    {
-      this.buttondisable=false;
-    } 
+
+    if (this.addProject.value.project_name != '' && proTypeName != '') {
+      this.buttondisable = false;
+    }
   }
   createAvaterName(userName: string) {
     const name = userName.trim().split(' ');
@@ -220,148 +253,140 @@ FetchAllByCondition(){
   }
 
   onSubmit() {
-    
-    if(this.addSource.invalid){
-      if( this.fileflag=="FILE" )
-      {
-        if(this.fileName==null || this.fileName=='undefined' || this.fileName=="")
-        {
-            this.fileerrorShow=true;
+
+    if (this.addSource.invalid) {
+      if (this.fileflag == "FILE") {
+        if (this.fileName == null || this.fileName == 'undefined' || this.fileName == "") {
+          this.fileerrorShow = true;
         }
-        else{
-          this.fileerrorShow=false;
+        else {
+          this.fileerrorShow = false;
           return;
         }
       }
-      else if( this.fileflag=="IMAGE" )
-      {
-        if(this.fileName==null || this.fileName=='undefined' || this.fileName=="")
-        {
-            this.fileerrorShow=true;
+      else if (this.fileflag == "IMAGE") {
+        if (this.fileName == null || this.fileName == 'undefined' || this.fileName == "") {
+          this.fileerrorShow = true;
         }
-        else{
-          this.fileerrorShow=false;
+        else {
+          this.fileerrorShow = false;
           return;
         }
-        
+
       }
-      else if( this.fileflag=="VIDEO" )
-      {
-        if(this.fileName==null || this.fileName=='undefined' || this.fileName=="")
-        {
-            this.fileerrorShow=true;
+      else if (this.fileflag == "VIDEO") {
+        if (this.fileName == null || this.fileName == 'undefined' || this.fileName == "") {
+          this.fileerrorShow = true;
         }
-        else{
-          this.fileerrorShow=false;
+        else {
+          this.fileerrorShow = false;
           return;
         }
-        
+
       }
 
-      else  if( this.fileflag=="RTSP" ){
-        const rtspurlvalue=this.addSource.get('rtspurl')?.value
+      else if (this.fileflag == "RTSP") {
+        const rtspurlvalue = this.addSource.get('rtspurl')?.value
         const encodedUrl = encodeURIComponent(rtspurlvalue);
         console.log(encodedUrl);
-        if(rtspurlvalue==null || rtspurlvalue=='undefined' || rtspurlvalue=="")
-        {
-            this.rtsperrorShow=true;
+        if (rtspurlvalue == null || rtspurlvalue == 'undefined' || rtspurlvalue == "") {
+          this.rtsperrorShow = true;
         }
-        else{
-          this.rtsperrorShow=false;
+        else {
+          this.rtsperrorShow = false;
           return;
         }
       }
       return;
-      }
-     else{     
-    this.addSource.value.project_id = localStorage.getItem('pr_id');
-    // this.data = this.addSource.value;
-    // console.log(this.addSource.valid);
-    const payload = {
-      Id: this.getTk.getUser_id(),
-      Type: 'Create Project Datasource',
-      Effect: 'Project Datasource Created Successfully',
-      Status: 1,
     }
-    this.formData.append('source_name', this.addSource.get('source_name')?.value);
-    this.formData.append('area_id',this.addSource.get('area_id')?.value);
-    this.formData.append('fps', this.addSource.get('fps')?.value);
-    this.formData.append('process_type',this.addSource.get('process_type')?.value);
-    // this.formData.append('project_id',this.addSource.get('project_id')?.value);
-    this.formData.append('source_stored_location_id',this.addSource.get('source_stored_location_id')?.value);
-    this.formData.append('created_by',this.addSource.get('created_by')?.value);
-    this.formData.append('modified_by',this.addSource.get('modified_by')?.value);
-    this.formData.append('description',this.addSource.get('description')?.value);
-    // this.formData.append('filename',this.addSource.get('filename')?.value);
-    // this.formData.append('rtspurl',this.addSource.get('rtspurl')?.value);
-    this.formData.append('project_type',this.addSource.get('project_type')?.value);
-    // this.formData.forEach((value, key) => {
-    //   console.log(`${key}: ${value}`);
-    // });
-    this.graphService.showLoader = true;
+    else {
+      this.addSource.value.project_id = localStorage.getItem('pr_id');
+      // this.data = this.addSource.value;
+      // console.log(this.addSource.valid);
+      const payload = {
+        Id: this.getTk.getUser_id(),
+        Type: 'Create Project Datasource',
+        Effect: 'Project Datasource Created Successfully',
+        Status: 1,
+      }
+      this.formData.append('source_name', this.addSource.get('source_name')?.value);
+      this.formData.append('area_id', this.addSource.get('area_id')?.value);
+      this.formData.append('fps', this.addSource.get('fps')?.value);
+      this.formData.append('process_type', this.addSource.get('process_type')?.value);
+      // this.formData.append('project_id',this.addSource.get('project_id')?.value);
+      this.formData.append('source_stored_location_id', this.addSource.get('source_stored_location_id')?.value);
+      this.formData.append('created_by', this.addSource.get('created_by')?.value);
+      this.formData.append('modified_by', this.addSource.get('modified_by')?.value);
+      this.formData.append('description', this.addSource.get('description')?.value);
+      // this.formData.append('filename',this.addSource.get('filename')?.value);
+      // this.formData.append('rtspurl',this.addSource.get('rtspurl')?.value);
+      this.formData.append('project_type', this.addSource.get('project_type')?.value);
+      // this.formData.forEach((value, key) => {
+      //   console.log(`${key}: ${value}`);
+      // });
+      this.graphService.showLoader = true;
 
-    this.pipelineData.saveSource('/source/create', this.formData)
-      .subscribe(
-        respArray => {
-          
-          console.log("sourcereSPONSE",respArray)
-          if(respArray.msg=='Success')
-          {
-            this.sourceResp = respArray;
-            this.closebutton.nativeElement.click();
-            
-            this._apiSubscription = this.pipelineData.getSourceList('source', 'all',localStorage.getItem('uid')! )
-              .subscribe(
+      this.pipelineData.saveSource('/source/create', this.formData)
+        .subscribe(
+          respArray => {
+
+            console.log("sourcereSPONSE", respArray)
+            if (respArray.msg == 'Success') {
+              this.sourceResp = respArray;
+              this.closebutton.nativeElement.click();
+
+              this._apiSubscription = this.pipelineData.getSourceList('source', 'all', localStorage.getItem('uid')!)
+                .subscribe(
+                  respArray => {
+                    this.sourceList = respArray;
+                    this.listdata = this.sourceList.data;
+                    this.graphService.showLoader = false;
+                    console.log(this.sourceList.data);
+                  }
+                )
+              this.addSource.reset();
+              this.audit.addAudit('userAuditLog', payload).subscribe(
                 respArray => {
-                  this.sourceList = respArray;
-                  this.listdata = this.sourceList.data;
-                  this.graphService.showLoader = false;
-                  console.log(this.sourceList.data);
+                  console.log(respArray)
                 }
               )
-            this.addSource.reset();
-            this.audit.addAudit('userAuditLog', payload).subscribe(
-              respArray => {
-                console.log(respArray)
-              }
-            )
+            }
+            else {
+              alert(respArray.msg)
+              return;
+              // payload.Effect = "Project Datasource creation Failed";
+              // payload.Status = 0;
+              // this.audit.addAudit('userAuditLog', payload).subscribe(
+              //   respArray => {
+              //     console.log(respArray)
+              //   }
+              // )
+            }
           }
-          else{
-            alert(respArray.msg)
-            return;
-            // payload.Effect = "Project Datasource creation Failed";
-            // payload.Status = 0;
-            // this.audit.addAudit('userAuditLog', payload).subscribe(
-            //   respArray => {
-            //     console.log(respArray)
-            //   }
-            // )
-          }
-        }
-      )
+        )
     }
   }
 
   fetchSourceList() {
     this.graphService.showLoader = true;
-    this._apiSubscription = this.pipelineData.getSourceList('source', 'all',localStorage.getItem('uid')!)
+    this._apiSubscription = this.pipelineData.getSourceList('source', 'all', localStorage.getItem('uid')!)
       .subscribe(
         respArray => {
-          console.log(respArray)
-          
-          
+          console.log("source_list",respArray)
+
+
           this.sourceList = respArray;
           this.listdata = this.sourceList.data;
           this.graphService.showLoader = false;
-          console.log("checking",respArray);
+          console.log("checking", respArray);
         }
       )
   }
   getProjectType() {
-    this.graphService.showLoader=true;
+    this.graphService.showLoader = true;
     this.projectData.projectTypeData('projectTypes').subscribe((respArray) => {
       this.ProjectTypeList = respArray;
-      this.graphService.showLoader=false;
+      this.graphService.showLoader = false;
 
     });
   }
@@ -380,34 +405,32 @@ FetchAllByCondition(){
   // @ select clicked Data Source # # # # # # # 
   selectSource(source: SourceData, e: Event) {
 
-     this._apiSubscription = this.pipelineData.getSourceList('source', source.source_id, localStorage.getItem('uid')!)
-     .subscribe(
-       respArray => {
-        console.log('file',respArray);
-        
-       this.source_stored_location=respArray.data[0].source_stored_location_id
-       this.file_type_name=respArray.data[0].processing_type_name
+    this._apiSubscription = this.pipelineData.getSourceList('source', source.source_id, localStorage.getItem('uid')!)
+      .subscribe(
+        respArray => {
+          console.log('file', respArray);
+
+          this.source_stored_location = respArray.data[0].source_stored_location_id
+          this.file_type_name = respArray.data[0].processing_type_name
 
 
-      //  alert(this.source_stored_location)
-      if(this.route_PRID=="tab")
-      {
-        this.NextVisibleFlag=true;
-      }
-      else
-      {
-        this.NextVisibleFlag=false;
-      }
-    this.source_id_sec=source.source_stored_location_id
-    localStorage.setItem('source_id_session', String(source.source_id));
-    localStorage.setItem('source_location_session_id',this.source_stored_location );
-    localStorage.setItem('processing_type_name',this.file_type_name );
-    // alert(this.file_type_name)
-    // alert(this.source_stored_location)
+          //  alert(this.source_stored_location)
+          if (this.route_PRID == "tab") {
+            this.NextVisibleFlag = true;
+          }
+          else {
+            this.NextVisibleFlag = false;
+          }
+          this.source_id_sec = source.source_stored_location_id
+          localStorage.setItem('source_id_session', String(source.source_id));
+          localStorage.setItem('source_location_session_id', this.source_stored_location);
+          localStorage.setItem('processing_type_name', this.file_type_name);
+          // alert(this.file_type_name)
+          // alert(this.source_stored_location)
 
-    });
-    
- 
+        });
+
+
     if (!this.isSourceAttatched(source.source_id)) {
       this.selectedDataSource = {};
       let ele = (<HTMLElement>e.target).parentNode;
@@ -422,6 +445,14 @@ FetchAllByCondition(){
 
       // console.log(ele);
     }
+    const projectId = parseInt(localStorage.getItem("pr_id")!);
+  this.updateSource(projectId,source);
+  }
+
+  updateSource(projectId: number, source: SourceData) {
+     this.selectedDataSource = source;
+
+   
   }
 
   // @ Deleting Source From Project # # # # # # # # 
@@ -452,20 +483,7 @@ FetchAllByCondition(){
     }, 100);
     this.renderer.removeClass(this.deleteModal.nativeElement, "show");
   }
-  // @ Deleting Source From Project # # # # # # # # 
-
-  // @ Checking Source Attached to current project or not
-  // isSourceAttatched(source_id: number) {
   
-  //   if (localStorage.getItem("pr_id") !== null) {
-  //     let isAttatched = this.attatchedSources.includes(source_id, 0);
-  //     return isAttatched;
-  //   } else {
-  //     return false;
-  //   }
-  //   // console.clear();
-  //   // console.log(source_id, "source attatched", isAttatched);
-  // }
   isSourceAttatched(source_id: number) {
     if (localStorage.getItem("pr_id") !== null) {
       if (Array.isArray(this.attatchedSources)) {
@@ -476,45 +494,45 @@ FetchAllByCondition(){
     }
     return false;
   }
-  
+
 
 
   editDatasource(id: any) {
     this.router.navigate(['datasource-edit', id]);
   }
 
-  ngOnDestroy(): void {
-  this._apiSubscription.unsubscribe();
+  // ngOnDestroy(): void {
+  //   this._apiSubscription.unsubscribe();
+  // }
+  getProjectTypeflag(id: any) {
+    this.projectTypeFlag = id;
   }
-  getProjectTypeflag(id:any){
-  this.projectTypeFlag=id;
-  }
-  getProcessingTypeflag(name:any){
-  this.ProcessingTypeflag=name;
- if(name=="FILE"){
-  this.fileflag="FILE";
+  getProcessingTypeflag(name: any) {
+    this.ProcessingTypeflag = name;
+    if (name == "FILE") {
+      this.fileflag = "FILE";
 
-}
-else if(name=="IMAGE"){
-  this.fileflag="IMAGE";
-}
-else if (name=="VIDEO"){
-  this.fileflag="VIDEO"
-}
-else{
-  this.fileflag="RTSP";
-}
+    }
+    else if (name == "IMAGE") {
+      this.fileflag = "IMAGE";
+    }
+    else if (name == "VIDEO") {
+      this.fileflag = "VIDEO"
+    }
+    else {
+      this.fileflag = "RTSP";
+    }
   }
 
   onFileSelection(e: Event) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
-  
+
     if (file) {
       const allowedExtensions = ['zip', 'png', 'mp4'];
       const fileExtension = file.name.split('.').pop();
       const lowerCaseExtension = fileExtension!.toLowerCase();
-  
+
       if (allowedExtensions.includes(lowerCaseExtension)) {
         // Valid file selected
         this.fileName = file.name;
@@ -523,10 +541,10 @@ else{
       } else {
         this.fileerrorShow = true;
         this.fileName = '';
-  
+
         // Clear the chosen file input
         target.value = '';
-  
+
         if (this.fileflag === "FILE" && !allowedExtensions.includes('zip')) {
           alert("Please upload only ZIP files.");
         } else if (this.fileflag === "IMAGE" && !allowedExtensions.includes('png')) {
@@ -543,75 +561,46 @@ else{
       this.fileerrorShow = false;
     }
   }
-  
 
-  // onFileSelection(e: Event) {
-  //   const target = e.target as HTMLInputElement;
-  //   const file: File = (target.files as FileList)[0];
-  //   this.fileName = file.name;
-  //   this.fileerrorShow=false;
-  //   // this.formData.append('filename', this.fileName);
-  //   this.formData.append('file', file, file.name);
 
-  //   // this.uploadSourceFile();
-  // }
-  // onFileSelection(e: Event) {
-  //   const target = e.target as HTMLInputElement;
-  //   const file: File = (target.files as FileList)[0];
+
+  nexttype() {
+    this.graphService.showLoader = true;
+    if(this.useflowmode=='useflow'){
+      this.router.navigate(['zone-creation']);
+
+    }
+    else{
+
     
-  //   if (file) {
-  //     const fileSizeInMB = file.size / (1024 * 1024); // Convert bytes to MB
-      
-  //     if (fileSizeInMB >= 100) {
-  //       this.fileName = file.name;
-  //       this.fileerrorShow = false;
-  //       this.formData.append('file', file, file.name);
-        
-  //       // Now, you can proceed with uploading the file or performing any other actions.
-  //       // this.uploadSourceFile();
-  //     } else {
-  //       // Display an error message because the file size is less than 100MB
-  //       this.fileerrorShow = true;
+    this.projectTypeFlag = localStorage.getItem("pr_type")
 
-  //     }
-  //   }
-  // }
-  
-    
- 
-  // uploadSourceFile() {
-  //   this.projectService.uploadSourceFile
-  //   ('sourceFileUpload', this.formData)
-  //      .subscribe((respArray) => {
-  //        this.sourceUpload= respArray;
-  //        console.log(this.sourceUpload)
-  //      });
- //  }
+    localStorage.setItem('pr_id', this.project_id);
+    this.projectService.getProjectType('projecttype', this.projectTypeFlag)
+      .subscribe(
+        respArray => {
+          console.log("next resp",respArray)
+          this.projecttype = respArray.data[0];
+          
+          this.projecttype = this.projecttype.operation_type_name
+       
+          this.graphService.showLoader = false;
+          if (this.projecttype == "Training") {
+            this.router.navigate(['config-model']);
+          }
+          else {
+     
+            this.router.navigate(['config-model']);
+          }
+        })
+      }
 
- nexttype(){
-  this.graphService.showLoader=true;
-  this.projectTypeFlag= localStorage.getItem("pr_type")
-   localStorage.setItem('pr_id', this.project_id);
-  this.projectService.getProjectType('projecttype', this.projectTypeFlag)
-  .subscribe(
-    respArray => {
-      this.projecttype = respArray.data[0];
-      this.projecttype=this.projecttype.operation_type_name
-      this.graphService.showLoader=false;
-      if(this.projecttype=="Training")
-{
-  this.router.navigate(['config-model']);
+  }
+  errorMessages = {
+    required: 'This field is Required',
+    maxLength: 'max length 10',
+    minLength: 'minimum length is 5'
+  }
+  errorMessage = '';
 }
-else{ 
-  this.router.navigate(['config-model']);
-}
-    })
-    
- }
- errorMessages = {
-  required: 'This field is Required',
-  maxLength: 'max length 10',
-  minLength: 'minimum length is 5'
- }
- errorMessage = '';
-}
+

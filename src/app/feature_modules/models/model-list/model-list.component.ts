@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit,OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
+import { Subject, interval } from 'rxjs';
 import { ModelListConfig } from 'src/app/data-models/model';
 import { ModelDataService } from 'src/app/services/model-data.service';
 import { GraphService} from 'src/app/services/graph.service';
@@ -21,9 +21,14 @@ export class ModelListComponent implements OnInit, OnDestroy  {
   modalListById!: ModelListConfig;
   modelId!:number;
   listdata:any=[];
+  mySubscription: Subscription | undefined
   private _apiSubscription! : Subscription;
   ngOnInit(): void {
     this.fetchModelListData();
+    this.mySubscription = interval(30 * 1000).subscribe((x => {
+      this.fetchModelListData();
+    }));
+    
     this.audit.addUrlAudit('userAuditLog');
 
   }

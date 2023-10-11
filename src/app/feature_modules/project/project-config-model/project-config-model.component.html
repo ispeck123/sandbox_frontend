@@ -41,7 +41,12 @@
                                     <input type="file" [id]="'myFile' + i" [name]="'filename' + i" accept=".pt,.pb,.pth,.weights,.tf,.h5,.caffe"
                                            (change)="selectFiles($event, items.artifacts_type_id, items)" required>
                                     <div *ngIf="!items.selectedFile">No chosen file</div>
+                                    
                                     <div *ngIf="items.selectedFile">Selected file: {{ items.selectedFile.name }}</div>
+
+                                    
+                                    
+                                    <!-- <div *ngIf="items.selectedFile">Selected file: {{ items.selectedFile.name }}</div> -->
                                   </button>
                             </div>
                         </div>

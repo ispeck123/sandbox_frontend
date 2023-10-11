@@ -43,7 +43,7 @@ export class DatasourceEditComponent implements OnInit,OnDestroy {
     })
   ngOnInit(): void {
     this.source_id = this.route.snapshot.params['id'];
-    console.log(this.source_id);
+    console.log("................",this.source_id);
 
     this.audit.addUrlAudit('userAuditLog');
     this.fetchSourceData();
@@ -54,29 +54,52 @@ export class DatasourceEditComponent implements OnInit,OnDestroy {
     this.username = this.getToken.getUser_name();
   }
   fetchSourceData(){
-    this.graphService.showLoader=true;
-    this._apiSubscription =this.projectService.sourceFileList('sourceFileList',this.source_id)
-    .subscribe(
-      respArray => {
-        this.sourceFileList = respArray;
-        console.log(respArray);
-         this.editDatasource.addControl('source_id', new FormControl(''));
-      this.editDatasource.patchValue({
-        source_id        : this.sourceFileList.data[0].source_id,
-        source_name      : this.sourceFileList.data[0].source_name,
-        area_id          : this.sourceFileList.data[0].area_id,
-        project_id          : this.sourceFileList.data[0].project_id,
-        process_type     : this.sourceFileList.data[0].process_type,
-        fps              : this.sourceFileList.data[0].fps,
-        source_stored_location_id     : this.sourceFileList.data[0].source_stored_location_id,
-        description      : this.sourceFileList.data[0].description,
-        modified_by      :  this.username,
-        created_by       :  this.sourceFileList.data[0].created_by,
-      })
-        this.graphService.showLoader=false;
+  this.graphService.showLoader=true;
+  this._apiSubscription =this.projectService.sourceview(this.source_id,localStorage.getItem('uid'))
+    .subscribe( respArray => {
+      
+      this.sourceFileList =respArray.response;
+      console.log("EditSource",this.sourceFileList);
+        this.editDatasource.addControl('source_id', new FormControl(''));
+        this.editDatasource.patchValue({
+          source_id        : this.sourceFileList.data[0].source_id,
+          source_name      : this.sourceFileList.data[0].source_name,
+          area_id          : this.sourceFileList.data[0].area_id,
+          project_id          : this.sourceFileList.data[0].project_id,
+          process_type     : this.sourceFileList.data[0].process_type,
+          fps              : this.sourceFileList.data[0].fps,
+          source_stored_location_id     : this.sourceFileList.data[0].source_stored_location_id,
+          description      : this.sourceFileList.data[0].description,
+          modified_by      :  this.username,
+          created_by       :  this.sourceFileList.data[0].created_by,
+        })
+        localStorage.setItem('source_id', (this.editDatasource.value.source_id).toString());
+          this.graphService.showLoader=false;
+    })
 
-      }
-    )
+    // this._apiSubscription =this.projectService.sourceFileList('sourceFileList',this.source_id)
+    // .subscribe(
+    //   respArray => {
+    //     this.sourceFileList = respArray;
+    //     console.log(respArray);
+    //      this.editDatasource.addControl('source_id', new FormControl(''));
+    //   this.editDatasource.setValue({
+    //     source_id        : this.sourceFileList.data[0].source_id,
+    //     source_name      : this.sourceFileList.data[0].source_name,
+    //     area_id          : this.sourceFileList.data[0].area_id,
+    //     project_id          : this.sourceFileList.data[0].project_id,
+    //     process_type     : this.sourceFileList.data[0].process_type,
+    //     fps              : this.sourceFileList.data[0].fps,
+    //     source_stored_location_id     : this.sourceFileList.data[0].source_stored_location_id,
+    //     description      : this.sourceFileList.data[0].description,
+    //     modified_by      :  this.username,
+    //     created_by       :  this.sourceFileList.data[0].created_by,
+    //   })
+    //     this.graphService.showLoader=false;
+
+    //   }
+      
+    // )
   }
   
   fetchProjectList(){
@@ -91,7 +114,7 @@ export class DatasourceEditComponent implements OnInit,OnDestroy {
      )
   }
   onSubmit(){
-    console.log(this.editDatasource.value)
+    console.log("editttttt",this.editDatasource.value)
     const payload= {
       Id     : this.getToken.getUser_id(),
       Type   : 'Edit Project Datasource',

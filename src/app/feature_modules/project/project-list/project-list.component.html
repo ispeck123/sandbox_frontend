@@ -1,6 +1,6 @@
 <div class="project-list-section">
     <div class="project_brd">
-        <div class="pro_sub d-flex justify-content-between">
+        <div class="pro_sub d-flex justify-content-between" *ngIf="Is_Canned_Check != 'canned'">
             <h3>Projects</h3>
             <div class="create-button">
                 <button mat-raised-button color="primary" [routerLink]="['/project-create']">
@@ -9,6 +9,7 @@
     </button>
             </div>
         </div>
+        
     </div>
 
     <div class="container-fluid">
@@ -17,7 +18,7 @@
             <div *ngIf="projectList != undefined">
                 <div class="row">
                     <div class="col-sm-3" *ngFor="let item of listdata; let i=index;">
-                        <mat-card >
+                        <mat-card>
                             
                             <div class="user_flt">
                                 <button class="ms-auto option-btn" mat-icon-button aria-label="option menu" [matMenuTriggerFor]="menu">
@@ -27,7 +28,13 @@
                                     <!-- <button mat-menu-item (click)="getProjectsById(item.project_id, 'edit')">
                                         <span> Edit</span>
                                     </button> -->
-                                    <button mat-menu-item routerLink="/project-edit/{{item.project_id}}">
+                                    <button *ngIf="Is_Canned_Check == 'canned' && role==='ADMIN'" mat-menu-item routerLink="/project-edit/{{item.project_id}}" (click)="editflow()">
+                                        <span> Edit</span>
+                                    </button>
+                                    <button *ngIf="Is_Canned_Check != 'canned' && role==='ADMIN'" mat-menu-item routerLink="/project-edit/{{item.project_id}}" (click)="editflow()">
+                                        <span> Edit</span>
+                                    </button>
+                                    <button *ngIf="Is_Canned_Check != 'canned' && role=='BUSINESS_USER'" mat-menu-item routerLink="/project-edit/{{item.project_id}}" (click)="editflow()">
                                         <span> Edit</span>
                                     </button>
                                     <button mat-menu-item (click)="getProjectsById(item.project_id, 'details')">
@@ -40,6 +47,14 @@
                                     <button mat-menu-item (click)="deletePopup(projectCard)">
                                         <span>Delete </span>
                                     </button>
+                                    <button *ngIf="Is_Canned_Check === 'canned' && item.project_type_name != 'Training'" mat-menu-item (click)="useProject(item.project_id, item.userid)">
+                                        <span>Use</span>
+                                      </button>
+                                      
+                                      
+                                    <!-- <button mat-menu-item (click)="use_project(item.project_id && item.userid)">
+                                        <span>Use </span>
+                                    </button> -->
                                 </mat-menu>
                             </div>
                             <div class="" #projectCard id="{{item.project_id}}">

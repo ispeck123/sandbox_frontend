@@ -26,8 +26,12 @@ export class ModelDataService {
     // const uid     = null;
     return this.http.get<ModelListConfig>(`${this.Api_Path}/${url}/${id}/${userid}`, {headers});
   }
+  getFileInformation(url:string,project_id:number,artifact_type_id :number){
+  const headers = this.getToken.getLocalToken();
 
+  return this.http.get<any>(this.fastapiurl+url+project_id + '/' +artifact_type_id, { headers });
 
+}
 
   getRigisterModelList(url: string, model_id: any ,userid:any) {
     const headers = this.getToken.getLocalToken();

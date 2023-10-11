@@ -27,6 +27,8 @@
             <mat-option *ngFor="let pipe of filteredPipeline" [value]="pipe.pipeline_id">{{pipe.pipeline_name}}</mat-option>
           </mat-select>
         </mat-form-field>
+       
+
         
   
         <!-- <mat-form-field appearance="outline" *ngIf="projectTypeList !== undefined">
@@ -59,8 +61,12 @@
             Next
           </button> -->
         </div>
+        <!-- <mat-checkbox formControlName="is_canned" >Are you creating a canned?</mat-checkbox> -->
       </form>
+      <div *ngIf="role=='ADMIN' ">
+      <mat-checkbox [(ngModel)]="isChecked" [checked]="isChecked" >Are you creating a canned?</mat-checkbox>
   </div>
+</div>
   </div>
   
   

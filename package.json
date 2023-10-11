@@ -32,10 +32,9 @@
     "file-saver": "^2.0.5",
     "jsoneditor": "^9.9.0",
     "ngx-mat-datetime-picker": "^3.0.0",
-   
     "rxjs": "^6.6.7",
     "rxjs-compat": "^6.6.7",
-    "sweetalert2": "^11.4.32",
+    "sweetalert2": "^11.7.31",
     "tslib": "^2.4.0",
     "zone.js": "~0.11.4"
   },

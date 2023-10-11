@@ -7,99 +7,9 @@
     </div>
 </div>
 <div class="container-fluid">
-     <div class="row">
-        <!-- <div class="col-sm-8">
-            <div class="" *ngIf="projectList != undefined">
-                <div *ngFor="let pro of this.projectList.data" class="w-100">
-                    <div>
-                        Project Name:
-                    </div>
-                    <div>{{pro.project_name}}</div>
-                    <div>Created By:</div>
-                    <div>{{pro.created_by}}</div>
-                    <div>
-                        Project Type ID
-                    </div>
-                    <div>{{pro.project_type_id}}</div>
-                </div>
-            </div>
-            <div class="placeholder_text" *ngIf="projectList == undefined">
-                Please create project first to view the project related
-            </div>
-            <div class="d-flex justify-content-between mt-1">
-                <button type="submit" class="log-button" mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal">
-                <mat-icon></mat-icon> Deploy Project
-              </button>
-             </div>
-        </div> -->
+    <div class="row">
         <div class="col-sm-12">
-            <!-- <div *ngIf="projectList != undefined">  @ Comented for creating simlpler UI logic
-                <div class="reg_secd" *ngFor="let pro of this.projectList.data">
-                    <div class="rg_section_pl">
-                        <div class="row">
-                            <div class="d-flex">
-                                <div class="regis_name_text">
-                                    <mat-icon class="material-symbols-outlined">
-                                        settings_account_box
-                                    </mat-icon>
-                                </div>
-                                <div class="reg_heading">
-                                    <h4> Project Name</h4>
-                                    <p>{{pro.project_name}}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <div class="regis_name_text">
-                                    <mat-icon class="material-symbols-outlined">
-                                        date_range
-                                    </mat-icon>
-                                </div>
-                                <div class="reg_heading">
-                                    <h4>Created By</h4>
-                                    <p>{{pro.created_by}}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <div class="regis_name_text">
-                                    <mat-icon class="material-symbols-outlined">
-                                        view_timeline
-                                    </mat-icon>
-                                </div>
-                                <div class="reg_heading">
-                                    <h4> Project Type ID</h4>
-                                    <p>{{pro.project_type_id}}</p>
-                                </div>
-                            </div>
-                            
-                            <div class="d-flex">
-                                <div class="regis_name_text">
-                                    <mat-icon class="material-symbols-outlined">
-                                        folder_shared
-                                    </mat-icon>
-                                </div>
-                                <div class="reg_heading">
-                                    <h4> Project Type</h4>
-                                    <p>{{pro.project_type_name}}</p>
-                                </div>
-                            </div>
 
-                            <div class="d-flex">
-                                <div class="regis_name_text">
-                                    <mat-icon class="material-symbols-outlined">
-                                        update
-                                    </mat-icon>
-                                </div>
-                                <div class="reg_heading">
-                                    <h4> Last updated on</h4>
-                                    <p>{{pro.modified_on | date}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- Commt ends here -->
-            <!-- project UI Clean -->
             <div *ngIf="projectUIData != undefined">
                 <div class="reg_secd">
                     <div class="rg_section_pl">
@@ -220,8 +130,8 @@
                         Now
                     </button>
                     <button type="button" class="" data-bs-dismiss="modal" aria-label="Close" mat-raised-button
-                        color="primary" routerLink="/project-list">
-                        Later``
+                        color="primary" routerLink="/scheduler">
+                        Later
                     </button>
                 </div>
                 <!-- <button type="button" class="log-button mt-2" mat-raised-button color="warn" data-bs-dismiss="modal">Close</button> -->

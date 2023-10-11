@@ -18,6 +18,7 @@ export class AuthService {
   userid!: number;
   userPermList!: UserPermByRoleConfig;
   userDetailsData!: UserDetailsConfig;
+  role:any;
   constructor(
     private login_register: LoginRegister,
     private router: Router,
@@ -30,12 +31,13 @@ export class AuthService {
     console.log(payload);
     this.login_register.loginData('login', payload).subscribe(
       (resp) => {
-        console.log("login success:",resp)
+        console.log("LOGIN RESPONSE",resp);
         const message = resp.message;
         if (message == 'Success') {
           this.token = resp.data.accessToken;
           this.userid = resp.data.userid;
-
+          this.role=resp.data.role;
+          localStorage.setItem('role',this.role)
           localStorage.setItem('tk', this.token);
           localStorage.setItem('user_id', this.userid.toString());
           this.getUserDetails(this.userid);

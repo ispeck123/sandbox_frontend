@@ -22,5 +22,7 @@ export class LandingPageComponent implements OnInit {
   datasource()
 {
   localStorage.removeItem("pr_type");
+  localStorage.removeItem("editflow");
+  localStorage.removeItem("useflow");
 }
 }
