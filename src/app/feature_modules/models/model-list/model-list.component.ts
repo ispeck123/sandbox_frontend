@@ -25,7 +25,7 @@ export class ModelListComponent implements OnInit, OnDestroy  {
   private _apiSubscription! : Subscription;
   ngOnInit(): void {
     this.fetchModelListData();
-    this.mySubscription = interval(30 * 1000).subscribe((x => {
+    this.mySubscription = interval(30 * 5000).subscribe((x => {
       this.fetchModelListData();
     }));
     

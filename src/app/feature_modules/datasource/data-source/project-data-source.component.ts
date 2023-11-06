@@ -87,33 +87,39 @@ export class ProjectDataSourceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.useflowmode=localStorage.getItem('useflow');
-
     this.flowmode=localStorage.getItem('editflow');
     this.route_PRID = localStorage.getItem("tab");
     localStorage.removeItem("tab");
 
-    if(this.flowmode=='editflow' || this.useflowmode=='useflow'){
-      const projectId = parseInt(localStorage.getItem("pro_id")!);
-      this.projectService.updateSourceByProjectId(projectId)
-      .subscribe(
-        (response) => {
+    console.log("------1---------")
+    console.log(this.flowmode)
+    console.log("=========")
+
+    if(this.flowmode=='editflow' || this.useflowmode=='useflow' || this.useflowmode == null){
+      this.fetchSourceList();
+      const projectId = parseInt(sessionStorage.getItem("useflow_projectid")!);
+      this.processingTypeData();
+      this.fetchSouceLocationList();
+      // this.projectService.updateSourceByProjectId(projectId)
+      // .subscribe(
+      //   (response) => {
         
-          this.sourceList = response.response;
+      //     this.sourceList = response.response;
 
-          console.log("list",this.sourceList)
-          this.listdata = this.sourceList.data;
-          this.graphService.showLoader = false;
-          this.selectedDataSource.source_id=this.listdata[0].source_id
+      //     console.log("list",this.sourceList)
+      //     this.listdata = this.sourceList.data;
+      //     this.graphService.showLoader = false;
+      //     this.selectedDataSource.source_id=this.listdata[0].source_id
           
-          this.NextVisibleFlag=true;
+      //     this.NextVisibleFlag=true;
 
 
-        },
-        (error) => {
-          console.error('Error updating source:', error);
+      //   },
+      //   (error) => {
+      //     console.error('Error updating source:', error);
 
-        }
-      );
+      //   }
+      // );
 
     }
 else{
@@ -190,8 +196,8 @@ else{
 
   addSource = new FormGroup({
     source_name: new FormControl('', Validators.required),
-    area_id: new FormControl('', Validators.required),
-    fps: new FormControl('', Validators.required),
+    // area_id: new FormControl('',),
+    // fps: new FormControl('',),
     process_type: new FormControl('', Validators.required),
     project_id: new FormControl('',),
     source_stored_location_id: new FormControl('', Validators.required),
@@ -244,7 +250,9 @@ else{
         respArray => {
           this.processingTypeList = respArray;
           // this.ProjectTypeList = respArray;
+          console.log("------------------------------");
           console.log(this.processingTypeList.data);
+          console.log("-------1-------------")
         }
       )
   }
@@ -310,8 +318,8 @@ else{
         Status: 1,
       }
       this.formData.append('source_name', this.addSource.get('source_name')?.value);
-      this.formData.append('area_id', this.addSource.get('area_id')?.value);
-      this.formData.append('fps', this.addSource.get('fps')?.value);
+      // this.formData.append('area_id', this.addSource.get('area_id')?.value);
+      // this.formData.append('fps', this.addSource.get('fps')?.value);
       this.formData.append('process_type', this.addSource.get('process_type')?.value);
       // this.formData.append('project_id',this.addSource.get('project_id')?.value);
       this.formData.append('source_stored_location_id', this.addSource.get('source_stored_location_id')?.value);
@@ -388,6 +396,10 @@ else{
       this.ProjectTypeList = respArray;
       this.graphService.showLoader = false;
 
+      console.log("============projecttype---------")
+      console.log(this.ProjectTypeList)
+      console.log("================")
+
     });
   }
 
@@ -404,7 +416,6 @@ else{
 
   // @ select clicked Data Source # # # # # # # 
   selectSource(source: SourceData, e: Event) {
-
     this._apiSubscription = this.pipelineData.getSourceList('source', source.source_id, localStorage.getItem('uid')!)
       .subscribe(
         respArray => {
@@ -412,15 +423,21 @@ else{
 
           this.source_stored_location = respArray.data[0].source_stored_location_id
           this.file_type_name = respArray.data[0].processing_type_name
-
-
+          if(this.flowmode=='editflow' || this.useflowmode=='useflow')
+          {
+            this.NextVisibleFlag = true;
+          }
+          else{
           //  alert(this.source_stored_location)
           if (this.route_PRID == "tab") {
             this.NextVisibleFlag = true;
           }
           else {
+
             this.NextVisibleFlag = false;
           }
+          }
+         
           this.source_id_sec = source.source_stored_location_id
           localStorage.setItem('source_id_session', String(source.source_id));
           localStorage.setItem('source_location_session_id', this.source_stored_location);
@@ -435,14 +452,27 @@ else{
       this.selectedDataSource = {};
       let ele = (<HTMLElement>e.target).parentNode;
       this.selectedDataSource = source;
-
-      this.projectService.mapProjectSource("projectSourceMap", parseInt(localStorage.getItem("pr_id")!), source.source_id, localStorage.getItem("uid")!)
+      if(this.useflowmode=='useflow'){
+        this.projectService.usemapProjectSource("used/project/source/map", parseInt(sessionStorage.getItem("useflow_projectid")!), source.source_id, localStorage.getItem("uid")!)
         .subscribe((res) => {
           console.log("Mapping Source to Project by id:: ", res);
         }, err => {
           console.log("Error in Mapping source to project", err);
         })
 
+      }
+      else{
+        this.projectService.mapProjectSource("projectSourceMap", parseInt(localStorage.getItem("pr_id")!), source.source_id, localStorage.getItem("uid")!)
+        .subscribe((res) => {
+          console.log("Mapping Source to Project by id:: ", res);
+        }, err => {
+          console.log("Error in Mapping source to project", err);
+        })
+
+
+      }
+
+      
       // console.log(ele);
     }
     const projectId = parseInt(localStorage.getItem("pr_id")!);

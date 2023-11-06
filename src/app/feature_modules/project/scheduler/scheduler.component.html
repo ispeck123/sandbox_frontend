@@ -1,8 +1,8 @@
 <h2>Scheduler View</h2>
-<div class="create-button" >
+<div class="create-button">
   <button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#dataModal">
-      <mat-icon>add</mat-icon>
-Add Schedule Time
+    <mat-icon>add</mat-icon>
+    Add Schedule Time
   </button>
 </div>
 
@@ -11,7 +11,6 @@ Add Schedule Time
     <tr>
       <th>Project name </th>
       <th>Operation name</th>
-      
       <th>Pipeline name</th>
       <th>Processing name</th>
       <th>Model name</th>
@@ -24,7 +23,6 @@ Add Schedule Time
       <th>Container status</th>
       <th>Scheduled by</th>
       <th>Scheduled on</th>
-
     </tr>
   </thead>
   <tbody>
@@ -43,31 +41,27 @@ Add Schedule Time
       <td>{{ item.docker_container_current_status }}</td>
       <td>{{item.scheduled_by}}</td>
       <td>{{item.scheduled_on}}</td>
-    
     </tr>
-     
-    <!-- Add more rows for other properties -->
   </tbody>
 </table>
 
-  <div class="modal fade show" id="dataModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal"
+<div class="modal fade show" id="dataModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="dataModal"
   aria-modal="false" role="dialog">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="dataModal">Add Schedule Time</h5>
-              <button type="button" class="btn-close" #closebutton data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-          </div>
-          <div class="project_header">
-            <form >
-              <mat-form-field appearance="outline">
-                <mat-label>Project Name</mat-label>
-                <input matInput  placeholder="Enter Project Name" formControlName="project_name">
-              </mat-form-field>
-      </form>
-            </div>
-         
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dataModal">Add Schedule Time</h5>
+        <button type="button" class="btn-close" #closebutton data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="project_header">
+        <form>
+          <mat-form-field appearance="outline">
+            <mat-label>Project Name</mat-label>
+            <input matInput placeholder="Enter Project Name" formControlName="project_name">
+          </mat-form-field>
+        </form>
+      </div>
+
+    </div>
   </div>
 </div>

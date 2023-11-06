@@ -12,13 +12,14 @@ import { HttpClient } from '@angular/common/http';
 import FileSaver from 'file-saver';
 import { DomSanitizer } from '@angular/platform-browser';
 import { saveAs } from 'file-saver';
+import { GetTokenService } from 'src/app/services/get-token.service';
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css']
 })
-export class ProjectListComponent implements OnInit, OnDestroy {
+export class ProjectListComponent implements OnInit {
   projectById!: ProjectListConfig;
   projectList!: ProjectListConfig;
   listdata: any;
@@ -31,7 +32,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   Is_Canned_Check:any;
   role:any;
   useflowmode:any;
-
+  projectid_model_verify:any;
+  pId!:any;
+  pro_id!: number;
 
 
   
@@ -39,10 +42,11 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   constructor(private projectData: ProjectDataService, public dialog: MatDialog,
     public audit: AuditTrailService,
-    private graphService: GraphService, private router: Router, private deleteDialog: MatDialog,private sanitizer: DomSanitizer
+    private graphService: GraphService, private tkService : GetTokenService, private router: Router, private deleteDialog: MatDialog,private sanitizer: DomSanitizer
   ) { }
   auditData!: AddAuditConfig;
   ngOnInit(): void {
+    this.pId=localStorage.getItem("pro_id")
     this.role= localStorage.getItem("role");
     this.listdata = [];
     this.Is_Canned_Check=localStorage.getItem('cannedProject');
@@ -69,6 +73,7 @@ getuselist(){
       this.projectList=resp.response.projects;
       console.log('Success:', this.projectList);
      this.listdata = this.projectList;
+     console.log("LIST",this.listdata)
 
       this.graphService.showLoader = false;
 })
@@ -143,6 +148,7 @@ getuselist(){
     return (this.element = false);
     this.project_Id = id;
     this.control = bool;
+    
  
     }
   
@@ -162,29 +168,7 @@ getuselist(){
     }
 
   }
-  projectDeploy(id: number) {
-    // this.projectData.projectDeploy('projectDeploy', id)
-    //   .subscribe((respArray: any) => {
-    //     console.log(respArray.data.msg);
-    //     if (respArray.data.msg == 'Failed') {
-    //       alert(respArray.data.response.project_deploy.reason[0]);
-    //     } else {
-    //       this.isButtonDisabled = true; // Disable the button on successful response
-    //     }
-    //   });
-  }
 
-  // projectDeploy(id: number) {
-  //   this.projectData.projectDeploy('projectDeploy', id)
-  //     .subscribe((respArray: any) => {
-  //       console.log(respArray.data.msg)
-  //       if (respArray.data.msg == 'Failed') {
-  //         alert(respArray.data.response.project_deploy.reason[0])
-  //       }
-  //       //this.projectDepData = respArray;
-  //       //alert(this.projectDepData.status)
-  //     })
-  // }
 
   dialogData(id: ProjectListConfig | number, val: string) {
     const dialogConfig = new MatDialogConfig();
@@ -217,6 +201,67 @@ getuselist(){
     this.dialog.open(ProjectEdit, dialogConfig);
   }
 
+  projectDeploy(id: number) {
+    const payload= {
+            Id     : this.tkService.getUser_id(),
+            Type   : 'Deploy Project',
+            Effect : 'Project deployed successfully',
+            Status : 1,
+          }
+    const projectId = localStorage.getItem('pro_id');
+  
+    
+    if (!projectId) {
+      console.log('Project ID not available.');
+      return;
+    }
+  this.graphService.showLoader=true;
+    this._apiSubscription = this.projectData.projectDeploy(projectId,localStorage.getItem('uid')!)
+      .subscribe(
+        respArray => {
+          console.log('Project deploy response:', respArray);
+          this.graphService.showLoader=false;
+          if (respArray.response.project_deploy.mlflow_url) {
+            const sanitizedURL = encodeURI(respArray.response.project_deploy.mlflow_url);
+            const newWindow = window.open(sanitizedURL, '_blank');
+            this.router.navigateByUrl("/project-list");
+        
+            if (newWindow) {
+  
+             
+            } else {
+              
+            }
+          }
+          if(respArray.data.msg == 'Success') {
+                    this.audit.addAudit('userAuditLog',payload)
+                    .subscribe(respArray=>{
+                        console.log(respArray)
+                       
+                      })
+                  }
+                  else
+                  {
+                    alert(respArray.data.response.project_deploy.reason[0]);
+                    payload.Effect="Project deploy failed";
+                      payload.Status=0;
+                      this.audit.addAudit('userAuditLog',payload).subscribe(
+                        respArray=>{
+                          console.log(respArray)
+                        }
+                      )
+                  }
+          // Handle the response here
+        },
+        error => {
+          console.error('Error during project deploy:', error);
+          // Handle the error here
+  
+          alert('An error occurred while fetching data from the API.');
+        }
+      );
+   
+  }
 
 
   downloadweightFile(project_id: number) {
@@ -247,10 +292,12 @@ getuselist(){
   // }
   
   useProject(projectId: any, userId: string) {
+   
     localStorage.setItem("useflow",'useflow');
     this.projectData.createUseProject("used/project/create",projectId, localStorage.getItem("uid")!).subscribe(
       (resp: any) => {
         console.log('Success:', resp); 
+        sessionStorage.setItem('useflow_projectid',resp.response.project_id)
       },
       (error: any) => {
         console.error('Error:', error); 
@@ -280,9 +327,9 @@ getuselist(){
     })
   }
 
-  ngOnDestroy(): void {
-    this._apiSubscription.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this._apiSubscription.unsubscribe();
+  // }
 }
 
 

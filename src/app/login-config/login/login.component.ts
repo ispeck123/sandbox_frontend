@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
   this.data = this.loginForm.value;
   this.authservice.authHelper(this.data);
   this.graphService.showLoader=false;
-  this.globalservice.swalSuccess("Login Success !")
+ 
 
 }
 

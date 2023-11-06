@@ -23,6 +23,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { saveAs } from 'file-saver';
 import { GraphService } from 'src/app/services/graph.service';
+import { AlertForm } from '../project/project-alert-rules/project-alert-rules.component';
+import { GlobalService } from 'src/app/services/global.service';
 
 
 @Component({
@@ -65,7 +67,7 @@ export class ZoneCreationComponent implements OnInit {
   
   selectedZoneImage!: string;
   updateZoneCoordinates: boolean = false;
-
+  useflowmode:any;
   shapeDeleteButton!: boolean;
   b64: any;
   videoUrl:any;
@@ -117,6 +119,7 @@ export class ZoneCreationComponent implements OnInit {
     public audit: AuditTrailService,
     private zoneData: ZoneDataService, 
     private router: Router,
+    private globalservice:GlobalService,
       private projectService: ProjectDataService,
       private graphService : GraphService,
   
@@ -152,6 +155,7 @@ export class ZoneCreationComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.useflowmode=localStorage.getItem('useflow');
     this.graphService.showLoader=true;
     this.sourcesessionid = localStorage.getItem("source_id_session");
     this.projectsessionid=localStorage.getItem("pro_id");
@@ -655,7 +659,9 @@ startDrawing (e: any) {
       this.zoneCoordinates[0].polygons.length > 0 ||
       this.zoneCoordinates[0].lines.length > 0
     ) {
+     
       if (this.updateZoneCoordinates) {
+        alert("Update")
         // @ update zone API implementation
         this.zoneData.updateZoneCoordinates('updateZone', this.zoneCoordinates).subscribe((respArray) => {
           this.zoneResp = respArray;
@@ -663,21 +669,29 @@ startDrawing (e: any) {
           if(this.zoneResp.message=="success" || this.zoneResp.message=="Success"){
             payload.Effect = "Zone Created Successfully";
             payload.Status = 1;
-            this.audit.addAudit('userAuditLog',payload).subscribe(
-              respArray=>{
-                console.log("Audit log", respArray)
-              }
-            )
+            alert("Zone Updated Successfully")
+            if(this.useflowmode=="useflow")
+            {
+              this.router.navigate(['model-verify']);
+            }
+            else{
+              this.router.navigate(['model-class']);
+            }
+            // this.audit.addAudit('userAuditLog',payload).subscribe(
+            //   respArray=>{
+            //     console.log("Audit log", respArray)
+            //   }
+            // )
           }
           else
           {
             payload.Effect="Zone creation failed";
             payload.Status=0;
-            this.audit.addAudit('userAuditLog',payload).subscribe(
-              respArray=>{
-                console.log(respArray)
-              }
-            )
+            // this.audit.addAudit('userAuditLog',payload).subscribe(
+            //   respArray=>{
+            //     console.log(respArray)
+            //   }
+            // )
           }
         });
       } else {
@@ -690,7 +704,16 @@ startDrawing (e: any) {
             payload.Effect = "Zone Created Successfully";
             payload.Status = 1;
             // this.router.navigate(['select-model-pipeline']);
-            this.router.navigate(['model-class']);
+            if(this.zoneCoordinates)
+            {
+            if(this.useflowmode=="useflow")
+            {
+              this.router.navigate(['model-verify']);
+            }
+            else{
+              this.router.navigate(['model-class']);
+            }
+          }            
             // this.audit.addAudit('userAuditLog',payload).subscribe(
             //   respArray=>{
             //     console.log("Audit log", respArray)
@@ -714,8 +737,13 @@ startDrawing (e: any) {
 
     }
     else{
-      // this.router.navigate(['select-model-pipeline']);
-      this.router.navigate(['model-class']);
+       if(this.useflowmode=="useflow")
+      {
+        this.router.navigate(['model-verify']);
+      }
+      else{
+        this.router.navigate(['model-class']);
+      }
     }
   
   }

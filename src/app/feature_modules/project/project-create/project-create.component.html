@@ -5,33 +5,38 @@
     </div>
   </div>
   <div class="project_header">
-      <form [formGroup]="addProject" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Project Name</mat-label>
-          <input matInput  placeholder="Enter Project Name" formControlName="project_name" (input)="checkDataAvaibility()" [disabled]="!isCreateMode">
-        </mat-form-field>
+    <form [formGroup]="addProject" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Use Case Name</mat-label>
+        <input matInput placeholder="Enter Use Case Name" formControlName="project_name" (input)="checkDataAvaibility()"
+          [disabled]="!isCreateMode">
+      </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Select Project Type</mat-label>
-          <mat-select #id formControlName="project_type_id" (selectionChange)="onProjectTypeChange(id.value)" [disabled]="!isCreateMode">
-            
-            
-            <mat-option [value]="projectType.project_type_id" *ngFor="let projectType of projectTypeList.data" (onSelectionChange)="getProTypeName(projectType.project_type)"  >
-              {{projectType.project_type}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline" *ngIf="projectTypeSelected">
-          <mat-label>Select Pipeline</mat-label>
-          <mat-select #id formControlName="pipeline_id" (selectionChange)="getPipeName(id.value)" [disabled]="!isCreateMode" >
-            <mat-option *ngFor="let pipe of filteredPipeline" [value]="pipe.pipeline_id">{{pipe.pipeline_name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-       
+      <mat-form-field appearance="outline">
+        <mat-label>Select Use Case Type</mat-label>
+        <mat-select #id formControlName="project_type_id" (selectionChange)="onProjectTypeChange(id.value)"
+          [disabled]="!isCreateMode">
 
-        
-  
-        <!-- <mat-form-field appearance="outline" *ngIf="projectTypeList !== undefined">
+
+          <mat-option [value]="projectType.project_type_id" *ngFor="let projectType of projectTypeList.data">
+            {{projectType.project_type}}
+          </mat-option>
+          <!-- (onSelectionChange)="getProTypeName(projectType.project_type)" -->
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" *ngIf="projectTypeSelected">
+        <mat-label>Select Pipeline</mat-label>
+        <mat-select #id formControlName="pipeline_id" (selectionChange)="getPipeName(id.value)"
+          [disabled]="!isCreateMode">
+          <mat-option *ngFor="let pipe of filteredPipeline"
+            [value]="pipe.pipeline_id">{{pipe.pipeline_name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
+
+      <!-- <mat-form-field appearance="outline" *ngIf="projectTypeList !== undefined">
           <mat-label>Select Project Type</mat-label>
           <mat-select #id formControlName="project_type_id" (selectionChange)="getProjectTypeflag(id.value)">
             <mat-option [value]="projectType.project_type_id" *ngFor="let projectType of projectTypeList.data" (onSelectionChange)="getProTypeName(projectType.project_type)">
@@ -39,34 +44,40 @@
             </mat-option>
           </mat-select>
         </mat-form-field> -->
-  
-        <!-- <mat-form-field appearance="outline" *ngIf="projectTypeList !== undefined">
+
+      <!-- <mat-form-field appearance="outline" *ngIf="projectTypeList !== undefined">
           <mat-label>Select Pipeline </mat-label>
             <mat-select #id formControlName="pipeline_id"  (selectionChange)="getPipeName(id.value)">
               <mat-option *ngFor="let pipe of pipelinedata" [value]="pipe.pipeline_id" >{{pipe.pipeline_name}}</mat-option>
             </mat-select>
           </mat-form-field> -->
-          
-            
-        <input type="hidden" formControlName="created_by" [ngModel]="username">
-        <input type="hidden" formControlName="modified_by" [ngModel]="">
-        <div class="project_btn d-flex">
-          <button class="stepper-button" mat-raised-button  color="primary" [routerLink]="['/project-list']"  [hidden]="buttonvisible" style="margin-right: 10px;">
-            Back
-          </button>
-          <button type="submit" class="stepper-button"  [hidden]="buttonvisible"   mat-raised-button color="primary" style="margin-right: 10px;">
-            {{isCreate ? ' Submit' : 'Update'}}
-          </button>
-          <!-- <button class="stepper-button" mat-raised-button   [hidden]="!buttonvisible"  color="primary" [routerLink]="['/project-datasource']" (click)=" setUrlData()">
+
+
+      <input type="hidden" formControlName="created_by" [ngModel]="username">
+      <input type="hidden" formControlName="modified_by" [ngModel]="">
+      <div class="project_btn d-flex">
+        <button class="stepper-button" mat-raised-button color="primary" [routerLink]="['/project-list']"
+          [hidden]="buttonvisible" style="margin-right: 10px;">
+          Back
+        </button>
+        <button type="submit" class="stepper-button" [hidden]="buttonvisible" mat-raised-button color="primary"
+          style="margin-right: 10px;">
+          {{isCreate ? ' Submit' : 'Update'}}
+        </button>
+        <!-- <button class="stepper-button" mat-raised-button   [hidden]="!buttonvisible"  color="primary" [routerLink]="['/project-datasource']" (click)=" setUrlData()">
             Next
           </button> -->
-        </div>
-        <!-- <mat-checkbox formControlName="is_canned" >Are you creating a canned?</mat-checkbox> -->
-      </form>
-      <div *ngIf="role=='ADMIN' ">
-      <mat-checkbox [(ngModel)]="isChecked" [checked]="isChecked" >Are you creating a canned?</mat-checkbox>
+      </div>
+      <!-- <mat-checkbox formControlName="is_canned" >Are you creating a canned?</mat-checkbox> -->
+    </form>
+    <div *ngIf="role === 'ADMIN'">
+      <div *ngIf="cannedCondition === true">
+        <mat-checkbox [(ngModel)]="isChecked" [checked]="isChecked">Are you creating a canned?</mat-checkbox>
+      </div>
+    </div>
+
+    <!-- <div *ngIf="role=='ADMIN' && cannedCondition==true">
+      <mat-checkbox [(ngModel)]="isChecked" [checked]="isChecked">Are you creating a canned?</mat-checkbox>
+    </div> -->
   </div>
 </div>
-  </div>
-  
-  

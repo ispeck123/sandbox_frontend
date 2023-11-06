@@ -34,6 +34,7 @@ export class AddModelsComponent implements OnInit, OnDestroy {
   isCreate!: boolean;
   items!: FormArray;
   deletableModelId!: number;
+  submitVisible:boolean=false;
   
 
   deleteModalClickListenerSubscriber!: any;
@@ -176,7 +177,7 @@ export class AddModelsComponent implements OnInit, OnDestroy {
   }
 
   addModel() {
-    this.buttonvisibles = true;
+    // this.buttonvisibles = true;
     const payload = {
       Id: this.getToken.getUser_id(),
       Type: 'Pipeline model create',
@@ -210,6 +211,8 @@ export class AddModelsComponent implements OnInit, OnDestroy {
         console.log("while attaching more model error occurred", err);
       }, () => {
         console.log("Request Complete");
+        alert("Model Updated");
+            this.router.navigateByUrl('/pipeline');
       })
     } else {
       console.log("hmm, first time, Attach Model API is being called here");
@@ -222,11 +225,12 @@ export class AddModelsComponent implements OnInit, OnDestroy {
   
           if (this.attachModelResp.message == "success" || this.attachModelResp.message == "Success") {
             alert("Model Attached");
-            this.audit.addAudit('userAuditLog', payload).subscribe(
-              respArray => {
-                console.log(respArray)
-              }
-            )
+            this.router.navigateByUrl('/pipeline');
+            // this.audit.addAudit('userAuditLog', payload).subscribe(
+            //   respArray => {
+            //     console.log(respArray)
+            //   }
+            // )
           }
           else {
             alert("Failed to attach model");
@@ -336,5 +340,14 @@ export class AddModelsComponent implements OnInit, OnDestroy {
       });
       window.location.reload();
   }
-
+  modelSelection(id:any)
+  {
+    if(id)
+    {
+      this.submitVisible=true;
+    }
+    else{
+      this.submitVisible=false;
+    }
+  }
 }

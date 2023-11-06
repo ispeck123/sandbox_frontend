@@ -213,7 +213,7 @@
 <div class="" *ngIf="(nextUrl != '')">
     <div class="project_button_nt">
         <button type="button" mat-stroked-button color="primary" [routerLink]="['/model-create']">Back</button>
-        <button type="button" class="stepper-button mt-2" mat-raised-button color="primary" [routerLink]="[nextUrl]">
+        <button type="button" class="stepper-button mt-2" mat-raised-button color="primary" [routerLink]="[nextUrl]" (click)="isCompleted(pId)">
             Next
         </button>
     </div>

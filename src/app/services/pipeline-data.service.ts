@@ -51,7 +51,18 @@ export class PipelineDataService {
       headers,
     });
   }
-
+  getFileInformation(url:string,project_id:number,artifact_type_id :number){
+    const headers = this.getToken.getLocalToken();
+  
+    return this.http.get<any>(this.fastapiurl+url+project_id + '/' +artifact_type_id, { headers })
+  }
+  putIsCompleted(url:string,project_id:any){
+ 
+    const headers = this.getToken.getLocalToken();
+   
+  
+    return this.http.put<any>(this.fastapiurl+url + '/'+ project_id , { headers })
+  }
   getProcessingTypeData(url: string, id: number | string) {
     const headers = this.getToken.getLocalToken();
     return this.http.get<ProcessingTypeConfig>(

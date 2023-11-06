@@ -22,9 +22,12 @@ export class ZoneDataService {
   sourcesessionid:any;
   projectsessionid:any;
   fileid:any;
+  used_project:any;
+  useflowmode:any;
 
   Api_Path: string = '';
   authorization: string = '';
+  savezone:boolean=false;
 
   constructor(private http: HttpClient, private getToken: GetTokenService) {
     this.Api_Path = servicedata.api_url;;
@@ -34,13 +37,33 @@ export class ZoneDataService {
   saveZone(url: string, coordinates: any[]) {
     const uid = this.getToken.getUser_name();
     this.sourcesessionid = localStorage.getItem("source_id_session");
-    this.projectsessionid=localStorage.getItem("pro_id");
+    this.useflowmode=localStorage.getItem('useflow');
+    if(this.useflowmode=="useflow")
+    {
+      this.projectsessionid=sessionStorage.getItem("useflow_projectid")
+    }
+    else{
+      this.projectsessionid=localStorage.getItem("pro_id")
+    }
+    ;
     this.fileid=localStorage.getItem("source_location_session_id")
     const headers = this.getToken.getLocalToken();
+    this.used_project=localStorage.getItem("useflow");
+    if(this.used_project=='useflow')
+    {
+      this.savezone=true;
+    }
+    else{
+      this.savezone=false;
+    }
+  
+  
+
     this.data = {
       zone_coordinates: coordinates,
       created_by: uid,
       // file_id: this.fileid,
+      used_project:this.savezone,
       source_id: this.sourcesessionid,
       project_id:this.projectsessionid,
     };

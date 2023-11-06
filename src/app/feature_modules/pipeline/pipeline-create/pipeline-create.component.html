@@ -16,7 +16,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="form-fields" *ngIf="pipeLineType != undefined">
         <mat-label>Select Pipeline Operation Type</mat-label>
-        <mat-select formControlName= "pipeline_type_id">
+        <mat-select #id formControlName= "pipeline_type_id" (selectionChange)="onOperationTypeChange(id.value)">
           <mat-option [value]="item.pipeline_type_id" *ngFor="let item of pipeLineType.data">{{item.pipeline_type}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -30,7 +30,7 @@
       <mat-form-field appearance="outline" *ngIf="processingTypeList != undefined">
         <mat-label>Processing Type</mat-label>
         <mat-select formControlName= "processing_type_id">
-          <mat-option [value]="processType.processing_type_id" selected *ngFor="let processType of processingTypeList.data" >{{processType.processing_type_name}}</mat-option>
+          <mat-option [value]="processType.processing_type_id" selected *ngFor="let processType of filteredProcessingTypes" >{{processType.processing_type_name}}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -57,7 +57,7 @@
 
       <div class="d-flex project_btn">
         <button type="submit"  class="stepper-button" mat-raised-button color="primary" style="margin-right: 10px;"  [hidden]="buttonvisible" >{{isCreate ? 'Submit' : 'Update'}}</button>
-        <button  class="stepper-button" mat-raised-button color="primary"  [routerLink]="['/add-model']"  [hidden]="!buttonvisible">Next</button>
+        <!-- <button  class="stepper-button" mat-raised-button color="primary"  [routerLink]="['/add-model']"  [hidden]="!buttonvisible">Next</button> -->
     </div>
     </form>
   </div>

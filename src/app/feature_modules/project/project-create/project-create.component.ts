@@ -47,6 +47,8 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
   isCreateMode!: boolean;
   isChecked: boolean = false;
   role: any;
+  cannedCondition:boolean=false;
+  projectType:any;
 
 
 
@@ -112,6 +114,7 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
     this.graphService.showLoader = true;
     this.projectData.projectTypeData('projectTypes').subscribe((respArray) => {
       this.projectTypeList = respArray;
+      console.log("Project TYpe",this.projectTypeList)
 
       console.log("TYPE", this.projectTypeList);
       if (respArray.message === 'failed') {
@@ -270,12 +273,21 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
       });
   }
 
-  getProTypeName(proTypeName: string) {
-    localStorage.setItem('proTypeName', proTypeName);
-    if (this.addProject.value.project_name != '' && proTypeName != '') {
-      this.buttondisable = false;
-    }
-  }
+  // getProTypeName(proTypeName: string) {
+  //   alert(proTypeName)
+  //   if(proTypeName=="Inference")
+  //   {
+  //     this.cannedCondition=true;
+  //   }
+  //   else
+  //   {
+  //     this.cannedCondition=false;
+  //   }
+  //   localStorage.setItem('proTypeName', proTypeName);
+  //   if (this.addProject.value.project_name != '' && proTypeName != '') {
+  //     this.buttondisable = false;
+  //   }
+  // }
   getPipeName(id: any) {
     localStorage.setItem("model_id", id);
     localStorage.setItem("pipeline_id", id);
@@ -297,7 +309,24 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
       });
   }
 
-  onProjectTypeChange(projectTypeId: string) {
+  onProjectTypeChange(projectTypeId: any) {
+    this._apiSubscription = this.projectData.getProjecttypebyId('projectTypedata', projectTypeId)
+        .subscribe((respArray) => {
+          this.projectType = respArray.response.projecttype[0].operation_type_name;
+          if(this.projectType=="Inference")
+          {
+            this.cannedCondition=true;
+          }
+          else
+          {
+            this.cannedCondition=false;
+          }
+          localStorage.setItem('proTypeName', this.projectType);
+          // if (this.addProject.value.project_name != '' && this.projectType != '') {
+          //   this.buttondisable = false;
+          // }
+        });
+
     if (projectTypeId) {
       this._apiSubscription = this.projectData.getProjecttype('get_pipeline_by_type_id', projectTypeId, localStorage.getItem('uid')!)
         .subscribe((respArray) => {

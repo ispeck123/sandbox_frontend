@@ -1,11 +1,11 @@
 <div class="project-list-section">
     <div class="project_brd">
-        <div class="pro_sub d-flex justify-content-between" *ngIf="Is_Canned_Check != 'canned'">
-            <h3>Projects</h3>
+        <div class="pro_sub d-flex justify-content-between" *ngIf="Is_Canned_Check != 'canned' && useflowmode!='useflow'">
+            <h3>Use Cases</h3>
             <div class="create-button">
                 <button mat-raised-button color="primary" [routerLink]="['/project-create']">
       <mat-icon>add</mat-icon>
-      Create Project
+      Create Use Case
     </button>
             </div>
         </div>
@@ -21,7 +21,7 @@
                         <mat-card>
                             
                             <div class="user_flt">
-                                <button class="ms-auto option-btn" mat-icon-button aria-label="option menu" [matMenuTriggerFor]="menu">
+                                <button class="ms-auto option-btn" mat-icon-button aria-label="option menu" [matMenuTriggerFor]="menu"  *ngIf=" useflowmode!='useflow'">
                                     <mat-icon>more_horiz</mat-icon>
                                 </button>
                                 <mat-menu #menu="matMenu">
@@ -43,8 +43,20 @@
                                     <button mat-menu-item *ngIf="item.project_type_name === 'Training' && item.is_deployed === 1" (click)="downloadweightFile(item.project_id)">
                                         <span>Download Weight File</span>
                                     </button>
-                                    
-                                    <button mat-menu-item (click)="deletePopup(projectCard)">
+
+                                    <button mat-menu-item *ngIf="item.project_type_name === 'Training' && item.is_deploye!=1" (click)="projectDeploy(pro_id)">
+                                        <span>Deploy</span>
+                                    </button>
+                                    <button mat-menu-item *ngIf="item.project_type_name === 'Training' && item.is_deploye!=1" (click)="projectDeploy(pro_id)">
+                                        <span>Schedule</span>
+                                    </button>
+                                    <button mat-menu-item (click)="deletePopup(projectCard)"  *ngIf="Is_Canned_Check == 'canned' && role=='ADMIN'">
+                                        <span>Delete </span>
+                                    </button>
+                                    <button mat-menu-item (click)="deletePopup(projectCard)"  *ngIf="Is_Canned_Check != 'canned' && role=='ADMIN'">
+                                        <span>Delete </span>
+                                    </button>
+                                    <button mat-menu-item (click)="deletePopup(projectCard)"  *ngIf="Is_Canned_Check != 'canned' && role=='BUSINESS_USER'">
                                         <span>Delete </span>
                                     </button>
                                     <button *ngIf="Is_Canned_Check === 'canned' && item.project_type_name != 'Training'" mat-menu-item (click)="useProject(item.project_id, item.userid)">
@@ -139,8 +151,7 @@
           class="log-button mt-2"
           mat-raised-button
           color="warn"
-          data-bs-dismiss="modal"
-        >
+          data-bs-dismiss="modal">
           Close
         </button> -->
             </div>

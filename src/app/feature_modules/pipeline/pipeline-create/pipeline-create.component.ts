@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModelListConfig } from 'src/app/data-models/model';
-import { PipelineCreateResp, PipelineListConfig, PipelineRespData, PipelineTypeConfig, PipeModelTypeConfig, ProcessingTypeConfig } from 'src/app/data-models/pipeline-model';
+import { PipelineCreateResp, PipelineListConfig, PipelineRespData, PipelineTypeConfig, PipeModelTypeConfig, ProcessingTypeConfig, ProcessingTypeData } from 'src/app/data-models/pipeline-model';
 import { ClassUiChangerService } from 'src/app/services/class-ui-changer.service';
 import { GetTokenService } from 'src/app/services/get-token.service';
 import { GraphService } from 'src/app/services/graph.service';
 import { ModelDataService } from 'src/app/services/model-data.service';
 import { PipelineDataService } from 'src/app/services/pipeline-data.service';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
+import { ProjectDataService } from 'src/app/services/project-data.service';
 
 
 @Component({
@@ -32,6 +33,8 @@ export class PipelineCreateComponent implements OnInit {
   pipeId: number = 0;
   isCreate!: boolean;
   buttonvisible:boolean=false;
+  projectType:any;
+  filteredProcessingTypes: ProcessingTypeData[] = [];
   constructor(
     private pipelineData: PipelineDataService,
     // private modelDataService: ModelDataService,
@@ -39,7 +42,9 @@ export class PipelineCreateComponent implements OnInit {
     private getTk: GetTokenService,
     private route: ActivatedRoute,
     private graphService : GraphService,
-    public audit: AuditTrailService
+    public audit: AuditTrailService,
+    private projectData: ProjectDataService,
+    private router: Router,
 
     ) { }
 
@@ -53,7 +58,7 @@ export class PipelineCreateComponent implements OnInit {
     }
    // this.setUrlData();
     this.getPipelineTypes();
-    this.processingTypeData();
+    // this.processingTypeData();
     this.getPipelineModelType();
     this.username = this.getTk.getUser_name();
     this.audit.addUrlAudit('userAuditLog');
@@ -78,8 +83,14 @@ export class PipelineCreateComponent implements OnInit {
     this.pipelineData.getProcessingTypeData('processing', 'ALL')
     .subscribe(
       respArray => {
-            this.processingTypeList = respArray;
-            console.log(this.processingTypeList.data);
+        this.processingTypeList = respArray;
+        if (this.projectType === 'Training') {
+          this.filteredProcessingTypes  = this.processingTypeList.data.filter(processType => processType.processing_type_name === 'FILE');
+        } else {
+          this.filteredProcessingTypes  = this.processingTypeList.data.filter(processType => processType.processing_type_name === 'VIDEO');
+        }
+            
+            console.log("process",this.processingTypeList.data);
       }
     )
   }
@@ -155,12 +166,13 @@ export class PipelineCreateComponent implements OnInit {
 
              localStorage.setItem('pid', this.pipelineResp.data.pipeline_id.toString());
              alert("Pipeline Created:"+this.pipelineResp.message);
-             this.audit.addAudit('userAuditLog',payload).subscribe(
-              respArray=>{
-                console.log(respArray)
+             this.router.navigateByUrl('/add-model');
+            //  this.audit.addAudit('userAuditLog',payload).subscribe(
+            //   respArray=>{
+            //     console.log(respArray)
               
-              }
-            )
+            //   }
+            // )
         }
         else
         {
@@ -189,11 +201,12 @@ export class PipelineCreateComponent implements OnInit {
 
                localStorage.setItem('pid', this.pipelineResp.data.pipeline_id.toString());
                alert(this.pipelineResp.message);
-               this.audit.addAudit('userAuditLog',payload).subscribe(
-                respArray=>{
-                  console.log(respArray)
-                }
-              )
+               this.router.navigateByUrl('/add-model');
+              //  this.audit.addAudit('userAuditLog',payload).subscribe(
+              //   respArray=>{
+              //     console.log(respArray)
+              //   }
+              // )
           }
           else
           {
@@ -230,6 +243,16 @@ export class PipelineCreateComponent implements OnInit {
 
      }
    )
+  }
+
+  onOperationTypeChange(projectTypeId:any)
+  {
+    this.projectData.getProjecttypebyId('projectTypedata', projectTypeId)
+    .subscribe((respArray) => {
+      this.projectType = respArray.response.projecttype[0].operation_type_name;
+      this.processingTypeData();
+      
+    });
   }
 
   // checkDataAvaibility(){

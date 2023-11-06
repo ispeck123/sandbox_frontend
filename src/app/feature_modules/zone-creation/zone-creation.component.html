@@ -24,8 +24,8 @@
                       </div>
 
                     <!-- coohse color section -->
-                    <div class="" *ngIf="isSettings"
-                        style="background: #fff;   border: 1px solid #ddd; padding: 16px !important;">
+                    <!-- <div class="" *ngIf="isSettings"
+                        style="background: #fff;   border: 1px solid #ddd; padding: 1px !important;">
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="zone_input_kl">
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- button header section -->
                     <div class="draw_zone_section" style="margin-top: 230px;">
@@ -125,14 +125,57 @@
                             (click)="onSelectTool('clear')">
                             Clear
                         </button>
-                        <button mat-raised-button color="primary" class="me-1" (click)="saveZone()"
+                        <!-- <button mat-raised-button color="primary" class="me-1" (click)="saveZone()"
                             *ngIf="updateZoneCoordinates === true" [disabled]="isSaveBtn">
                             Update
-                        </button>
+                        </button> -->
                        
                     </div>
 
+                    <div class="" *ngIf="isSettings"
+                    style="background: #fff;   border: 1px solid #ddd; padding: 1px !important;">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="zone_input_kl">
+                                <mat-label style="margin-top:0.8em;">Choose Line Color </mat-label><br>
+                                <input class="mt-2" matInput name="colorCode" type="color" [(ngModel)]="strokeColor"
+                                    (ngModelChange)="onStrokeColorChange()" />
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="ms-2">
+                                <label>Line Width</label><br>
+                                <mat-slider min="1" max="10" [(ngModel)]="strokeWidth" class="me-1"
+                                    (change)="onStrokeWidthChange()">
+                                </mat-slider>{{strokeWidth}}&nbsp;&nbsp;
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="zone_input_kl">
 
+                                <mat-label style="margin-top:0.8em;">Background Color</mat-label><br>
+                                <input class="mt-2" matInput name="bgColor" type="color" [(ngModel)]="bgColor"
+                                    (ngModelChange)="onBgColorChange()" />
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="ms-2">
+                                <label>Background Opacity</label><br>
+                                <mat-slider min="0" max="1" step="0.1" [(ngModel)]="bgOpacity"
+                                    (change)="onBgOpacityChange()" class="me-1">
+                                </mat-slider>{{bgOpacity}}
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="zone_cre_btn">
+                                <button mat-raised-button color="primary" (click)="saveSettings()"
+                                    [disabled]="isSaveSettings">
+                                    Save Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     <!--End coohse color section -->
                 </div>
             </div>

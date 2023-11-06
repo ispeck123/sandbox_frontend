@@ -11,6 +11,8 @@ import { PipelineDataService } from 'src/app/services/pipeline-data.service';
 import { AuditTrailService } from 'src/app/services/audit-trail.service';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { DOCUMENT } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { ProjectCreateResp } from 'src/app/data-models/project-model';
 
 
 @Component({
@@ -58,10 +60,18 @@ export class AddModelClassComponent implements OnInit {
   cId: any;
   dType: any;
   deleteval: any;
+  private _apiSubscription! : Subscription;
   resp: any;
-
+  projectId!: number;
+  pro_id!: number;
+  id:any
+  projectResp!: ProjectCreateResp;
+  pId!:any
+  proType:any
   currentAttributeField!: HTMLElement;
   selectedAttrValField!: HTMLElement
+  flowmode: any;
+  useflowmode:any;
 
   constructor(private pipelineData: PipelineDataService,
     private modelDataService: ModelDataService,
@@ -69,11 +79,14 @@ export class AddModelClassComponent implements OnInit {
     private classChangeUi: ClassUiChangerService,
     private getToken: GetTokenService,
     private graphService: GraphService,
-    public audit: AuditTrailService, 
+    public audit: AuditTrailService,
+     
     @Inject(DOCUMENT) document: Document
   ) { }
 
   ngOnInit(): void {
+    this.pId=localStorage.getItem("pro_id")
+
     this.FecthAll();
 
     if (localStorage.getItem('mname')) {
@@ -107,6 +120,30 @@ export class AddModelClassComponent implements OnInit {
       this.hideBtn = false;
     }
   }
+  isCompleted(pId:any) {
+    var protypecheck = localStorage.getItem('proTypeName');
+  
+   const projectId = localStorage.getItem('pro_id');
+    if (!projectId) {
+      console.log('Project ID not available.');
+      return;
+    }if(this.flowmode!='editflow' && this.flowmode!='useflow'){
+      if (protypecheck == 'Inference'){
+  
+        this.pipelineData.putIsCompleted('/complete/project/create', projectId)
+        .subscribe(
+          (respArray) => {
+            this.projectResp = respArray;
+            console.log('Project response:', respArray);
+          });
+  
+       }
+    }
+    
+    
+  
+  }
+  
   addClass = new FormGroup({
     class_name: new FormControl(''),
     created_by: new FormControl(''),
@@ -285,6 +322,7 @@ export class AddModelClassComponent implements OnInit {
           }
           this.addAttributeVal.reset();
         }
+        
       )
     console.log(this.data);
   }

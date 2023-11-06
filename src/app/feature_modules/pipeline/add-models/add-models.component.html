@@ -19,7 +19,7 @@
             <form [formGroup]="attachModel">
             <mat-form-field appearance="outline" *ngIf="modelList != undefined">
                 <mat-label>Select Model</mat-label>
-                <mat-select formControlName="model_ids">
+                <mat-select formControlName="model_ids" #id (selectionChange)="modelSelection(id.value)">
                     <mat-option [value]="item.model_id" selected *ngFor="let item of modelList.models; let i = index">
                         {{item.model_name}}
                     </mat-option>
@@ -61,10 +61,14 @@
             <!-- Already Existing models ends here-->
 
             <div class="d-flex project_btn">
-                <button type="submit" class="stepper-button" mat-raised-button color="primary"
-                    style="margin-right: 10px;" [hidden]="buttonvisibles" (click)="addModel()">Submit</button>
-                <button class="stepper-button" mat-raised-button color="primary" [routerLink]="['/save-pipeline']"
-                    [hidden]="!buttonvisibles">Next </button>
+                <button *ngIf="submitVisible" type="submit" class="stepper-button" mat-raised-button color="primary"
+                    style="margin-right: 10px;" (click)="addModel()">Submit</button>
+
+
+                <!-- <button class="stepper-button" mat-raised-button color="primary" [routerLink]="['/save-pipeline']"
+                    [hidden]="!buttonvisibles">Next </button> -->
+
+
             </div>
         </form>
     </div>

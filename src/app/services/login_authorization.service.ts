@@ -8,6 +8,7 @@ import {
   UserPermByRoleConfig,
   UserPermRoleData,
 } from '../data-models/user.model';
+import { GlobalService } from './global.service';
 
 
 @Injectable()
@@ -22,7 +23,8 @@ export class AuthService {
   constructor(
     private login_register: LoginRegister,
     private router: Router,
-    private userData: UserDataService
+    private userData: UserDataService,
+    private globalservice:GlobalService
   ) {
     this.isloggedIn = false;
   }
@@ -41,16 +43,17 @@ export class AuthService {
           localStorage.setItem('tk', this.token);
           localStorage.setItem('user_id', this.userid.toString());
           this.getUserDetails(this.userid);
+          this.globalservice.swalSuccess("Login Success !")
           // console.log("user details",this.getUserDetails(this.userid))
 
           //  this.router.navigate(['/home']);
         } else {
-          alert(message);
+          this.globalservice.swalError(message);
           return;
         }
       },
       (error) => {
-        alert('Please check your username and password');
+        this.globalservice.swalError('Please check your username and password');
       }
     );
     return this.isloggedIn;

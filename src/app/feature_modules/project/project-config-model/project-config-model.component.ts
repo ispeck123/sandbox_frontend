@@ -10,6 +10,7 @@ import { MatChip } from '@angular/material/chips';
 import { ProjectDataService } from 'src/app/services/project-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GraphService } from 'src/app/services/graph.service';
+import { ProjectCreateResp } from 'src/app/data-models/project-model';
 
 @Component({
   selector: 'app-project-config-model',
@@ -42,6 +43,7 @@ export class ProjectConfigModelComponent implements OnInit {
   selectedFiles: any=[];
   projectsessionId:any;
   pipelinesessionid:any;
+  projectResp!: ProjectCreateResp;
   modelsessionid:any;
   sourcesessionid:any;
   artifacttypesessionid:any=[];
@@ -65,6 +67,10 @@ export class ProjectConfigModelComponent implements OnInit {
   items: any;
   project_id: any;
   artifact_type_id: any;
+  flowmode:any;
+  posts:any;
+  useflowmode:any;
+
   // @ViewChild(JsonEditorComponent, { static: false }) editor!: JsonEditorComponent;
   constructor(
     private projectService: ProjectDataService,
@@ -78,6 +84,7 @@ export class ProjectConfigModelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.flowmode=localStorage.getItem('editflow')
     this.pr_type= localStorage.getItem("pr_type")
     this.projectsessionId= localStorage.getItem("pro_id")
     this.pipelinesessionid= localStorage.getItem("pipeline_id")
@@ -92,7 +99,7 @@ export class ProjectConfigModelComponent implements OnInit {
       this.projecttype=this.projecttype.operation_type_name
     })
     // this.getUrl();
-    this.audit.addUrlAudit('userAuditLog');
+    // this.audit.addUrlAudit('userAuditLog');
     //  this.dataParser();
     //   this.data = this.configData.data;
     this.visibleData = this.data;
@@ -106,15 +113,29 @@ export class ProjectConfigModelComponent implements OnInit {
     //   this.project_id = +params.get('project_id');
     //   this.artifact_type_id = +params.get('artifact_type_id');
     // });
-    if (this.items.selectedFile) {
-      this.getFileInformation(this.project_id, this.artifact_type_id);
+
+    if (this.flowmode === 'editflow') {
+      alert(this.items.selectedFile)
+      if (this.items.selectedFile) {
+        this.getFileInformation(this.project_id, this.artifact_type_id);
+      }
     }
   }
+  
+
+
+
+
+
+
+
+
   getFileInformation(project_id: number,artifact_type_id :number) {
-    this.modelDataService.getFileInformation('artifact/by/project_id', project_id,artifact_type_id )
+    this.pipelineData.getFileInformation('artifact/by/project_id', project_id,artifact_type_id )
       .subscribe(response => {
       
-        console.log("fileeeeeeeeeeeeeeeeee",response);
+        this.posts = response;
+        console.log("fileeee",response);
       });
   }
   
@@ -313,6 +334,7 @@ export class ProjectConfigModelComponent implements OnInit {
       items.selectedFile = selectedFile;
   
       console.log("Selected files: ", this.selectedFiles);
+     
     }
   }
   
@@ -335,6 +357,26 @@ export class ProjectConfigModelComponent implements OnInit {
         return;
       }
     }
+    const projectId = localStorage.getItem('pro_id');
+    if (!projectId) {
+      console.log('Project ID not available.');
+      return;
+    }
+    if(this.flowmode!='editflow' && this.useflowmode!='useflow'){
+      if (protypecheck == 'Training'){
+  
+        this.pipelineData.putIsCompleted('/complete/project/create', projectId)
+        .subscribe(
+          (respArray) => {
+            this.projectResp = respArray;
+            console.log('Project response:', respArray);
+          });
+  
+       }
+
+    }
+
+   
 
 // FILE LENGTH CHECKING
     var formData = new FormData();

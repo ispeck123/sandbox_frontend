@@ -27,6 +27,10 @@ export class ProjectDataService {
     const headers = this.getToken.getLocalToken();
     return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id +'/' +userid, { headers });
   }
+  getProjecttypebyId(url: string, id: any): Observable<ProjectTypeConfig> {
+    const headers = this.getToken.getLocalToken();
+    return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id , { headers });
+  }
   projectTypeData(url:string){
     const headers = this.getToken.getLocalToken();
     console.log(headers)
@@ -140,6 +144,15 @@ export class ProjectDataService {
   //   return this.http.post<any>(this.fastapiurl+'project/deploy' + '/' + id, { headers });
   // }
 
+  useprojectDeploy(id: string,userid:string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      // You might need to add more headers if required
+    });
+
+    return this.http.post<any>(this.fastapiurl+'used/project/deploy'+'/'+id +'?userid='+userid, { headers });
+  }
+
   projectDeploy(id: string,userid:string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -185,6 +198,12 @@ export class ProjectDataService {
       return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id  +'?userid='+userid, { headers });
     }
 
+    getartifactfilenamet(url: string, id: any,userid:string): Observable<ProjectTypeConfig> {
+      const headers = this.getToken.getLocalToken();
+      return this.http.get<ProjectTypeConfig>(this.fastapiurl + url + '/' + id  +'?userid='+userid, { headers });
+    }
+
+
   // weightFiledownload(url: string , project_id : number | string){
   //   const headers = this.getToken.getLocalToken();
   //   let payload:object = {};
@@ -199,6 +218,10 @@ export class ProjectDataService {
   mapProjectSource (url: string, project_id: number, source_id: number, created_by: string) {
     const headers = this.getToken.getLocalToken();
     return this.http.post(`${this.Api_Path}/${url}/${project_id}/${source_id}/${created_by}`, {}, {headers});
+  }
+  usemapProjectSource(url: string, project_id: number, source_id: number, created_by: string): Observable<any> {
+    const headers = this.getToken.getLocalToken();
+    return this.http.post<ProjectTypeConfig>(this.fastapiurl + url + '/' + project_id +'/' +source_id +'/'+created_by, { headers });
   }
 
   deleteProject (id: number) {

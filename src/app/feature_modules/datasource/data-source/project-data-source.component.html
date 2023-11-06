@@ -61,14 +61,14 @@
                                 <div class="project_heading">
                                     <h4>{{source.source_name}}</h4>
                                 </div>
-                                <div class="prj_icon">
+                                <!-- <div class="prj_icon">
                                     <mat-icon class="material-symbols-outlined">
                                         confirmation_number
                                     </mat-icon>
                                     <span>
                                         {{source.fps}}
                                     </span>
-                                </div>
+                                </div> -->
 
                                 <div class="prj_icon">
                                     <mat-icon class="material-symbols-outlined">
@@ -76,19 +76,19 @@
                                     </mat-icon>
                                     <span>{{source.processing_type_name}}</span>
                                 </div>
-
++
                                 <div class="prj_icon">
                                     <mat-icon class="material-symbols-outlined">
                                         file_present
                                     </mat-icon>
                                     <span>{{source.source_stored_location_name}}</span>
                                 </div>
-                                <div class="prj_icon">
+                                <!-- <div class="prj_icon">
                                     <mat-icon class="material-symbols-outlined">
                                         location_on
                                     </mat-icon>
                                     <span> {{source.area_name}}</span>
-                                </div>
+                                </div> -->
                                 <div class="prj_icon">
                                     <mat-icon class="material-symbols-outlined">
                                         description
@@ -157,14 +157,6 @@
                             </mat-select>
                         </mat-form-field>
 
-
-                        <mat-form-field appearance="outline" *ngIf="areaList != undefined">
-                            <mat-label>Select Area</mat-label>
-                            <mat-select formControlName="area_id">
-                                <mat-option value="{{area.area_id}}" selected *ngFor="let area of areaList.data">
-                                    {{area.area_name}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
                         <mat-form-field appearance="outline" *ngIf="ProjectTypeList!= undefined">
                             <mat-label>Select Project Type</mat-label>
                             <mat-select #id formControlName="project_type"
@@ -209,13 +201,15 @@
 
                             </mat-select>
                         </mat-form-field>
+                        
                         <div class="image-upload" *ngIf="fileflag=='IMAGE'">
-                            <input type="file" required formControlName="filename" (change)="onFileSelection($event)"
+                            <input type="file" class="form-control"  required formControlName="filename" (change)="onFileSelection($event)"
                                 #fileUpload>
                             <label for="logo" id="file-label" class="upload-field">
                             </label>
                             <!-- <span *ngIf="fileerrorShow" style="color: red;">* Required</span> -->
                         </div>
+                       
                         <div class="image-upload" *ngIf="fileflag=='VIDEO'">
                             <input type="file" required formControlName="filename" (change)="onFileSelection($event)"
                                 #fileUpload>
@@ -240,13 +234,13 @@
                         </div>
 
 
-                        <div>
+                        <!-- <div>
                             <label class="example-name-label">Selected FPS
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                             <label class="example-value-label">{{value}}</label>
-                        </div>
-                        <mat-label>FPS&nbsp;</mat-label>
-                        <mat-slider min="0" max="144" step="1" formControlName="fps" [(ngModel)]="value"></mat-slider>
+                        </div> -->
+                        <!-- <mat-label>FPS&nbsp;</mat-label>
+                        <mat-slider min="0" max="144" step="1" formControlName="fps" [(ngModel)]="value"></mat-slider> -->
 
                         <mat-form-field appearance="outline" *ngIf="sourceLocation != undefined">
                             <mat-label>Select Source Stored Location</mat-label>
